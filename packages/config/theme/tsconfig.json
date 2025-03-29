@@ -1,0 +1,15 @@
+{
+  "extends": "@pms/tsconfig/react-library.json",
+  "compilerOptions": {
+    "plugins": [{ "name": "next" }],
+    "baseUrl": "./",
+    "paths": {
+      "@/components/*": ["./src/components/*"],
+      "@/context/*": ["./src/store/*"],
+      "@/models/*": ["./src/models/*"],
+      "@/utility/*": ["./src/utility/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["dist", "build", "node_modules"]
+}
