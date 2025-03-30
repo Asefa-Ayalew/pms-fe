@@ -1,0 +1,17 @@
+{
+  "extends": "@pms/tsconfig/nextjs.json",
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "plugins": [{ "name": "next" }],
+    "baseUrl": ".",
+    "paths": {
+      "@/components/*": ["./src/components/*"],
+      "@/context/*": ["./src/context/*"],
+      "@/hooks/*": ["./src/hooks/*"],
+      "@/models/*": ["./src/models/*"],
+      "@/utility/*": ["./src/utility/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": [".turbo", ".next", "dist", "build", "node_modules"]
+}

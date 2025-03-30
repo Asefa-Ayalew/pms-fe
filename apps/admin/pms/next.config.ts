@@ -5,8 +5,9 @@ const nextConfig = {
   transpilePackages: [
     '@pms/theme',
     '@pms/auth', 
+    '@pms/core'
   ],
-  output: 'standalone',
- };
+  output: 'standalone'
+};
 
 module.exports = nextConfig;
