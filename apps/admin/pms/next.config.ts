@@ -1,7 +1,12 @@
-import type { NextConfig } from "next";
+/** @type {import('next').NextConfig} */
+const nextConfig = { 
+  basePath: '/pms',
+  reactStrictMode: true,
+  transpilePackages: [
+    '@pms/theme',
+    '@pms/auth', 
+  ],
+  output: 'standalone',
+ };
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
-
-export default nextConfig;
+module.exports = nextConfig;
