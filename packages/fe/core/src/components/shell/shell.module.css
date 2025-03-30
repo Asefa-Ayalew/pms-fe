@@ -1,11 +1,11 @@
 .side {
   color: white;
-  background-color: #0b2752;
+  background-color: #003366;
 }
 .header {
   /* @apply p-2 flex items-center justify-between; */
   background: #fff;
-  height: 42px;
+  height: 60px;
   color: #111827;
 }
 

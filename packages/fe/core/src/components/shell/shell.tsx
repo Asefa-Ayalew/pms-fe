@@ -2,30 +2,19 @@
 import '../../styles.css'
 import {
   AppShell,
-  Avatar,
   Box,
   Burger,
-  Button,
-  Divider,
   Flex,
   Group,
   Menu,
   ScrollArea,
-  Select,
   Text,
   Title,
 } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
 import {
-  IconGridDots,
-  IconHelpCircle,
-  IconLogout,
   IconMenu2,
-  IconMessages,
-  IconPasswordUser,
-  IconSettings,
-  IconUserCircle,
 } from "@tabler/icons-react";
 import React, { useState } from "react";
 import { LinksGroup } from "./navbar-link-group";
@@ -33,7 +22,7 @@ import { useDisclosure, useNetwork } from "@mantine/hooks";
 import styles from "./shell.module.css";
 import { appConfig } from "src/config/menu";
 import { Applications } from "src/config/application";
-import DarkModeToggle from "../dark-mode-toggle";
+import { UserInfo } from './user-info';
 
 interface ShellProps {
   children: React.ReactNode;
@@ -45,7 +34,7 @@ export function Shell({ children }: ShellProps): React.ReactNode {
   ));
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
-  const [currentApplication, setCurrentApplication] = useState("Community Service");
+  const [currentApplication, setCurrentApplication] = useState("Property Management");
 
   const applications = Applications.filter(({ name }) => name !== currentApplication).map((item) => (
     <Menu.Item
@@ -77,9 +66,7 @@ export function Shell({ children }: ShellProps): React.ReactNode {
       >
         <AppShell.Header style={{
             height: "48px",
-            backgroundColor: "#1A2940",
             alignItems: "center",
-            color: "white"
           }}>
           <Group align="center" h="100%" justify="space-between" px="sm"
          >
@@ -90,21 +77,10 @@ export function Shell({ children }: ShellProps): React.ReactNode {
                 opened={mobileOpened}
                 size="sm"
               />
-              {/* <Button
-                leftSection={<IconMenu2 size={16} />}
-                onClick={toggleDesktop}
-                pr={0}
-                visibleFrom="sm"
-                style={{
-                  backgroundColor: "#0b2752",
-                  color: "white",
-                }}
-              /> */}
 
               <IconMenu2 size={16} 
               onClick={toggleDesktop}
               style={{
-                color: "white",
                 cursor: "pointer",
                 fontWeight: "bold",
               }}/>
@@ -113,52 +89,6 @@ export function Shell({ children }: ShellProps): React.ReactNode {
                 {"LAL-ERP"}
               </Title>
             </Group>
-            <Flex gap={4}>
-              {/* <Menu arrowPosition="center" shadow="md" width={200} withArrow>
-                <Menu.Target>
-                  <Button variant="subtle">
-                    <Flex gap={4} c="white">
-                      <Avatar  radius="xl" size="sm"  className='text-blue-800'/>
-                      <Text>{"Nolawi Mekuriaw"}</Text>
-                    </Flex>
-                  </Button>
-                </Menu.Target>
-
-                <Menu.Dropdown>
-                  <Menu.Item
-                    component="a"
-                    href={``}
-                    leftSection={<IconUserCircle size={14} />}
-                  >
-                    Profile
-                  </Menu.Item>
-                  <Menu.Item
-                    component="a"
-                    href="/iam/change-password"
-                    leftSection={<IconPasswordUser size={14} />}
-                  >
-                    Change Password
-                  </Menu.Item>
-
-                  <Menu.Item leftSection={<IconSettings size={14} />}>
-                    Settings
-                  </Menu.Item>
-                  <Menu.Divider />
-                  <Menu.Item leftSection={<IconMessages size={14} />}>
-                    FAQ
-                  </Menu.Item>
-                  <Menu.Item leftSection={<IconHelpCircle size={14} />}>
-                    Help
-                  </Menu.Item>
-
-                  <Menu.Divider />
-
-                  <Menu.Item leftSection={<IconLogout size={14} />}>
-                    Logout
-                  </Menu.Item>
-                </Menu.Dropdown>
-              </Menu> */}
-            </Flex>
           </Group>
         </AppShell.Header>
         <AppShell.Navbar className={styles.side}>
@@ -167,8 +97,8 @@ export function Shell({ children }: ShellProps): React.ReactNode {
               <Box className="flex-grow">
                 <Box
                   style={{
-                    height: "42px",
-                    backgroundColor: "#1A2940",
+                    height: "60px",
+                    backgroundColor: "#0b2752",
                     alignItems: "center",
                     color: "white"
                   }}
@@ -176,10 +106,11 @@ export function Shell({ children }: ShellProps): React.ReactNode {
                   <h2
                     style={{
                       paddingLeft: "20px",
-                      paddingBottom: "10px",
-                      paddingTop: "10px",
+                      paddingBottom: "20px",
+                      paddingTop: "20px",
                       fontFamily: "sans-serif",
                       fontWeight: "bold",
+                      height: "60px"
                     }}
                   >
                     {currentApplication }
@@ -195,7 +126,7 @@ export function Shell({ children }: ShellProps): React.ReactNode {
                 />
               </Box>
             </Box>
-            {/* <UserInfo /> */}
+            <UserInfo />
             {/* <Divider c="blue" /> */}
           </AppShell.Section>
           <AppShell.Section component={ScrollArea} grow>

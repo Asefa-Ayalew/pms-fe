@@ -8,16 +8,16 @@ export function UserInfo() {
       <Group wrap="nowrap">
         <Avatar
           src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png"
-          size={94}
+          size={72}
           radius="120 "
         />
         <div>
 
           <Text fz="lg" fw={500} className='text-blue-950'>
-            Nolawi Mekuriaw
+            Asefa Ayalew
           </Text>
           <Text  fw={300}>
-            Software engineer
+            CEO
           </Text>
 
           {/* <Group wrap="nowrap" gap={10} mt={3}>
