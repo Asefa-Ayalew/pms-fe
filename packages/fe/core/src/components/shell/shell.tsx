@@ -1,6 +1,6 @@
-"use client";
-import React, { useState } from "react";
-import "../../styles.css";
+'use client';
+import React, { useState } from 'react';
+import '../../styles.css';
 import {
   AppShell,
   Avatar,
@@ -13,20 +13,20 @@ import {
   ScrollArea,
   Text,
   Title,
-} from "@mantine/core";
-import { ModalsProvider } from "@mantine/modals";
-import { Notifications } from "@mantine/notifications";
-import { IconLogout, IconMenu2, IconUserCircle } from "@tabler/icons-react";
-import { LinksGroup } from "./navbar-link-group";
-import { useDisclosure, useNetwork } from "@mantine/hooks";
-import styles from "./shell.module.css";
-import { appConfig } from "src/config/menu";
-import { Applications } from "src/config/application";
-import { UserInfo } from "./user-info";
-import DarkModeToggle from "@/utility/dark-mode-toggler";
-import { useAuth } from "@pms/auth";
-import { useContext } from "react";
-import { ShellContext } from "@/context/shell.context";
+} from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
+import { Notifications } from '@mantine/notifications';
+import { IconLogout, IconMenu2, IconUserCircle } from '@tabler/icons-react';
+import { LinksGroup } from './navbar-link-group';
+import { useDisclosure, useNetwork } from '@mantine/hooks';
+import styles from './shell.module.css';
+import { appConfig } from 'src/config/menu';
+import { Applications } from 'src/config/application';
+import { UserInfo } from './user-info';
+import DarkModeToggle from '@/utility/dark-mode-toggler';
+import { getCurrentSession, useAuth } from '@pms/auth';
+import { useContext } from 'react';
+import { ShellContext } from '@/context/shell.context';
 
 interface ShellProps {
   children: React.ReactNode;
@@ -35,6 +35,7 @@ interface ShellProps {
 export function Shell({ children }: ShellProps): React.ReactNode {
   const shellContext = useContext(ShellContext);
   const { logOut, user } = useAuth();
+  const userInfo = getCurrentSession();
 
   const links = appConfig.map((item) => (
     <LinksGroup {...item} key={item.label} />
@@ -42,10 +43,10 @@ export function Shell({ children }: ShellProps): React.ReactNode {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
   const [currentApplication, setCurrentApplication] =
-    useState("Training Center");
+    useState('Training Center');
 
   const applications = Applications.filter(
-    ({ name }) => name !== currentApplication
+    ({ name }) => name !== currentApplication,
   ).map((item) => (
     <Menu.Item
       component="a"
@@ -62,11 +63,11 @@ export function Shell({ children }: ShellProps): React.ReactNode {
     <ModalsProvider>
       <Notifications />
       <AppShell
-        header={{ height: "48px" }}
+        header={{ height: '48px' }}
         layout="alt"
         navbar={{
           width: 250,
-          breakpoint: "sm",
+          breakpoint: 'sm',
           collapsed: {
             mobile: !mobileOpened,
             desktop: !desktopOpened,
@@ -76,43 +77,43 @@ export function Shell({ children }: ShellProps): React.ReactNode {
       >
         <AppShell.Header
           style={{
-            height: "48px",
-            alignItems: "center",
+            height: '48px',
+            alignItems: 'center',
           }}
         >
           <Group align="center" h="100%" justify="space-between" px="sm">
-            <Title fz={16}>{"General Homes trading"}</Title>
+            <Title fz={16}>{userInfo?.tenant?.name}</Title>
             <Group gap={8} align="center">
-            <DarkModeToggle />
-            <Menu arrowPosition="center" shadow="md" width={200} withArrow>
-              <Menu.Target>
-                <Button variant="subtle">
-                  <Box className="flex gap-2 items-center">
-                    <Avatar color="primary" radius="xl" size="sm" />
+              <DarkModeToggle />
+              <Menu arrowPosition="center" shadow="md" width={200} withArrow>
+                <Menu.Target>
+                  <Button variant="subtle">
+                    <Box className="flex gap-2 items-center">
+                      <Avatar color="primary" radius="xl" size="sm" />
 
-                    <Flex className="flex-col justify-start text-left">
-                      <Text lh={1}>{"Asefa Ayalew"}</Text>
-                    </Flex>
-                  </Box>
-                </Button>
-              </Menu.Target>
-              <Menu.Dropdown>
-                <Menu.Item leftSection={<IconUserCircle size={14} />}>
-                  Profile
-                </Menu.Item>
+                      <Flex className="flex-col justify-start text-left">
+                        <Text lh={1}>{userInfo?.firstName}</Text>
+                      </Flex>
+                    </Box>
+                  </Button>
+                </Menu.Target>
+                <Menu.Dropdown>
+                  <Menu.Item leftSection={<IconUserCircle size={14} />}>
+                    Profile
+                  </Menu.Item>
 
-                <Menu.Divider />
+                  <Menu.Divider />
 
-                <Menu.Item
-                  leftSection={<IconLogout size={14} />}
-                  onClick={() => {
-                    logOut();
-                  }}
-                >
-                  Logout
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
+                  <Menu.Item
+                    leftSection={<IconLogout size={14} />}
+                    onClick={() => {
+                      logOut();
+                    }}
+                  >
+                    Logout
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
             </Group>
           </Group>
         </AppShell.Header>
@@ -122,10 +123,10 @@ export function Shell({ children }: ShellProps): React.ReactNode {
               <Box className="flex-grow">
                 <Box
                   style={{
-                    height: "60px",
-                    backgroundColor: "#0b2752",
-                    alignItems: "center",
-                    color: "white",
+                    height: '60px',
+                    backgroundColor: '#0b2752',
+                    alignItems: 'center',
+                    color: 'white',
                   }}
                   className="dark:bg-gray-900"
                 >
@@ -141,18 +142,18 @@ export function Shell({ children }: ShellProps): React.ReactNode {
                       size={16}
                       onClick={toggleDesktop}
                       style={{
-                        cursor: "pointer",
-                        fontWeight: "bold",
+                        cursor: 'pointer',
+                        fontWeight: 'bold',
                       }}
                     />
                     <h2
                       style={{
-                        paddingLeft: "20px",
-                        paddingBottom: "20px",
-                        paddingTop: "20px",
-                        fontFamily: "sans-serif",
-                        fontWeight: "bold",
-                        height: "60px",
+                        paddingLeft: '20px',
+                        paddingBottom: '20px',
+                        paddingTop: '20px',
+                        fontFamily: 'sans-serif',
+                        fontWeight: 'bold',
+                        height: '60px',
                       }}
                     >
                       {currentApplication}
@@ -168,8 +169,7 @@ export function Shell({ children }: ShellProps): React.ReactNode {
                 />
               </Box>
             </Box>
-            <UserInfo />
-            {/* <Divider c="blue" /> */}
+            <UserInfo user={userInfo} />
           </AppShell.Section>
           <AppShell.Section component={ScrollArea} grow>
             {links}
@@ -177,15 +177,15 @@ export function Shell({ children }: ShellProps): React.ReactNode {
           <AppShell.Section>
             <div className=" text-xs  border-t p-2">
               <div className="flex justify-between items-center">
-                <Text color={networkStatus.online ? "teal" : "red"} size="sm">
-                  {networkStatus.online ? "Online" : "Offline"}
+                <Text color={networkStatus.online ? 'teal' : 'red'} size="sm">
+                  {networkStatus.online ? 'Online' : 'Offline'}
                 </Text>
                 <div className="text-center">
                   {process.env.NEXT_PUBLIC_VERSION}
-                </div>{" "}
+                </div>{' '}
               </div>
               <div className="flex gap-2 justify-between items-center">
-                <Flex gap={"xl"}>
+                <Flex gap={'xl'}>
                   <Box>My Company</Box>
                   <Box> &copy; 2025 </Box>
                 </Flex>

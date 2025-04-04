@@ -5,11 +5,14 @@ import { useAuth } from '@pms/auth';
 
 export default function Protected({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const { isUser } = useAuth();
+  const { user } = useAuth();
   useEffect(() => {
-    if (!isUser()) {
+    if (!user) {
       router.push('/auth/login');
     }
-  }, [isUser, router]);
+    else {
+    router.push('/dashboard');
+    }
+  }, [user, router]);
   return <>{children}</>;
 }

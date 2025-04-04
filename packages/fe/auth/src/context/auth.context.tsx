@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import { createContext, useState, useEffect, useContext, JSX } from 'react';
 import { useRouter } from 'next/navigation';
 import { jwtVerify } from 'jose'; // Correct import for jwtVerify
@@ -17,7 +17,11 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 const baseURL = process.env.NEXT_PUBLIC_APP_API || '';
 
-function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element {
+function AuthProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}): JSX.Element {
   const [user, setUser] = useState<any>();
   const [error, setError] = useState<any>();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -25,6 +29,7 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
 
   useEffect(() => {
     const isSignedIn = Boolean(hasCookie('token'));
+    console.log('isSSIGN::::', isSignedIn);
     setIsAuthenticated(isSignedIn);
   }, []);
 
@@ -37,13 +42,16 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
         setUser(userInfo);
         console.log('user info', userInfo);
 
-        setCookie('token', userInfo.accessToken); 
-        setCookie('refreshToken', userInfo.refreshToken); 
+        setCookie('token', userInfo.accessToken);
+        setCookie('refreshToken', userInfo.refreshToken);
       }
 
       if (token && typeof token === 'string' && token.split('.').length === 3) {
         try {
-          const payload  = jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET || '')); // Using jwtVerify
+          const payload = jwtVerify(
+            token,
+            new TextEncoder().encode(process.env.JWT_SECRET || ''),
+          ); // Using jwtVerify
           setUser(payload);
         } catch (err) {
           console.error('Failed to decode token:', err);
@@ -78,9 +86,12 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
       // Set the tokens in cookies
       setCookie('token', access_token);
       setCookie('refreshToken', refresh_token);
-      setCookie('userInfo', data.userInfo ? JSON.stringify(data.userInfo) : '{}');
+      setCookie('userInfo', data.profile ? JSON.stringify(data.profile) : '{}');
       // Optionally decode and set user info
-      const { payload } = await jwtVerify(access_token, new TextEncoder().encode(process.env.JWT_SECRET || ''));
+      const { payload } = await jwtVerify(
+        access_token,
+        new TextEncoder().encode(process.env.JWT_SECRET || ''),
+      );
       setUser(payload);
       localStorage.setItem('usersInfo', JSON.stringify(payload));
       setIsAuthenticated(true);
@@ -102,7 +113,10 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
     const token = getCookie('token');
     if (token && typeof token === 'string' && token.split('.').length === 3) {
       try {
-        const { payload } = await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET || ''));
+        const { payload } = await jwtVerify(
+          token,
+          new TextEncoder().encode(process.env.JWT_SECRET || ''),
+        );
         return payload;
       } catch (err) {
         console.error('Failed to decode token:', err);
@@ -125,7 +139,11 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
     getUserInfo,
   };
 
-  return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={authContextValue}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 const useAuth = () => {

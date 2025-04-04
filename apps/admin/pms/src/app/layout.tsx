@@ -19,7 +19,7 @@ export default function RootLayout({
       <body className="dark:bg-black dark:text-white">
         <MantineProviderRegistry>
           <AuthProvider>
-            <Shell> {children}</Shell>
+           {children}
           </AuthProvider>
         </MantineProviderRegistry>
       </body>

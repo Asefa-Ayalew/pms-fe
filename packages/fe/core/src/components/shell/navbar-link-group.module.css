@@ -27,7 +27,7 @@
 }
 .chevron {
   transition: transform 200ms ease;
-  color: white
+  color: black
 }
 
 .active {
