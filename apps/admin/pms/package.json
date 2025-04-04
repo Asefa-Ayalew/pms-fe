@@ -16,6 +16,7 @@
     "@pms/core": "workspace:*",
     "@pms/theme": "workspace:*",
     "@reduxjs/toolkit": "^2.6.1",
+    "@tabler/icons-react": "3.31.0",
     "jose": "^6.0.10",
     "next": "15.2.4",
     "next-auth": "5.0.0-beta.25",

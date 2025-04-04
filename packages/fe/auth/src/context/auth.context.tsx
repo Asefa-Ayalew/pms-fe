@@ -21,7 +21,10 @@ interface AuthContextValue {
   isUser: () => boolean;
 
   login: (
-    formFields: Login
+    formFields: {
+      email: string;
+      password: string;
+    }
   ) => Promise<
     | {
         access_token?: string;
@@ -73,20 +76,36 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
       setIsAuthenticated(isSignedIn);
     }, []);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      const token = getCookie('token');
-      if (token) {
-        const userInfo: Record<string, any> = jwtDecode(token as string);
-        setUser(userInfo);
-
-        setOrganizationId(userInfo.organizations?.[0]?.organization?.id || '');
-
-        userInfo.roles && setRole(userInfo.organizations?.[0]?.roles[0]?.name);
-        setRoles(userInfo.organizations?.[0]?.roles);
+    useEffect(() => {
+      if (isAuthenticated) {
+        const token = getCookie('token');
+    
+        if (token && typeof token === 'string' && token.split('.').length === 3) {
+          try {
+            const userInfo: Record<string, any> = jwtDecode(token);
+            setUser(userInfo);
+    
+            setOrganizationId(userInfo.organizations?.[0]?.organization?.id || '');
+    
+            userInfo.roles && setRole(userInfo.organizations?.[0]?.roles[0]?.name);
+            setRoles(userInfo.organizations?.[0]?.roles);
+          } catch (err) {
+            console.error('Failed to decode token:', err);
+            deleteCookie('token');
+            deleteCookie('refreshToken');
+            setIsAuthenticated(false);
+            router.refresh(); 
+          }
+        } else {
+          console.warn('Invalid or malformed token found in cookies:', token);
+          deleteCookie('token');
+          deleteCookie('refreshToken');
+          setIsAuthenticated(false);
+          router.refresh();
+        }
       }
-    }
-  }, [isAuthenticated]);
+    }, [isAuthenticated]);
+    
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -204,6 +223,8 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
   };
 
   const logOut = () => {
+    const token = getCookie('token');
+    console.log('token', token)
     deleteCookie('token');
     deleteCookie('refreshToken');
     router.refresh();

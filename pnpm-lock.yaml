@@ -51,6 +51,9 @@ importers:
       '@reduxjs/toolkit':
         specifier: ^2.6.1
         version: 2.6.1(react-redux@9.2.0(@types/react@19.0.10)(react@19.0.0)(redux@5.0.1))(react@19.0.0)
+      '@tabler/icons-react':
+        specifier: 3.31.0
+        version: 3.31.0(react@19.0.0)
       jose:
         specifier: ^6.0.10
         version: 6.0.10
@@ -347,109 +350,6 @@ importers:
         specifier: ^5.8.2
         version: 5.8.2
 
-  packages/fe/auth2:
-    dependencies:
-      '@auth/core':
-        specifier: ^0.38.0
-        version: 0.38.0
-      '@hookform/resolvers':
-        specifier: ^4.1.3
-        version: 4.1.3(react-hook-form@7.55.0(react@19.0.0))
-      '@mantine/core':
-        specifier: ^7.17.3
-        version: 7.17.3(@mantine/hooks@7.17.3(react@19.0.0))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@mantine/hooks':
-        specifier: ^7.17.3
-        version: 7.17.3(react@19.0.0)
-      '@mantine/modals':
-        specifier: ^7.17.3
-        version: 7.17.3(@mantine/core@7.17.3(@mantine/hooks@7.17.3(react@19.0.0))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@mantine/hooks@7.17.3(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@mantine/notifications':
-        specifier: ^7.17.3
-        version: 7.17.3(@mantine/core@7.17.3(@mantine/hooks@7.17.3(react@19.0.0))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@mantine/hooks@7.17.3(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@pms/theme':
-        specifier: workspace:*
-        version: link:../../config/theme
-      '@reduxjs/toolkit':
-        specifier: ^2.6.1
-        version: 2.6.1(react-redux@9.2.0(@types/react@19.0.10)(react@19.0.0)(redux@5.0.1))(react@19.0.0)
-      axios:
-        specifier: ^1.8.4
-        version: 1.8.4
-      axois:
-        specifier: 0.0.1-security
-        version: 0.0.1-security
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      cookies-next:
-        specifier: ^5.1.0
-        version: 5.1.0(next@15.2.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
-      jose:
-        specifier: ^6.0.10
-        version: 6.0.10
-      js-cookie:
-        specifier: ^3.0.5
-        version: 3.0.5
-      jsonwebtoken:
-        specifier: ^9.0.2
-        version: 9.0.2
-      jwt-decode:
-        specifier: 4.0.0
-        version: 4.0.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      next:
-        specifier: 15.2.4
-        version: 15.2.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      next-auth:
-        specifier: ^5.0.0-beta.25
-        version: 5.0.0-beta.25(next@15.2.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
-      react:
-        specifier: ^19.0.0
-        version: 19.0.0
-      react-dom:
-        specifier: ^19.0.0
-        version: 19.0.0(react@19.0.0)
-      react-hook-form:
-        specifier: ^7.55.0
-        version: 7.55.0(react@19.0.0)
-      react-redux:
-        specifier: ^9.2.0
-        version: 9.2.0(@types/react@19.0.10)(react@19.0.0)(redux@5.0.1)
-      server-only:
-        specifier: ^0.0.1
-        version: 0.0.1
-      tailwind-merge:
-        specifier: ^3.0.2
-        version: 3.0.2
-      zod:
-        specifier: ^3.24.2
-        version: 3.24.2
-    devDependencies:
-      '@pms/eslint-config':
-        specifier: workspace:*
-        version: link:../../config/eslint-config
-      '@pms/tsconfig':
-        specifier: workspace:*
-        version: link:../../config/tsconfig
-      '@types/js-cookie':
-        specifier: ^3.0.6
-        version: 3.0.6
-      '@types/node':
-        specifier: ^20.17.28
-        version: 20.17.28
-      '@types/react':
-        specifier: ^19.0.10
-        version: 19.0.10
-      '@types/react-dom':
-        specifier: ^19.0.4
-        version: 19.0.4(@types/react@19.0.10)
-      typescript:
-        specifier: ^5.8.2
-        version: 5.8.2
-
   packages/fe/core:
     dependencies:
       '@hookform/resolvers':
@@ -485,6 +385,9 @@ importers:
       '@mantine/tiptap':
         specifier: 7.17.3
         version: 7.17.3(@mantine/core@7.17.3(@mantine/hooks@7.17.3(react@19.0.0))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@mantine/hooks@7.17.3(react@19.0.0))(@tiptap/extension-link@2.11.7(@tiptap/core@2.11.7(@tiptap/pm@2.11.7))(@tiptap/pm@2.11.7))(@tiptap/react@2.11.7(@tiptap/core@2.11.7(@tiptap/pm@2.11.7))(@tiptap/pm@2.11.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@pms/auth':
+        specifier: workspace:*
+        version: link:../auth
       '@reduxjs/toolkit':
         specifier: ^2.6.1
         version: 2.6.1(react-redux@9.2.0(@types/react@19.0.10)(react@19.0.0)(redux@5.0.1))(react@19.0.0)

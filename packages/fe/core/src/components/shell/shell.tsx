@@ -1,9 +1,12 @@
 "use client";
+import React, { useState } from "react";
 import "../../styles.css";
 import {
   AppShell,
+  Avatar,
   Box,
   Burger,
+  Button,
   Flex,
   Group,
   Menu,
@@ -13,8 +16,7 @@ import {
 } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
-import { IconMenu2 } from "@tabler/icons-react";
-import React, { useState } from "react";
+import { IconLogout, IconMenu2, IconUserCircle } from "@tabler/icons-react";
 import { LinksGroup } from "./navbar-link-group";
 import { useDisclosure, useNetwork } from "@mantine/hooks";
 import styles from "./shell.module.css";
@@ -22,28 +24,33 @@ import { appConfig } from "src/config/menu";
 import { Applications } from "src/config/application";
 import { UserInfo } from "./user-info";
 import DarkModeToggle from "@/utility/dark-mode-toggler";
+import { useAuth } from "@pms/auth";
+import { useContext } from "react";
+import { ShellContext } from "@/context/shell.context";
 
 interface ShellProps {
   children: React.ReactNode;
 }
 
 export function Shell({ children }: ShellProps): React.ReactNode {
+  const shellContext = useContext(ShellContext);
+  const { logOut, user } = useAuth();
+
   const links = appConfig.map((item) => (
     <LinksGroup {...item} key={item.label} />
   ));
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
-  const [currentApplication, setCurrentApplication] = useState(
-    "Training Center"
-  );
+  const [currentApplication, setCurrentApplication] =
+    useState("Training Center");
 
   const applications = Applications.filter(
     ({ name }) => name !== currentApplication
   ).map((item) => (
     <Menu.Item
       component="a"
-      href={`/${item.key}`}
-      key={item.key}
+      href={`/${item?.key}`}
+      key={item?.key}
       leftSection={<item.icon size={14} />}
     >
       {item.name}
@@ -75,7 +82,39 @@ export function Shell({ children }: ShellProps): React.ReactNode {
         >
           <Group align="center" h="100%" justify="space-between" px="sm">
             <Title fz={16}>{"General Homes trading"}</Title>
+            <Group gap={8} align="center">
             <DarkModeToggle />
+            <Menu arrowPosition="center" shadow="md" width={200} withArrow>
+              <Menu.Target>
+                <Button variant="subtle">
+                  <Box className="flex gap-2 items-center">
+                    <Avatar color="primary" radius="xl" size="sm" />
+
+                    <Flex className="flex-col justify-start text-left">
+                      <Text lh={1}>{"Asefa Ayalew"}</Text>
+                    </Flex>
+                  </Box>
+                </Button>
+              </Menu.Target>
+
+              <Menu.Dropdown>
+                <Menu.Item leftSection={<IconUserCircle size={14} />}>
+                  Profile
+                </Menu.Item>
+
+                <Menu.Divider />
+
+                <Menu.Item
+                  leftSection={<IconLogout size={14} />}
+                  onClick={() => {
+                    logOut();
+                  }}
+                >
+                  Logout
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+            </Group>
           </Group>
         </AppShell.Header>
         <AppShell.Navbar className={styles.side}>
@@ -107,18 +146,18 @@ export function Shell({ children }: ShellProps): React.ReactNode {
                         fontWeight: "bold",
                       }}
                     />
-                     <h2
-                    style={{
-                      paddingLeft: "20px",
-                      paddingBottom: "20px",
-                      paddingTop: "20px",
-                      fontFamily: "sans-serif",
-                      fontWeight: "bold",
-                      height: "60px",
-                    }}
-                  >
-                    {currentApplication}
-                  </h2>
+                    <h2
+                      style={{
+                        paddingLeft: "20px",
+                        paddingBottom: "20px",
+                        paddingTop: "20px",
+                        fontFamily: "sans-serif",
+                        fontWeight: "bold",
+                        height: "60px",
+                      }}
+                    >
+                      {currentApplication}
+                    </h2>
                   </Group>
                 </Box>
                 <Burger
@@ -148,7 +187,7 @@ export function Shell({ children }: ShellProps): React.ReactNode {
               </div>
               <div className="flex gap-2 justify-between items-center">
                 <Flex gap={"xl"}>
-                  <Box>WDU</Box>
+                  <Box>My Company</Box>
                   <Box> &copy; 2025 </Box>
                 </Flex>
               </div>
