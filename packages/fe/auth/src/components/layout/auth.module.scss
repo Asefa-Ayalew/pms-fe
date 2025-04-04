@@ -1,0 +1,28 @@
+.root {
+  @apply p-4 py-8 w-full flex justify-center;
+  background-color: white;
+  min-height: 250px;
+  max-width: 400px;
+}
+.tabRoot {
+  @apply w-full;
+}
+.tab {
+  @apply w-1/2;
+  &[data-active] {
+  }
+  &[data-direction='left'] {
+    border-radius: 3px 0px 0px 3px;
+  }
+  &[data-direction='right'] {
+    border-radius: 0px 3px 3px 0px;
+  }
+}
+.tabList {
+  gap: 0;
+  background-color: #e9ecef;
+  border-radius: 3px;
+}
+.tabPanal {
+  @apply p-4;
+}

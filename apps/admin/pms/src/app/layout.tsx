@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 import MantineProviderRegistry from "./mantine";
 import { Shell } from "@pms/core";
+import { AuthProvider } from "@pms/auth";
 
 export const metadata: Metadata = {
-  title: "PMS",
-  description: "property Management System",
+  title: "Training Center",
+  description: "Training Center",
 };
 
 export default function RootLayout({
@@ -15,10 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="dark:bg-black dark:text-white">
         <MantineProviderRegistry>
-          <Shell>{children}</Shell>
-        </MantineProviderRegistry>{" "}
+          <AuthProvider>
+            <Shell>{children}</Shell>
+          </AuthProvider>
+        </MantineProviderRegistry>
       </body>
     </html>
   );

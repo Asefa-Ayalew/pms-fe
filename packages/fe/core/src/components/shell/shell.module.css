@@ -1,6 +1,6 @@
 .side {
-  color: white;
-  background-color: #003366;
+  color: black;
+  background-color: #fff;
 }
 .header {
   /* @apply p-2 flex items-center justify-between; */

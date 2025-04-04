@@ -1,5 +1,5 @@
 "use client";
-import '../../styles.css'
+import "../../styles.css";
 import {
   AppShell,
   Box,
@@ -13,16 +13,15 @@ import {
 } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
-import {
-  IconMenu2,
-} from "@tabler/icons-react";
+import { IconMenu2 } from "@tabler/icons-react";
 import React, { useState } from "react";
 import { LinksGroup } from "./navbar-link-group";
 import { useDisclosure, useNetwork } from "@mantine/hooks";
 import styles from "./shell.module.css";
 import { appConfig } from "src/config/menu";
 import { Applications } from "src/config/application";
-import { UserInfo } from './user-info';
+import { UserInfo } from "./user-info";
+import DarkModeToggle from "@/utility/dark-mode-toggler";
 
 interface ShellProps {
   children: React.ReactNode;
@@ -34,9 +33,13 @@ export function Shell({ children }: ShellProps): React.ReactNode {
   ));
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
-  const [currentApplication, setCurrentApplication] = useState("Property Management");
+  const [currentApplication, setCurrentApplication] = useState(
+    "Training Center"
+  );
 
-  const applications = Applications.filter(({ name }) => name !== currentApplication).map((item) => (
+  const applications = Applications.filter(
+    ({ name }) => name !== currentApplication
+  ).map((item) => (
     <Menu.Item
       component="a"
       href={`/${item.key}`}
@@ -55,7 +58,7 @@ export function Shell({ children }: ShellProps): React.ReactNode {
         header={{ height: "48px" }}
         layout="alt"
         navbar={{
-          width:250,
+          width: 250,
           breakpoint: "sm",
           collapsed: {
             mobile: !mobileOpened,
@@ -64,31 +67,15 @@ export function Shell({ children }: ShellProps): React.ReactNode {
         }}
         padding="md"
       >
-        <AppShell.Header style={{
+        <AppShell.Header
+          style={{
             height: "48px",
             alignItems: "center",
-          }}>
-          <Group align="center" h="100%" justify="space-between" px="sm"
-         >
-            <Group align="center" gap={12} h="100%">
-              <Burger
-                hiddenFrom="sm"
-                onClick={toggleMobile}
-                opened={mobileOpened}
-                size="sm"
-              />
-
-              <IconMenu2 size={16} 
-              onClick={toggleDesktop}
-              style={{
-                cursor: "pointer",
-                fontWeight: "bold",
-              }}/>
-
-              <Title fz={16}>
-                {"LAL-ERP"}
-              </Title>
-            </Group>
+          }}
+        >
+          <Group align="center" h="100%" justify="space-between" px="sm">
+            <Title fz={16}>{"General Homes trading"}</Title>
+            <DarkModeToggle />
           </Group>
         </AppShell.Header>
         <AppShell.Navbar className={styles.side}>
@@ -100,25 +87,42 @@ export function Shell({ children }: ShellProps): React.ReactNode {
                     height: "60px",
                     backgroundColor: "#0b2752",
                     alignItems: "center",
-                    color: "white"
+                    color: "white",
                   }}
+                  className="dark:bg-gray-900"
                 >
-                  <h2
+                  <Group align="center" gap={4} h="100%" className="mx-4">
+                    <Burger
+                      hiddenFrom="sm"
+                      onClick={toggleMobile}
+                      opened={mobileOpened}
+                      size="sm"
+                    />
+
+                    <IconMenu2
+                      size={16}
+                      onClick={toggleDesktop}
+                      style={{
+                        cursor: "pointer",
+                        fontWeight: "bold",
+                      }}
+                    />
+                     <h2
                     style={{
                       paddingLeft: "20px",
                       paddingBottom: "20px",
                       paddingTop: "20px",
                       fontFamily: "sans-serif",
                       fontWeight: "bold",
-                      height: "60px"
+                      height: "60px",
                     }}
                   >
-                    {currentApplication }
+                    {currentApplication}
                   </h2>
-                  {/* <Divider c="blue" /> */}
+                  </Group>
                 </Box>
                 <Burger
-                  color="white"
+                  color="black"
                   hiddenFrom="sm"
                   onClick={toggleMobile}
                   opened={mobileOpened}

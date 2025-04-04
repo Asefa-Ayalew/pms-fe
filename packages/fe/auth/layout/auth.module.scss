@@ -1,0 +1,33 @@
+.left_content {
+    @apply flex-grow flex justify-between min-h-screen flex-col border bg-gray-100;
+    width: 40%;
+    padding: 4rem;
+}
+
+.workflow {
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 50%;
+    height: 45vh
+}
+
+.right_content {
+    @apply md:flex w-8/12 flex-col items-center justify-center min-h-screen hidden
+}
+
+.logo {
+    @apply self-center
+}
+
+.form {
+    @apply border-r border-solid border-gray-300 dark:border-gray-700 min-h-[900px] max-w-[450px] pt-[80px] md:max-w-full
+}
+
+.welcome {
+    @apply text-center text-3xl mt-5
+}
+
+.footer_text {
+    @apply justify-center text-center text-sm relative -bottom-10
+}

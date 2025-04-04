@@ -1,2 +1,2 @@
-export * from './src/components/auth';
-export * from './src/utility';
+export * from './src/components/layout/auth';
+export * from './src/context';

@@ -11,3 +11,4 @@
   --breakpoint-md: 768px;
   --breakpoint-lg: 976px;
 }
+@custom-variant dark (&:where(.dark, .dark *));
