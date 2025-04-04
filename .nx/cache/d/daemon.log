@@ -1,0 +1,136 @@
+[NX Daemon Server] - 2024-03-13T04:12:17.464Z - Started listening on: \\.\pipe\nx\C:\Users\User\AppData\Local\Temp\692f0ae5289011ad92e2\d.sock
+[NX Daemon Server] - 2024-03-13T04:12:17.470Z - [WATCHER]: Subscribed to changes within: D:\my projects\training-center (native)
+[NX Daemon Server] - 2024-03-13T04:12:17.473Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2024-03-13T04:12:17.479Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2024-03-13T04:12:17.483Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2024-03-13T04:12:17.666Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2024-03-13T04:12:17.666Z - [REQUEST]: 
+[NX Daemon Server] - 2024-03-13T04:12:17.667Z - [REQUEST]: 
+Plugin listed in `nx.json` not found: @nx/jest/plugin
+[NX Daemon Server] - 2024-03-13T04:12:18.110Z - [REQUEST]: Responding to the client with an error. Error when preparing serialized project graph. Cannot find module '@nx/jest/plugin'
+Require stack:
+- D:\my projects\training-center\node_modules\nx\src\utils\nx-plugin.js
+- D:\my projects\training-center\node_modules\nx\src\project-graph\build-project-graph.js
+- D:\my projects\training-center\node_modules\nx\src\project-graph\project-graph.js
+- D:\my projects\training-center\node_modules\nx\src\utils\project-graph-utils.js
+- D:\my projects\training-center\node_modules\nx\src\daemon\server\file-watching\file-watcher-sockets.js
+- D:\my projects\training-center\node_modules\nx\src\daemon\server\server.js
+- D:\my projects\training-center\node_modules\nx\src\daemon\server\start.js
+Error: Cannot find module '@nx/jest/plugin'
+Require stack:
+- D:\my projects\training-center\node_modules\nx\src\utils\nx-plugin.js
+- D:\my projects\training-center\node_modules\nx\src\project-graph\build-project-graph.js
+- D:\my projects\training-center\node_modules\nx\src\project-graph\project-graph.js
+- D:\my projects\training-center\node_modules\nx\src\utils\project-graph-utils.js
+- D:\my projects\training-center\node_modules\nx\src\daemon\server\file-watching\file-watcher-sockets.js
+- D:\my projects\training-center\node_modules\nx\src\daemon\server\server.js
+- D:\my projects\training-center\node_modules\nx\src\daemon\server\start.js
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:933:15)
+    at Function.resolve (node:internal/modules/cjs/helpers:108:19)
+    at getPluginPathAndName (D:\my projects\training-center\node_modules\nx\src\utils\nx-plugin.js:35:30)
+    at loadNxPluginAsync (D:\my projects\training-center\node_modules\nx\src\utils\nx-plugin.js:78:38)
+    at loadNxPlugins (D:\my projects\training-center\node_modules\nx\src\utils\nx-plugin.js:105:27)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async retrieveProjectConfigurations (D:\my projects\training-center\node_modules\nx\src\project-graph\utils\retrieve-workspace-files.js:45:21)
+    at async processFilesAndCreateAndSerializeProjectGraph (D:\my projects\training-center\node_modules\nx\src\daemon\server\project-graph-incremental-recomputation.js:140:28)
+    at async getCachedSerializedProjectGraphPromise (D:\my projects\training-center\node_modules\nx\src\daemon\server\project-graph-incremental-recomputation.js:43:16)
+    at async handleRequestProjectGraph (D:\my projects\training-center\node_modules\nx\src\daemon\server\handle-request-project-graph.js:12:24) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'D:\\my projects\\training-center\\node_modules\\nx\\src\\utils\\nx-plugin.js',
+    'D:\\my projects\\training-center\\node_modules\\nx\\src\\project-graph\\build-project-graph.js',
+    'D:\\my projects\\training-center\\node_modules\\nx\\src\\project-graph\\project-graph.js',
+    'D:\\my projects\\training-center\\node_modules\\nx\\src\\utils\\project-graph-utils.js',
+    'D:\\my projects\\training-center\\node_modules\\nx\\src\\daemon\\server\\file-watching\\file-watcher-sockets.js',
+    'D:\\my projects\\training-center\\node_modules\\nx\\src\\daemon\\server\\server.js',
+    'D:\\my projects\\training-center\\node_modules\\nx\\src\\daemon\\server\\start.js'
+  ]
+}
+[NX Daemon Server] - 2024-03-13T04:12:18.118Z - Time taken for 'hash changed files from watcher' 175.3770999982953ms
+[NX Daemon Server] - 2024-03-13T04:12:18.119Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2024-03-13T04:12:18.123Z - Done responding to the client null
+[NX Daemon Server] - 2024-03-13T04:12:30.848Z - Started listening on: \\.\pipe\nx\C:\Users\User\AppData\Local\Temp\692f0ae5289011ad92e2\d.sock
+[NX Daemon Server] - 2024-03-13T04:12:30.854Z - [WATCHER]: Subscribed to changes within: D:\my projects\training-center (native)
+[NX Daemon Server] - 2024-03-13T04:12:30.857Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2024-03-13T04:12:30.860Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2024-03-13T04:12:30.866Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2024-03-13T04:12:30.870Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2024-03-13T04:12:30.870Z - [REQUEST]: 
+[NX Daemon Server] - 2024-03-13T04:12:30.870Z - [REQUEST]: 
+Plugin listed in `nx.json` not found: @nx/jest/plugin
+[NX Daemon Server] - 2024-03-13T04:12:31.457Z - [REQUEST]: Responding to the client with an error. Error when preparing serialized project graph. Cannot find module '@nx/jest/plugin'
+Require stack:
+- D:\my projects\training-center\node_modules\nx\src\utils\nx-plugin.js
+- D:\my projects\training-center\node_modules\nx\src\project-graph\build-project-graph.js
+- D:\my projects\training-center\node_modules\nx\src\project-graph\project-graph.js
+- D:\my projects\training-center\node_modules\nx\src\utils\project-graph-utils.js
+- D:\my projects\training-center\node_modules\nx\src\daemon\server\file-watching\file-watcher-sockets.js
+- D:\my projects\training-center\node_modules\nx\src\daemon\server\server.js
+- D:\my projects\training-center\node_modules\nx\src\daemon\server\start.js
+Error: Cannot find module '@nx/jest/plugin'
+Require stack:
+- D:\my projects\training-center\node_modules\nx\src\utils\nx-plugin.js
+- D:\my projects\training-center\node_modules\nx\src\project-graph\build-project-graph.js
+- D:\my projects\training-center\node_modules\nx\src\project-graph\project-graph.js
+- D:\my projects\training-center\node_modules\nx\src\utils\project-graph-utils.js
+- D:\my projects\training-center\node_modules\nx\src\daemon\server\file-watching\file-watcher-sockets.js
+- D:\my projects\training-center\node_modules\nx\src\daemon\server\server.js
+- D:\my projects\training-center\node_modules\nx\src\daemon\server\start.js
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:933:15)
+    at Function.resolve (node:internal/modules/cjs/helpers:108:19)
+    at getPluginPathAndName (D:\my projects\training-center\node_modules\nx\src\utils\nx-plugin.js:35:30)
+    at loadNxPluginAsync (D:\my projects\training-center\node_modules\nx\src\utils\nx-plugin.js:78:38)
+    at loadNxPlugins (D:\my projects\training-center\node_modules\nx\src\utils\nx-plugin.js:105:27)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async retrieveProjectConfigurations (D:\my projects\training-center\node_modules\nx\src\project-graph\utils\retrieve-workspace-files.js:45:21)
+    at async processFilesAndCreateAndSerializeProjectGraph (D:\my projects\training-center\node_modules\nx\src\daemon\server\project-graph-incremental-recomputation.js:140:28)
+    at async getCachedSerializedProjectGraphPromise (D:\my projects\training-center\node_modules\nx\src\daemon\server\project-graph-incremental-recomputation.js:43:16)
+    at async handleRequestProjectGraph (D:\my projects\training-center\node_modules\nx\src\daemon\server\handle-request-project-graph.js:12:24) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'D:\\my projects\\training-center\\node_modules\\nx\\src\\utils\\nx-plugin.js',
+    'D:\\my projects\\training-center\\node_modules\\nx\\src\\project-graph\\build-project-graph.js',
+    'D:\\my projects\\training-center\\node_modules\\nx\\src\\project-graph\\project-graph.js',
+    'D:\\my projects\\training-center\\node_modules\\nx\\src\\utils\\project-graph-utils.js',
+    'D:\\my projects\\training-center\\node_modules\\nx\\src\\daemon\\server\\file-watching\\file-watcher-sockets.js',
+    'D:\\my projects\\training-center\\node_modules\\nx\\src\\daemon\\server\\server.js',
+    'D:\\my projects\\training-center\\node_modules\\nx\\src\\daemon\\server\\start.js'
+  ]
+}
+[NX Daemon Server] - 2024-03-13T04:12:31.477Z - Time taken for 'hash changed files from watcher' 0.5585999935865402ms
+[NX Daemon Server] - 2024-03-13T04:12:31.479Z - Done responding to the client null
+[NX Daemon Server] - 2025-04-04T10:33:11.553Z - Started listening on: \\.\pipe\nx\C:\Users\User\AppData\Local\Temp\692f0ae5289011ad92e2\d.sock
+[NX Daemon Server] - 2025-04-04T10:33:11.627Z - [WATCHER]: Subscribed to changes within: d:\my projects\training-center (native)
+[NX Daemon Server] - 2025-04-04T10:33:11.631Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-04-04T10:33:11.643Z - Closed a connection. Number of open connections: 0
+[NX Daemon Server] - 2025-04-04T10:33:11.654Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-04-04T10:33:11.656Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-04-04T10:33:11.657Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-04-04T10:33:11.661Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-04-04T10:33:12.290Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2025-04-04T10:33:12.290Z - [REQUEST]: 
+[NX Daemon Server] - 2025-04-04T10:33:12.290Z - [REQUEST]: 
+[NX Daemon Server] - 2025-04-04T10:33:13.379Z - [REQUEST]: Responding to the client with an error. Error when preparing serialized project graph. The following projects are defined in multiple locations:
+- registration: 
+  - apps/admin/registration
+  - apps/registration
+
+To fix this, set a unique name for each project in a project.json inside the project's root. If the project does not currently have a project.json, you can create one that contains only a name.
+Error: The following projects are defined in multiple locations:
+- registration: 
+  - apps/admin/registration
+  - apps/registration
+
+To fix this, set a unique name for each project in a project.json inside the project's root. If the project does not currently have a project.json, you can create one that contains only a name.
+    at readProjectConfigurationsFromRootMap (d:\my projects\training-center\node_modules\nx\src\project-graph\utils\project-configuration-utils.js:253:15)
+    at d:\my projects\training-center\node_modules\nx\src\project-graph\utils\project-configuration-utils.js:212:26
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async createProjectConfigurations (d:\my projects\training-center\node_modules\nx\src\project-graph\utils\retrieve-workspace-files.js:89:62)
+    at async retrieveProjectConfigurationsWithoutPluginInference (d:\my projects\training-center\node_modules\nx\src\project-graph\utils\retrieve-workspace-files.js:79:26)
+    at async loadNxPlugins (d:\my projects\training-center\node_modules\nx\src\utils\nx-plugin.js:100:26)
+    at async retrieveProjectConfigurations (d:\my projects\training-center\node_modules\nx\src\project-graph\utils\retrieve-workspace-files.js:45:21)
+    at async processFilesAndCreateAndSerializeProjectGraph (d:\my projects\training-center\node_modules\nx\src\daemon\server\project-graph-incremental-recomputation.js:140:28)
+    at async getCachedSerializedProjectGraphPromise (d:\my projects\training-center\node_modules\nx\src\daemon\server\project-graph-incremental-recomputation.js:43:16)
+    at async handleRequestProjectGraph (d:\my projects\training-center\node_modules\nx\src\daemon\server\handle-request-project-graph.js:12:24)
+[NX Daemon Server] - 2025-04-04T10:33:13.383Z - Time taken for 'hash changed files from watcher' 626.6451999992132ms
+[NX Daemon Server] - 2025-04-04T10:33:13.386Z - Done responding to the client null

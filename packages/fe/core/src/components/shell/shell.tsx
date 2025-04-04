@@ -96,7 +96,6 @@ export function Shell({ children }: ShellProps): React.ReactNode {
                   </Box>
                 </Button>
               </Menu.Target>
-
               <Menu.Dropdown>
                 <Menu.Item leftSection={<IconUserCircle size={14} />}>
                   Profile

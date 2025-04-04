@@ -7,16 +7,13 @@ import {
   Button,
   Stack,
   Flex,
-  Anchor,
 } from '@mantine/core';
-import Link from 'next/link';
 import { JSX, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import z from 'zod';
 import { notifications } from '@mantine/notifications';
 import { setCookie } from 'cookies-next';
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { useAuth } from '../../../context/auth.context';
 
 const schema = z
@@ -76,7 +73,7 @@ export function Login({
       <Stack className="mt-6 md:mt-0" gap={4}>
         <Flex align="center" justify="center" mb={10}>
           <Text fw={600} fz={22}>
-            Welcome Back!
+            Login Here!
           </Text>
         </Flex>
         <TextInput
