@@ -1,4 +1,4 @@
-'use client';
+"use client"
 import { createContext, useState, useEffect, useContext, JSX } from 'react';
 import { useRouter } from 'next/navigation';
 import { jwtVerify } from 'jose'; // Correct import for jwtVerify
@@ -17,11 +17,7 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 const baseURL = process.env.NEXT_PUBLIC_APP_API || '';
 
-function AuthProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}): JSX.Element {
+function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element {
   const [user, setUser] = useState<any>();
   const [error, setError] = useState<any>();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -29,7 +25,6 @@ function AuthProvider({
 
   useEffect(() => {
     const isSignedIn = Boolean(hasCookie('token'));
-    console.log('isSSIGN::::', isSignedIn);
     setIsAuthenticated(isSignedIn);
   }, []);
 
@@ -40,28 +35,22 @@ function AuthProvider({
       if (storedUserInfo) {
         const userInfo = JSON.parse(storedUserInfo);
         setUser(userInfo);
-        console.log('user info', userInfo);
-
-        setCookie('token', userInfo.accessToken);
-        setCookie('refreshToken', userInfo.refreshToken);
+        setCookie('token', userInfo.accessToken); 
+        setCookie('refreshToken', userInfo.refreshToken); 
+        router.push('/dashboard'); 
       }
 
       if (token && typeof token === 'string' && token.split('.').length === 3) {
         try {
-          const payload = jwtVerify(
-            token,
-            new TextEncoder().encode(process.env.JWT_SECRET || ''),
-          ); // Using jwtVerify
+          const payload  = jwtVerify(token, new TextEncoder().encode(process.env.NEXT_PUBLIC_AUTH_SECRET || '')); 
           setUser(payload);
         } catch (err) {
-          console.error('Failed to decode token:', err);
           deleteCookie('token');
           deleteCookie('refreshToken');
           setIsAuthenticated(false);
           router.refresh();
         }
       } else {
-        console.warn('Invalid or malformed token found in cookies:', token);
         deleteCookie('token');
         deleteCookie('refreshToken');
         setIsAuthenticated(false);
@@ -81,19 +70,14 @@ function AuthProvider({
 
     if (response.ok) {
       const data = await response.json();
-      const { access_token, refresh_token } = data;
+      const { access_token, refresh_token, profile } = data;
 
       // Set the tokens in cookies
       setCookie('token', access_token);
       setCookie('refreshToken', refresh_token);
-      setCookie('userInfo', data.profile ? JSON.stringify(data.profile) : '{}');
-      // Optionally decode and set user info
-      const { payload } = await jwtVerify(
-        access_token,
-        new TextEncoder().encode(process.env.JWT_SECRET || ''),
-      );
-      setUser(payload);
-      localStorage.setItem('usersInfo', JSON.stringify(payload));
+      setCookie('userInfo', profile ? JSON.stringify(profile) : '{}');
+      setUser(profile);
+      localStorage.setItem('usersInfo', JSON.stringify(profile));
       setIsAuthenticated(true);
       return data;
     }
@@ -113,13 +97,9 @@ function AuthProvider({
     const token = getCookie('token');
     if (token && typeof token === 'string' && token.split('.').length === 3) {
       try {
-        const { payload } = await jwtVerify(
-          token,
-          new TextEncoder().encode(process.env.JWT_SECRET || ''),
-        );
+        const { payload } = await jwtVerify(token, new TextEncoder().encode(process.env.NEXT_PUBLIC_AUTH_SECRET || ''));
         return payload;
       } catch (err) {
-        console.error('Failed to decode token:', err);
         deleteCookie('token');
         deleteCookie('refreshToken');
         setIsAuthenticated(false);
@@ -139,11 +119,7 @@ function AuthProvider({
     getUserInfo,
   };
 
-  return (
-    <AuthContext.Provider value={authContextValue}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
 }
 
 const useAuth = () => {

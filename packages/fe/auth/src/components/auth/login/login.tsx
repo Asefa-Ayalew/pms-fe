@@ -8,6 +8,7 @@ import {
   Button,
   Stack,
   Flex,
+  Center,
 } from '@mantine/core';
 import { JSX, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -37,7 +38,6 @@ export function Login({ basePath }: { basePath?: string }): JSX.Element {
   } = useForm<FormSchema>({ resolver: zodResolver(schema) });
 
   const onSubmit = async (data: FormSchema) => {
-    console.log('NEXT_PUBLIC_AUTH_SECRET rsfd', process.env.NEXT_PUBLIC_AUTH_SECRET)
     try {
       setIsSigningIn(true);
       const res = await login(data);
@@ -62,7 +62,8 @@ export function Login({ basePath }: { basePath?: string }): JSX.Element {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack className="mt-36 md:mt-0" gap={4}>
+      <Center>
+      <Stack className="md:mt-0 w-1/4 items-center justify-center" gap={4}>
         <Flex align="center" justify="center" mb={10}>
           <Text fw={600} fz={22}>
             Login Here!
@@ -80,19 +81,13 @@ export function Login({ basePath }: { basePath?: string }): JSX.Element {
           placeholder="**********"
           {...register('password')}
           mt="md"
+          className="mb-3"
         />
-        <Flex justify="space-between" mb="xs" mt="lg">
-          <Checkbox
-            color="#1199ee"
-            fz={13}
-            label="Keep me logged in "
-            size="xs"
-          />
-        </Flex>
         <Button fullWidth h={40} loading={isSigningIn} type="submit">
           Login
         </Button>
       </Stack>
+      </Center>
     </form>
   );
 }
