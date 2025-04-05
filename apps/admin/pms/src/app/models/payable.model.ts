@@ -1,0 +1,35 @@
+import { Expense } from "./expense.model";
+import { Property } from "./property.model";
+import { Room } from "./room.model";
+import { Tenant } from "./tenant.model";
+export interface Payable {
+  expenses?: Expense[] | string[];
+  property?: Property;
+  tenant?: Tenant;
+  room?: Room;
+  id?: string;
+  propertyId?: string;
+  roomId?: string;
+  receiverId?: string;
+  receiverName?: string;
+  receiverType?: string;
+  receiverAccount?: string;
+  bankName?: string;
+  payableType?: string;
+  remark?: string;
+  totalAmount?: number;
+  finalAmount?: number;
+  totalTax?: number;
+  totalDiscount?: number;
+  metadata?: any;
+  transactionReference?: string;
+  status?: string;
+  createdBy?: string;
+  deletedBy?: string;
+  updatedBy?: string;
+  archivedBy?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
+  archivedAt?: Date;
+}

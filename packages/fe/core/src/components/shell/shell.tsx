@@ -20,12 +20,12 @@ import { IconLogout, IconMenu2, IconUserCircle } from '@tabler/icons-react';
 import { LinksGroup } from './navbar-link-group';
 import { useDisclosure, useNetwork } from '@mantine/hooks';
 import styles from './shell.module.css';
-import { appConfig } from 'src/config/menu';
-import { Applications } from 'src/config/application';
+import { Applications } from '../../config/application';
 import { UserInfo } from './user-info';
-import DarkModeToggle from '@/utility/dark-mode-toggler';
 import { getCurrentSession, useAuth } from '@pms/auth';
 import { useContext } from 'react';
+import { appConfig } from '../../config/menu';
+import DarkModeToggle from '../dark-mode-toggle';
 import { ShellContext } from '@/context/shell.context';
 
 interface ShellProps {
@@ -82,7 +82,7 @@ export function Shell({ children }: ShellProps): React.ReactNode {
           }}
         >
           <Group align="center" h="100%" justify="space-between" px="sm">
-            <Title fz={16}>{userInfo?.tenant?.name}</Title>
+            <Title fz={16}>{userInfo?.profile?.tenant?.name}</Title>
             <Group gap={8} align="center">
               <DarkModeToggle />
               <Menu arrowPosition="center" shadow="md" width={200} withArrow>
@@ -92,7 +92,7 @@ export function Shell({ children }: ShellProps): React.ReactNode {
                       <Avatar color="primary" radius="xl" size="sm" />
 
                       <Flex className="flex-col justify-start text-left">
-                        <Text lh={1}>{userInfo?.firstName}</Text>
+                        <Text lh={1}>{userInfo?.profile?.firstName}</Text>
                       </Flex>
                     </Box>
                   </Button>

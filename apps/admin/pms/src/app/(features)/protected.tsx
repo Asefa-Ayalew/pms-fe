@@ -1,11 +1,11 @@
 'use client';
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getUserInfo } from '@pms/auth';
+import { getCurrentSession } from '@pms/auth';
 
 export default function Protected({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const user = getUserInfo();
+  const user = getCurrentSession();
   useEffect(() => {
     if (!user) {
       router.push('/auth/login');

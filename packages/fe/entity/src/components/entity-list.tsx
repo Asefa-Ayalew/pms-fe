@@ -1,4 +1,5 @@
 "use client";
+import '../styles.css'
 import {
   Button,
   Checkbox,

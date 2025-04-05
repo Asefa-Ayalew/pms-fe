@@ -1,8 +1,8 @@
 "use client"
 import { createContext, useState, useEffect, useContext, JSX } from 'react';
 import { useRouter } from 'next/navigation';
-import { jwtVerify } from 'jose'; // Correct import for jwtVerify
-import { hasCookie, getCookie, setCookie, deleteCookie } from 'cookies-next';
+import { jwtVerify } from 'jose';
+import {  getCookie, setCookie, deleteCookie } from 'cookies-next';
 
 interface AuthContextValue {
   user: Record<string, any> | undefined;
@@ -24,66 +24,78 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
   const router = useRouter();
 
   useEffect(() => {
-    const isSignedIn = Boolean(hasCookie('token'));
+    const isSignedIn = Boolean(getCookie('token'));
     setIsAuthenticated(isSignedIn);
   }, []);
 
   useEffect(() => {
     if (isAuthenticated) {
-      const token = getCookie('token');
-      const storedUserInfo = localStorage.getItem('usersInfo');
-      if (storedUserInfo) {
-        const userInfo = JSON.parse(storedUserInfo);
-        setUser(userInfo);
-        setCookie('token', userInfo.accessToken); 
-        setCookie('refreshToken', userInfo.refreshToken); 
-        router.push('/dashboard'); 
-      }
-
-      if (token && typeof token === 'string' && token.split('.').length === 3) {
-        try {
-          const payload  = jwtVerify(token, new TextEncoder().encode(process.env.NEXT_PUBLIC_AUTH_SECRET || '')); 
-          setUser(payload);
-        } catch (err) {
-          deleteCookie('token');
-          deleteCookie('refreshToken');
-          setIsAuthenticated(false);
-          router.refresh();
+      (async () => {
+        const token = getCookie('token');
+        const storedUserInfo = localStorage.getItem('usersInfo');
+        if (storedUserInfo) {
+          const userInfo = JSON.parse(storedUserInfo);
+          setUser(userInfo);
+          router.push('/dashboard');  // Redirect to the dashboard after user info is set
         }
-      } else {
-        deleteCookie('token');
-        deleteCookie('refreshToken');
-        setIsAuthenticated(false);
-        router.refresh();
-      }
+
+        if (typeof token === 'string' && token.split('.').length === 3) {
+          try {
+            const { payload } = await jwtVerify(token, new TextEncoder().encode(process.env.NEXT_PUBLIC_AUTH_SECRET || ''));
+            setUser(payload);
+          } catch (err) {
+            handleSessionExpiration();
+          }
+        } else {
+          handleSessionExpiration();
+        }
+      })();
     }
   }, [isAuthenticated]);
 
+  const handleSessionExpiration = () => {
+    deleteCookie('token');
+    deleteCookie('refreshToken');
+    setIsAuthenticated(false);
+    router.refresh();  // Refresh page after invalid session
+  };
+
   const login = async (formFields: { email: string; password: string }) => {
-    const response = await fetch(`${baseURL}/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formFields),
-    });
+    try {
+      const response = await fetch(`${baseURL}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formFields),
+      });
 
-    if (response.ok) {
-      const data = await response.json();
-      const { access_token, refresh_token, profile } = data;
+      if (response.ok) {
+        const data = await response.json();
+        console.log('data', data);
+        const { access_token, refresh_token, profile } = data;
 
-      // Set the tokens in cookies
-      setCookie('token', access_token);
-      setCookie('refreshToken', refresh_token);
-      setCookie('userInfo', profile ? JSON.stringify(profile) : '{}');
-      setUser(profile);
-      localStorage.setItem('usersInfo', JSON.stringify(profile));
-      localStorage.setItem('userSession', JSON.stringify({access_token, refresh_token}));
-      setIsAuthenticated(true);
-      return data;
+        // Set the tokens in cookies and user info in localStorage
+        setCookie('token', access_token);
+        setCookie('refreshToken', refresh_token);
+        setCookie('userInfo', profile ? JSON.stringify(profile) : '{}');
+        setUser(profile);
+        localStorage.setItem('usersInfo', JSON.stringify(data));
+        const session = JSON.stringify({ access_token, refresh_token });
+        const profilee = JSON.stringify(profile);
+        console.log('profile::::::',profilee);
+        console.log('sesssion::::::',JSON.parse(session));
+        localStorage.setItem('userSession', JSON.stringify(session));
+        setIsAuthenticated(true);
+        router.push('/dashboard');
+        return data;
+      } else {
+        throw new Error('Login failed');
+      }
+    } catch (error) {
+      setError(error);
+      throw error;
     }
-
-    throw new Error('Login failed');
   };
 
   const logOut = () => {
@@ -91,20 +103,17 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
     deleteCookie('refreshToken');
     setIsAuthenticated(false);
     setUser(undefined);
-    router.refresh();
+    router.push('/login');  // Redirect to login page after logout
   };
 
   const getUserInfo = async () => {
-    const token = getCookie('token');
-    if (token && typeof token === 'string' && token.split('.').length === 3) {
+    const token = await getCookie('token');
+    if (typeof token === 'string' && token.split('.').length === 3) {
       try {
         const { payload } = await jwtVerify(token, new TextEncoder().encode(process.env.NEXT_PUBLIC_AUTH_SECRET || ''));
         return payload;
       } catch (err) {
-        deleteCookie('token');
-        deleteCookie('refreshToken');
-        setIsAuthenticated(false);
-        router.refresh();
+        handleSessionExpiration();
         return undefined;
       }
     }

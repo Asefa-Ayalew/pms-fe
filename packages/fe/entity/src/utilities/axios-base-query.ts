@@ -41,9 +41,13 @@ export const axiosBaseQuery =
     unknown
   > =>
   async ({ url, method, data, params, headers, responseType }) => {
+    const sessoin = getCurrentSession();
+    console.log('sesseion', sessoin);
     try {
-      const session = await getCurrentSession();
+      const session = getCurrentSession();
+      console.log("session", session);
       const accessToken = session?.accessToken;
+      console.log("accessToken", accessToken);
       const config: AxiosRequestConfig = {
         url: baseUrl + url,
         method: method,
@@ -57,6 +61,7 @@ export const axiosBaseQuery =
       };
 
       const result = await axios(config);
+      console.log("result", result);
       return { data: result.data };
     } catch (axiosError) {
       const err = axiosError as AxiosError;

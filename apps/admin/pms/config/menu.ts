@@ -8,7 +8,7 @@ export const Menu: MenuItem[] = [
     label: "Properties",
     icon: IconBuildingEstate,
     links: [
-      { label: "Tenants", link: "/tenants" },
+      { label: "Tenants", link: "/tenant" },
       { label: "Properties", link: "/property" },
       { label: "Leases", link: "/lease" },
     ],

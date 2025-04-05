@@ -15,7 +15,7 @@ export function UserInfo(props: {user: any}) {
         <div>
 
           <Text fz="lg" fw={500} className='text-blue-950'>
-            {props.user?.firstName + ' ' + props.user?.lastName}
+            {props.user?.profile?.firstName + ' ' + props.user?.profile?.lastName}
           </Text>
           <Text  fw={300}>
             CEO

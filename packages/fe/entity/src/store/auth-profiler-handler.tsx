@@ -1,10 +1,10 @@
 "use client";
 
+import { getCurrentSession } from "@pms/auth";
 import { useEffect } from "react";
-import { signIn, useSession } from "next-auth/react";
 
 export function AuthProfileHandler() {
-  const { data: session } = useSession();
+  const { data: session } = getCurrentSession();
 
   useEffect(() => {
     // Check if there's a profileScript in the session
