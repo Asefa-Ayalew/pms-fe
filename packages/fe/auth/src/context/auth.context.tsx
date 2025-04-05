@@ -78,6 +78,7 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
       setCookie('userInfo', profile ? JSON.stringify(profile) : '{}');
       setUser(profile);
       localStorage.setItem('usersInfo', JSON.stringify(profile));
+      localStorage.setItem('userSession', JSON.stringify({access_token, refresh_token}));
       setIsAuthenticated(true);
       return data;
     }

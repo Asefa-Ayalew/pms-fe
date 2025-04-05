@@ -16,6 +16,7 @@
     "@mantine/nprogress": "7.17.3",
     "@pms/auth": "workspace:*",
     "@pms/core": "workspace:*",
+    "@pms/entity": "workspace:*",
     "@pms/theme": "workspace:*",
     "@reduxjs/toolkit": "^2.6.1",
     "@tabler/icons-react": "3.31.0",
