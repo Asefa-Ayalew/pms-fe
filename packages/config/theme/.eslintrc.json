@@ -1,5 +1,5 @@
 {
-  "extends": "@megp/eslint-config-custom/next",
+  "extends": "@pms/eslint-config/next",
   "plugins": ["react"],
   "rules": {
     "@typescript-eslint/no-unsafe-return": "off"
