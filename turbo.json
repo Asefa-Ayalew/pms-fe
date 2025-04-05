@@ -4,18 +4,33 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"]
-    },
-    "lint": {
-      "dependsOn": ["^lint"]
-    },
-    "check-types": {
-      "dependsOn": ["^check-types"]
+      "outputs": [".next/**", "dist/**", "build/**", "!.next/cache/**"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"]
     },
     "dev": {
-      "cache": false,
-      "persistent": true
+      "cache": true,
+      "persistent": false
+    },
+    "lint": {
+      "dependsOn": [],
+      "outputs": [],
+      "inputs": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.js",
+        "**/*.jsx",
+        ".eslintrc.js",
+        ".eslintrc.cjs",
+        ".eslintrc.json"
+      ]
+    },
+    "check-types": {
+      "dependsOn": [],
+      "outputs": ["tsconfig.tsbuildinfo"],
+      "inputs": ["tsconfig.json", "**/*.ts", "**/*.tsx"]
+    },
+    "format": {
+      "cache": false
     }
   }
 }

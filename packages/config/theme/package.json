@@ -10,11 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@mantine/colors-generator": "^7.17.3",
     "@mantine/core": "^7.17.3",
     "@mantine/hooks": "^7.17.3"
   },
   "devDependencies": {
-    "@pms/tsconfig": "workspace:*",
-    "@pms/eslint-config": "workspace:*"
+    "@pms/eslint-config": "workspace:*",
+    "@pms/tsconfig": "workspace:*"
   }
 }

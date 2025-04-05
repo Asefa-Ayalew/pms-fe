@@ -26,7 +26,7 @@ import { getCurrentSession, useAuth } from '@pms/auth';
 import { useContext } from 'react';
 import { appConfig } from '../../config/menu';
 import DarkModeToggle from '../dark-mode-toggle';
-import { ShellContext } from '@/context/shell.context';
+import { ShellContext } from '../../context/shell.context';
 
 interface ShellProps {
   children: React.ReactNode;
@@ -84,7 +84,9 @@ export function Shell({ children }: ShellProps): React.ReactNode {
           <Group align="center" h="100%" justify="space-between" px="sm">
             <Title fz={16}>{userInfo?.profile?.tenant?.name}</Title>
             <Group gap={8} align="center">
-              <DarkModeToggle />
+              <Box className="mt-1">
+                <DarkModeToggle />
+              </Box>
               <Menu arrowPosition="center" shadow="md" width={200} withArrow>
                 <Menu.Target>
                   <Button variant="subtle">
