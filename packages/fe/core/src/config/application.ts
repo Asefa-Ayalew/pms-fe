@@ -1,17 +1,9 @@
 import type { Icon as TablerIcon, IconProps } from '@tabler/icons-react';
 import {
   IconAdjustments,
-  IconAdjustmentsCog,
-  IconBasketCog,
-  IconBook,
   IconBuildingBank,
-  IconBuildingStore,
-  IconCalendar,
-  IconCalendarEvent,
-  IconUsers,
-  IconUsersGroup,
 } from '@tabler/icons-react';
-import { JSX, ForwardRefExoticComponent, RefAttributes } from 'react';
+import { ForwardRefExoticComponent, RefAttributes } from 'react';
 
 interface ApplicationType {
   key: string;
@@ -20,16 +12,14 @@ interface ApplicationType {
 }
 
 export const Applications = [
-    { key: 'reg', name: 'Registration', icon: IconAdjustments },
-    { key: 'bsc', name: 'Balanced Score Card', icon: IconBuildingBank },
-    { key: 'hr', name: 'Human Resource', icon: IconUsersGroup },
-    { key: 'pm', name: 'Property Management', icon: IconUsers },
-    { key: 'rp', name: 'Research Publication', icon: IconBook },
-    { key: 'cs', name: 'Community Service', icon: IconCalendar },
-    { key: 'tt', name: 'Technology Transfer', icon: IconUsersGroup }
+    { key: 'registration', name: 'Registration', icon: IconAdjustments },
+    { key: 'pms', name: 'Training Center', icon: IconBuildingBank },
 ];
 
-export const CurrentApplication = (key = 'cs'): ApplicationType => {
+export const CurrentApplication = (key: string): ApplicationType => {
   const application = Applications.find((app) => app.key === key) ?? Applications[0];
   return application;
 };
+
+
+console.log('CurrentApplication', CurrentApplication);

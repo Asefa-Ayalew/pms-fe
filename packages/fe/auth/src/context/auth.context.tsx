@@ -103,7 +103,7 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
     deleteCookie('refreshToken');
     setIsAuthenticated(false);
     setUser(undefined);
-    router.push('/login');  // Redirect to login page after logout
+    router.push('/auth/login');  
   };
 
   const getUserInfo = async () => {

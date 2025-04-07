@@ -1,3 +1,8 @@
+'use client';
+import React from 'react';
+import { Shell } from '@pms/core';
+import { RouteTransition } from '@pms/core/components/route-transition';
+import { usePerformanceMonitor } from '@pms/core/utils/performance';
 import type { Metadata } from 'next';
 import './globals.css';
 import MantineProviderRegistry from './mantine';
@@ -11,15 +16,23 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
+  usePerformanceMonitor('RootLayout');
+
   return (
     <html lang="en">
       <body className="dark:bg-black dark:text-white">
         <MantineProviderRegistry>
           <Providers>
-            <AuthProvider>{children}</AuthProvider>
+            <AuthProvider>
+              <Shell>
+                <RouteTransition>
+                  {children}
+                </RouteTransition>
+              </Shell>
+            </AuthProvider>
           </Providers>
         </MantineProviderRegistry>
       </body>

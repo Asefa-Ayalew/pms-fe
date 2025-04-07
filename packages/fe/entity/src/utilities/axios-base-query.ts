@@ -41,10 +41,8 @@ export const axiosBaseQuery =
     unknown
   > =>
   async ({ url, method, data, params, headers, responseType }) => {
-    const sessoin = getCurrentSession();
-    console.log('sesseion', sessoin);
     try {
-      const session = getCurrentSession();
+      const session = await getCurrentSession();
       console.log("session", session);
       const accessToken = session?.accessToken;
       console.log("accessToken", accessToken);

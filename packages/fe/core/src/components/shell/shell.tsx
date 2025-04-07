@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import '../../styles.css';
 import {
   AppShell,
@@ -16,11 +16,11 @@ import {
 } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
-import { IconLogout, IconMenu2, IconUserCircle } from '@tabler/icons-react';
+import { IconLogout, IconMenu2, IconNotification, IconUserCircle } from '@tabler/icons-react';
 import { LinksGroup } from './navbar-link-group';
 import { useDisclosure, useNetwork } from '@mantine/hooks';
 import styles from './shell.module.css';
-import { Applications } from '../../config/application';
+import { Applications, CurrentApplication } from '../../config/application';
 import { UserInfo } from './user-info';
 import { getCurrentSession, useAuth } from '@pms/auth';
 import { useContext } from 'react';
@@ -32,32 +32,94 @@ interface ShellProps {
   children: React.ReactNode;
 }
 
-export function Shell({ children }: ShellProps): React.ReactNode {
+// Memoize the Shell component to prevent unnecessary re-renders
+export const Shell = React.memo(function Shell({ children }: ShellProps) {
   const shellContext = useContext(ShellContext);
   const { logOut, user } = useAuth();
-  const userInfo = getCurrentSession();
+  const [userInfo, setUserInfo] = useState<any>(null);
 
-  const links = appConfig.map((item) => (
-    <LinksGroup {...item} key={item.label} />
-  ));
+  // Memoize the links to prevent re-renders
+  const links = useMemo(() => 
+    appConfig.map((item) => (
+      <LinksGroup {...item} key={item.label} />
+    )), 
+    [appConfig]
+  );
+
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
-  const [currentApplication, setCurrentApplication] =
-    useState('Training Center');
 
-  const applications = Applications.filter(
-    ({ name }) => name !== currentApplication,
-  ).map((item) => (
-    <Menu.Item
-      component="a"
-      href={`/${item?.key}`}
-      key={item?.key}
-      leftSection={<item.icon size={14} />}
-    >
-      {item.name}
-    </Menu.Item>
-  ));
+  // Memoize current application
+  const currentApplication = useMemo(() => 
+    CurrentApplication(shellContext.currentApplication).name,
+    [shellContext.currentApplication]
+  );
+
+  // Memoize applications menu items
+  const applications = useMemo(() => 
+    Applications.filter(({ name }) => name !== currentApplication)
+      .map((item) => (
+        <Menu.Item
+          component="a"
+          href={`/${item?.key}`}
+          key={item?.key}
+          leftSection={<item.icon size={14} />}
+        >
+          {item.name}
+        </Menu.Item>
+      )),
+    [currentApplication]
+  );
+
   const networkStatus = useNetwork();
+
+  // Memoize the session fetch
+  const fetchSession = useCallback(async () => {
+    const session = await getCurrentSession();
+    setUserInfo(session);
+  }, []);
+
+  useEffect(() => {
+    fetchSession();
+  }, [fetchSession]);
+
+  // Memoize the header content
+  const headerContent = useMemo(() => (
+    <Group align="center" h="100%" justify="space-between" px="sm">
+      <Title fz={16}>{userInfo?.profile?.tenant?.name}</Title>
+      <Group gap={8} align="center">
+        <IconNotification size={16}/>
+        <Box className="mt-1">
+          <DarkModeToggle />
+        </Box>
+        <Menu arrowPosition="center" shadow="md" width={200} withArrow>
+          <Menu.Target>
+            <Button variant="subtle">
+              <Box className="flex gap-2 items-center">
+                <Avatar color="primary" radius="xl" size="sm" />
+                <Flex className="flex-col justify-start text-left">
+                  <Text lh={1}>{userInfo?.profile?.firstName}</Text>
+                </Flex>
+              </Box>
+            </Button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item leftSection={<IconUserCircle size={14} />}>
+              Profile
+            </Menu.Item>
+            <Menu.Divider />
+            <Menu.Item
+              leftSection={<IconLogout size={14} />}
+              onClick={logOut}
+              color="red"
+            >
+              Logout
+            </Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      </Group>
+    </Group>
+  ), [userInfo, logOut]);
 
   return (
     <ModalsProvider>
@@ -81,43 +143,7 @@ export function Shell({ children }: ShellProps): React.ReactNode {
             alignItems: 'center',
           }}
         >
-          <Group align="center" h="100%" justify="space-between" px="sm">
-            <Title fz={16}>{userInfo?.profile?.tenant?.name}</Title>
-            <Group gap={8} align="center">
-              <Box className="mt-1">
-                <DarkModeToggle />
-              </Box>
-              <Menu arrowPosition="center" shadow="md" width={200} withArrow>
-                <Menu.Target>
-                  <Button variant="subtle">
-                    <Box className="flex gap-2 items-center">
-                      <Avatar color="primary" radius="xl" size="sm" />
-
-                      <Flex className="flex-col justify-start text-left">
-                        <Text lh={1}>{userInfo?.profile?.firstName}</Text>
-                      </Flex>
-                    </Box>
-                  </Button>
-                </Menu.Target>
-                <Menu.Dropdown>
-                  <Menu.Item leftSection={<IconUserCircle size={14} />}>
-                    Profile
-                  </Menu.Item>
-
-                  <Menu.Divider />
-
-                  <Menu.Item
-                    leftSection={<IconLogout size={14} />}
-                    onClick={() => {
-                      logOut();
-                    }}
-                  >
-                    Logout
-                  </Menu.Item>
-                </Menu.Dropdown>
-              </Menu>
-            </Group>
-          </Group>
+          {headerContent}
         </AppShell.Header>
         <AppShell.Navbar className={styles.side}>
           <AppShell.Section>
@@ -139,7 +165,6 @@ export function Shell({ children }: ShellProps): React.ReactNode {
                       opened={mobileOpened}
                       size="sm"
                     />
-
                     <IconMenu2
                       size={16}
                       onClick={toggleDesktop}
@@ -158,7 +183,19 @@ export function Shell({ children }: ShellProps): React.ReactNode {
                         height: '60px',
                       }}
                     >
-                      {currentApplication}
+                      <Menu shadow="md" width={250}>
+                        <Menu.Target>
+                          <div className="flex items-center gap-1 cursor-pointer">
+                            <Text fw={500} fz="md">
+                              {currentApplication}
+                            </Text>
+                          </div>
+                        </Menu.Target>
+                        <Menu.Dropdown>
+                          <Menu.Label>Applications</Menu.Label>
+                          {applications}
+                        </Menu.Dropdown>
+                      </Menu>
                     </h2>
                   </Group>
                 </Box>
@@ -177,14 +214,14 @@ export function Shell({ children }: ShellProps): React.ReactNode {
             {links}
           </AppShell.Section>
           <AppShell.Section>
-            <div className=" text-xs  border-t p-2">
+            <div className="text-xs border-t p-2">
               <div className="flex justify-between items-center">
                 <Text color={networkStatus.online ? 'teal' : 'red'} size="sm">
                   {networkStatus.online ? 'Online' : 'Offline'}
                 </Text>
                 <div className="text-center">
                   {process.env.NEXT_PUBLIC_VERSION}
-                </div>{' '}
+                </div>
               </div>
               <div className="flex gap-2 justify-between items-center">
                 <Flex gap={'xl'}>
@@ -199,6 +236,6 @@ export function Shell({ children }: ShellProps): React.ReactNode {
       </AppShell>
     </ModalsProvider>
   );
-}
+});
 
 export default Shell;

@@ -61,8 +61,8 @@ export default function NewTenantComponent(props: Props) {
   const { editMode, onCreating } = props;
   const params = useParams();
   const navigate = useRouter();
-  const currentSession = getCurrentSession();
-
+  const [currentSession, setCurrentSession] = useState<any>(null);
+  
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [selectedTenant, setSelectedTenant] = useState<Tenant>();
   const [countryCode, setCountryCode] = useState<string>("+251");
@@ -161,6 +161,13 @@ export default function NewTenantComponent(props: Props) {
     newSecondaryEmails[index] = value;
     setSecondaryEmails(newSecondaryEmails);
   };
+
+  useEffect(() => {
+    getCurrentSession().then((session: any) => {
+      setCurrentSession(session);
+    });
+  }, []);
+  
   useEffect(() => {
     if (editMode === "detail") {
       getTenant({ id: `${params?.id}` }).then((response: any) => {

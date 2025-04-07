@@ -11,7 +11,7 @@ interface ShellProviderProps {
 export function ShellProvider({ children }: ShellProviderProps) {
   const value = {
     menuItems: Menu,
-    currentApplication: 'Training Center',
+    currentApplication: 'pms',
   };
   return (
     <>

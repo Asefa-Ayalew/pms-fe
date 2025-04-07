@@ -1,13 +1,17 @@
-"use client"
+"use client";
+
 export const getCurrentSession = (): any | null => {
-    if (!localStorage.getItem('usersInfo')) {
-      return null; 
-    }
-    try {
-      const token = localStorage.getItem('usersInfo') ?? ''; 
-      const session: any | null = JSON.parse(token);
-      return session;
-    } catch (error) {
-      return null;
-    }
+  if (typeof window === "undefined") {
+    return null; // Prevents error on server
   }
+
+  const stored = localStorage.getItem("usersInfo");
+  if (!stored) return null;
+
+  try {
+    return JSON.parse(stored);
+  } catch (error) {
+    console.error("Failed to parse session:", error);
+    return null;
+  }
+};

@@ -51,7 +51,7 @@ export default function PropertyFormComponent(props: Props) {
   const [updateProperty, { isLoading: updating }] =
     useUpdatePropertyMutation();
   const [deleteProperty, { isLoading: deleting }] = useDeletePropertyMutation();
-  const  user  = getCurrentSession();
+  const [user, setUser] = useState<any>(null);
 
   const {
     register,
@@ -136,6 +136,15 @@ export default function PropertyFormComponent(props: Props) {
     console.log("Error", error);
   };
 
+  useEffect(() => {
+    const fetchSession = async () => {
+      const session = await getCurrentSession();
+      setUser(session);
+    };
+  
+    fetchSession();
+  }, []);
+  
   useEffect(() => {
     if (editMode === "detail") {
       getProperty({

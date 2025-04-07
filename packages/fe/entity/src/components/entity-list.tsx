@@ -181,10 +181,12 @@ export default function EntityList<T>(props: Props<T>) {
     actions: [],
   });
 
-  const collection = useSelector(
+  const collections = useSelector(
     (state: RootState) => state?.entityListReducer?.collections
-  ).filter((item: any) => item?.key === tableKey);
-
+  );
+  
+  const collection = collections?.filter((item: any) => item?.key === tableKey);
+    
   const viewAll = useSelector(
     (state: RootState) => state.entityListReducer.viewAll
   );

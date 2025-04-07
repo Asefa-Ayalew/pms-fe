@@ -452,10 +452,10 @@ importers:
         specifier: ^8.5.3
         version: 8.5.3
       react:
-        specifier: ^19.0.0
+        specifier: ^19.1.0
         version: 19.1.0
       react-dom:
-        specifier: ^19.0.0
+        specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
       react-hook-form:
         specifier: ^7.55.0
@@ -472,6 +472,34 @@ importers:
       zod:
         specifier: ^3.24.2
         version: 3.24.2
+    devDependencies:
+      '@eslint/eslintrc':
+        specifier: ^3
+        version: 3.3.1
+      '@pms/eslint-config':
+        specifier: workspace:*
+        version: link:../../config/eslint-config
+      '@pms/tsconfig':
+        specifier: workspace:*
+        version: link:../../config/tsconfig
+      '@types/node':
+        specifier: ^20
+        version: 20.17.30
+      '@types/react':
+        specifier: ^19
+        version: 19.1.0
+      '@types/react-dom':
+        specifier: ^19
+        version: 19.1.1(@types/react@19.1.0)
+      eslint:
+        specifier: ^9
+        version: 9.24.0(jiti@2.4.2)
+      eslint-config-next:
+        specifier: 15.2.4
+        version: 15.2.4(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.2)
+      typescript:
+        specifier: ^5
+        version: 5.8.2
 
   packages/fe/entity:
     dependencies:
@@ -548,12 +576,33 @@ importers:
         specifier: ^0.18.5
         version: 0.18.5
     devDependencies:
+      '@eslint/eslintrc':
+        specifier: ^3
+        version: 3.3.1
       '@pms/eslint-config':
         specifier: workspace:*
         version: link:../../config/eslint-config
       '@pms/tsconfig':
         specifier: workspace:*
         version: link:../../config/tsconfig
+      '@types/node':
+        specifier: ^20
+        version: 20.17.30
+      '@types/react':
+        specifier: ^19
+        version: 19.1.0
+      '@types/react-dom':
+        specifier: ^19
+        version: 19.1.1(@types/react@19.1.0)
+      eslint:
+        specifier: ^9
+        version: 9.24.0(jiti@2.4.2)
+      eslint-config-next:
+        specifier: 15.2.4
+        version: 15.2.4(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.2)
+      typescript:
+        specifier: ^5
+        version: 5.8.2
 
 packages:
 
