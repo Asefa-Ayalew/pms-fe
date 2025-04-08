@@ -1,0 +1,6 @@
+# Add files here to ignore them from prettier formatting
+.next
+.turbo
+next-i18next.config.js
+next-seo.config.ts
+next.config.js

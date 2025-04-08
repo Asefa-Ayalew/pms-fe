@@ -12,19 +12,10 @@
     "prettier": "^3.5.3",
     "turbo": "^2.4.4",
     "typescript": "5.8.2",
-    "@pms/tsconfig": "workspace:*",
-    "@pms/eslint-config": "workspace:*"
+    "@pms/tsconfig": "workspace:*"
   },
   "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=18"
-  },
-  "dependencies": {
-    "pms-admin": "workspace:*"
-  },
-  "pnpm": {
-    "ignoredBuiltDependencies": [
-      "sharp"
-    ]
   }
 }

@@ -1,49 +1,33 @@
-import js from "@eslint/js";
-import eslintConfigPrettier from "eslint-config-prettier";
-import tseslint from "typescript-eslint";
-import pluginReactHooks from "eslint-plugin-react-hooks";
-import pluginReact from "eslint-plugin-react";
-import globals from "globals";
-import pluginNext from "@next/eslint-plugin-next";
-import { config as baseConfig } from "./base.js";
-
-/**
- * A custom ESLint configuration for libraries that use Next.js.
- *
- * @type {import("eslint").Linter.Config[]}
- * */
-export const nextJsConfig = [
-  ...baseConfig,
-  js.configs.recommended,
-  eslintConfigPrettier,
-  ...tseslint.configs.recommended,
-  {
-    ...pluginReact.configs.flat.recommended,
-    languageOptions: {
-      ...pluginReact.configs.flat.recommended.languageOptions,
-      globals: {
-        ...globals.serviceworker,
+module.exports = {
+  extends: [
+    'next',
+    'next/core-web-vitals',
+    'plugin:sonar/base',
+    'eslint:recommended',
+    'plugin:sonar/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'eslint-config-turbo',
+    'plugin:react/recommended',
+    'plugin:jsx-a11y/recommended',
+    'prettier',
+  ],
+  globals: {
+    React: true,
+    JSX: true,
+  },
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint', 'react', 'jsx-a11y'],
+  ignorePatterns: ['build/', 'node_modules/', 'dist/'],
+  rules: {
+    'no-console': 2,
+    'no-alert': 2,
+    'no-restricted-syntax': [
+      'error',
+      {
+        selector:
+          "CallExpression[callee.object.name='console'][callee.property.name!=/^(log|warn|error|info|trace)$/]",
+        message: 'Unexpected property on console object was called',
       },
-    },
+    ],
   },
-  {
-    plugins: {
-      "@next/next": pluginNext,
-    },
-    rules: {
-      ...pluginNext.configs.recommended.rules,
-      ...pluginNext.configs["core-web-vitals"].rules,
-    },
-  },
-  {
-    plugins: {
-      "react-hooks": pluginReactHooks,
-    },
-    settings: { react: { version: "detect" } },
-    rules: {
-      ...pluginReactHooks.configs.recommended.rules,
-      // React scope no longer necessary with new JSX transform.
-      "react/react-in-jsx-scope": "off",
-    },
-  },
-];
+};

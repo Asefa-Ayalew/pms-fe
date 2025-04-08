@@ -1,21 +1,19 @@
 {
   "name": "@pms/theme",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {},
+  "publishConfig": {
+    "access": "public"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@mantine/colors-generator": "^7.17.3",
     "@mantine/core": "^7.17.3",
     "@mantine/hooks": "^7.17.3"
-  },
+    },
   "devDependencies": {
-    "@pms/eslint-config": "workspace:*",
-    "@pms/tsconfig": "workspace:*"
+    "@pms/tsconfig": "workspace:*",
+    "@pms/eslint-config": "workspace:*"
   }
 }

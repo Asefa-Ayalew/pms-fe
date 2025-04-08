@@ -1,39 +1,45 @@
-import js from "@eslint/js";
-import eslintConfigPrettier from "eslint-config-prettier";
-import tseslint from "typescript-eslint";
-import pluginReactHooks from "eslint-plugin-react-hooks";
-import pluginReact from "eslint-plugin-react";
-import globals from "globals";
-import { config as baseConfig } from "./base.js";
+const { resolve } = require('node:path');
 
-/**
- * A custom ESLint configuration for libraries that use React.
+const project = resolve(process.cwd(), 'tsconfig.json');
+
+/*
+ * This is a custom ESLint configuration for use with
+ * internal (bundled by their consumer) libraries
+ * that utilize React.
  *
- * @type {import("eslint").Linter.Config[]} */
-export const config = [
-  ...baseConfig,
-  js.configs.recommended,
-  eslintConfigPrettier,
-  ...tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
-  {
-    languageOptions: {
-      ...pluginReact.configs.flat.recommended.languageOptions,
-      globals: {
-        ...globals.serviceworker,
-        ...globals.browser,
+ * This config extends the Vercel Engineering Style Guide.
+ * For more information, see https://github.com/vercel/style-guide
+ *
+ */
+
+module.exports = {
+  extends: [
+    '@vercel/style-guide/eslint/browser',
+    '@vercel/style-guide/eslint/typescript',
+    '@vercel/style-guide/eslint/react',
+  ].map(require.resolve),
+  parserOptions: {
+    project,
+  },
+  globals: {
+    JSX: true,
+  },
+  settings: {
+    'import/resolver': {
+      typescript: {
+        project,
       },
     },
   },
-  {
-    plugins: {
-      "react-hooks": pluginReactHooks,
-    },
-    settings: { react: { version: "detect" } },
-    rules: {
-      ...pluginReactHooks.configs.recommended.rules,
-      // React scope no longer necessary with new JSX transform.
-      "react/react-in-jsx-scope": "off",
-    },
+  ignorePatterns: ['node_modules/', 'dist/', '.eslintrc.js'],
+  // add rules configurations here
+  rules: {
+    'import/no-default-export': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-invalid-void-type': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-return': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
+    '@typescript-eslint/no-unsafe-member-access': 'off',
   },
-];
+};
