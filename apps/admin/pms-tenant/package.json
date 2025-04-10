@@ -1,5 +1,5 @@
 {
-  "name": "registration",
+  "name": "pms-tenant",
   "version": "0.1.0",
   "private": true,
   "scripts": {

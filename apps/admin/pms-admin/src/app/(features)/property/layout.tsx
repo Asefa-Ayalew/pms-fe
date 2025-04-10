@@ -31,7 +31,7 @@ export default function PropertyListPage({
   });
 
   // RTK hooks
-  const [getProperties, properties] = useLazyGetPropertiesQuery();
+  const [getProperties, {data: properties, isLoading: propertyLoading}] = useLazyGetPropertiesQuery();
 
   useEffect(() => {
     getProperties(collection);
@@ -39,9 +39,9 @@ export default function PropertyListPage({
 
   useEffect(() => {
     setSelectedType(
-      properties?.data?.data?.find((item) => item?.id === `${params?.id}`),
+      properties?.data?.find((item) => item?.id === `${params?.id}`),
     );
-  }, [params?.id, properties?.data?.data]);
+  }, [params?.id, properties?.data]);
 
   useEffect(() => {
     setViewMode(params?.id !== undefined ? 'detail' : 'list');
@@ -73,7 +73,7 @@ export default function PropertyListPage({
     ],
   };
 
-  const data = properties?.data?.data;
+  const data = properties?.data;
 
   return (
     <div className="flex w-full">
@@ -88,9 +88,9 @@ export default function PropertyListPage({
         title="Property Names"
         detailTitle={`${selectedProperty?.description ?? ''}`}
         newButtonText="New Property"
-        total={properties?.data?.count}
+        total={properties?.count}
         collectionQuery={collection}
-        itemsLoading={properties?.isLoading || properties?.isFetching}
+        itemsLoading={propertyLoading}
         config={config}
         items={data}
         initialPage={1}
