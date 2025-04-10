@@ -21,7 +21,7 @@ importers:
         specifier: 5.8.2
         version: 5.8.2
 
-  apps/admin/pms:
+  apps/admin/pms-admin:
     dependencies:
       '@hookform/resolvers':
         specifier: ^4.1.3
@@ -121,8 +121,53 @@ importers:
         specifier: ^5
         version: 5.8.3
 
-  apps/admin/registration:
+  apps/admin/pms-tenant:
     dependencies:
+      '@hookform/resolvers':
+        specifier: ^4.1.3
+        version: 4.1.3(react-hook-form@7.55.0(react@19.1.0))
+      '@mantine/core':
+        specifier: ^7.17.3
+        version: 7.17.3(@mantine/hooks@7.17.3(react@19.1.0))(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@mantine/dates':
+        specifier: 7.17.3
+        version: 7.17.3(@mantine/core@7.17.3(@mantine/hooks@7.17.3(react@19.1.0))(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@mantine/hooks@7.17.3(react@19.1.0))(dayjs@1.11.13)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@mantine/hooks':
+        specifier: ^7.17.3
+        version: 7.17.3(react@19.1.0)
+      '@mantine/notifications':
+        specifier: ^7.17.3
+        version: 7.17.3(@mantine/core@7.17.3(@mantine/hooks@7.17.3(react@19.1.0))(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@mantine/hooks@7.17.3(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@mantine/nprogress':
+        specifier: 7.17.3
+        version: 7.17.3(@mantine/core@7.17.3(@mantine/hooks@7.17.3(react@19.1.0))(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@mantine/hooks@7.17.3(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@pms/auth':
+        specifier: workspace:*
+        version: link:../../../packages/fe/auth
+      '@pms/core':
+        specifier: workspace:*
+        version: link:../../../packages/fe/core
+      '@pms/entity':
+        specifier: workspace:*
+        version: link:../../../packages/fe/entity
+      '@pms/theme':
+        specifier: workspace:*
+        version: link:../../../packages/config/theme
+      '@reduxjs/toolkit':
+        specifier: ^2.6.1
+        version: 2.6.1(react-redux@9.2.0(@types/react@19.1.0)(react@19.1.0)(redux@5.0.1))(react@19.1.0)
+      '@tabler/icons-react':
+        specifier: 3.31.0
+        version: 3.31.0(react@19.1.0)
+      dayjs:
+        specifier: 1.11.13
+        version: 1.11.13
+      jose:
+        specifier: ^6.0.10
+        version: 6.0.10
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       next:
         specifier: 15.2.4
         version: 15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -132,10 +177,25 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.1.0(react@19.1.0)
+      react-hook-form:
+        specifier: ^7.55.0
+        version: 7.55.0(react@19.1.0)
+      react-redux:
+        specifier: ^9.2.0
+        version: 9.2.0(@types/react@19.1.0)(react@19.1.0)(redux@5.0.1)
+      zod:
+        specifier: ^3.24.2
+        version: 3.24.2
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3
         version: 3.3.1
+      '@pms/eslint-config':
+        specifier: workspace:*
+        version: link:../../../packages/config/eslint-config
+      '@pms/tsconfig':
+        specifier: workspace:*
+        version: link:../../../packages/config/tsconfig
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.1.3
