@@ -5,6 +5,9 @@
     "dev:pms-admin": "turbo run dev --filter=pms-admin",
     "build:pms-admin": "turbo run build --filter=pms-admin",
     "lint:pms-admin": "turbo run lint --filter=pms-admin",
+    "dev:pms-tenant": "turbo run dev --filter=pms-tenant",
+    "build:pms-tenant": "turbo run build --filter=pms-tenant",
+    "lint:pms-tenant": "turbo run lint --filter=pms-tenant",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"
   },

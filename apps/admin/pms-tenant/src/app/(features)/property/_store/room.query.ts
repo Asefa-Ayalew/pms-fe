@@ -1,0 +1,287 @@
+
+import { notifications } from "@mantine/notifications";
+import { roomEndpoint } from "./room.endpoint";
+import { appApi, Collection, CollectionQuery, collectionQueryBuilder } from "@pms/entity";
+import { Room } from "@/app/models/room.model";
+
+let roomCollection: CollectionQuery;
+
+export const roomQuery = appApi.injectEndpoints({
+  endpoints: (builder) => ({
+    getRooms: builder.query<Collection<Room>, CollectionQuery>({
+      query: (data: CollectionQuery) => ({
+        url: roomEndpoint.list,
+        method: "GET",
+        params: collectionQueryBuilder(data),
+      }),
+      providesTags: ["Rooms"],
+      async onQueryStarted(param, { queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          if (data) {
+            roomCollection = param;
+          }
+        } catch (error: any) {
+          notifications.show({
+            title: "Error",
+            message: error?.error?.data?.message || "Error, try again",
+            color: "red",
+          });
+        }
+      },
+    }),
+    getRoom: builder.query<Room, CollectionQuery>({
+      query: (data: CollectionQuery) => ({
+        url: `${roomEndpoint.detail}/${data?.id}`,
+        method: "GET",
+        params: collectionQueryBuilder(data),
+      }),
+    }),
+
+    createRoom: builder.mutation<Room, Room>({
+      query: (newData: any) => ({
+        url: roomEndpoint.create,
+        method: "POST",
+        data: newData,
+      }),
+
+      async onQueryStarted(param, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          if (data) {
+            dispatch(
+              roomQuery.util.updateQueryData(
+                "getRooms",
+                roomCollection,
+                (draft) => {
+                  if (data) {
+                    draft.data.push(data);
+                    draft.count += 1;
+                  }
+                }
+              )
+            );
+          }
+        } catch (error: any) {
+          notifications.show({
+            title: "Error",
+            message: error?.error?.data?.message || "Error, try again",
+            color: "red",
+          });
+        }
+      },
+    }),
+
+    updateRoom: builder.mutation<Room, Room>({
+      query: (newData: Room) => ({
+        url: `${roomEndpoint.update}`,
+        method: "POST",
+        data: newData,
+      }),
+      invalidatesTags: ["Rooms"],
+      async onQueryStarted(param, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          if (data) {
+            dispatch(
+              roomQuery.util.updateQueryData(
+                "getRooms",
+                roomCollection,
+                (draft) => {
+                  if (data) {
+                    draft.data = draft?.data?.map((item) =>
+                      item.id === data.id ? data : item
+                    );
+                  }
+                }
+              )
+            );
+
+            notifications.show({
+              title: "Success",
+              message: "Successfully updated",
+              color: "green",
+            });
+          }
+        } catch (error: any) {
+          notifications.show({
+            title: "Error",
+            message: error?.error?.data?.message || "Error, try again",
+            color: "red",
+          });
+        }
+      },
+    }),
+    getArchivedRooms: builder.query<Collection<Room>, CollectionQuery>({
+      query: (data: CollectionQuery) => ({
+        url: roomEndpoint.listArchivedRooms,
+        method: "GET",
+        params: collectionQueryBuilder(data),
+      }),
+      async onQueryStarted(param, { queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          if (data) {
+            roomCollection = param;
+          }
+        } catch (error: any) {
+          notifications.show({
+            title: "Error",
+            message: error?.error?.data?.message || "Error, try again",
+            color: "red",
+          });
+        }
+      },
+    }),
+    archiveRoom: builder.mutation<Room, { id: string; remark: string }>({
+      query: (data: any) => ({
+        url: `${roomEndpoint.archive}`,
+        data,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Rooms"],
+      async onQueryStarted(param, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          if (data) {
+            dispatch(
+              roomQuery.util.updateQueryData(
+                "getRooms",
+                roomCollection,
+                (draft) => {
+                  if (data) {
+                    draft.data = draft?.data?.map((room) => {
+                      if (room.id === data.id) return data;
+                      else {
+                        return room;
+                      }
+                    });
+                  }
+                }
+              )
+            );
+            dispatch(
+              roomQuery.util.updateQueryData("getRoom", param, (draft) => {
+                if (data) {
+                  draft.archivedAt = data?.archivedAt;
+                }
+              })
+            );
+            notifications.show({
+              title: "Success",
+              message: "Successfully archived",
+              color: "green",
+            });
+          }
+        } catch (error: any) {
+          notifications.show({
+            title: "Error",
+            message: error?.error?.data?.message
+              ? error?.error?.data?.message
+              : "Error try again",
+            color: "red",
+          });
+        }
+      },
+    }),
+    restoreRoom: builder.mutation<Room, string>({
+      query: (id: string) => ({
+        url: `${roomEndpoint.restore}/${id}`,
+        method: "POST",
+      }),
+
+      async onQueryStarted(param, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          if (data) {
+            dispatch(
+              roomQuery.util.updateQueryData(
+                "getRooms",
+                roomCollection,
+                (draft) => {
+                  if (data) {
+                    draft.data = draft?.data?.map((room) => {
+                      if (room.id === data.id)
+                        return { ...data, archivedDate: null };
+                      else {
+                        return room;
+                      }
+                    });
+                  }
+                }
+              )
+            );
+            notifications.show({
+              title: "Success",
+              message: "Successfully restored",
+              color: "green",
+            });
+          }
+        } catch (error: any) {
+          notifications.show({
+            title: "Error",
+            message: error?.error?.data?.message
+              ? error?.error?.data?.message
+              : "Error try again",
+            color: "red",
+          });
+        }
+      },
+    }),
+    deleteRoom: builder.mutation<boolean, string>({
+      query: (id: string) => ({
+        url: `${roomEndpoint.delete}/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Rooms"],
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          if (data) {
+            dispatch(
+              roomQuery.util.updateQueryData(
+                "getRooms",
+                roomCollection,
+                (draft) => {
+                  if (data) {
+                    draft.data = draft?.data?.filter(
+                      (item) => item.id?.toString() !== id
+                    );
+                    draft.count -= 1;
+                  }
+                }
+              )
+            );
+
+            notifications.show({
+              title: "Success",
+              message: "Successfully deleted",
+              color: "green",
+            });
+          }
+        } catch (error: any) {
+          notifications.show({
+            title: "Error",
+            message: error?.error?.data?.message || "Error, try again",
+            color: "red",
+          });
+        }
+      },
+    }),
+  }),
+
+  overrideExisting: true,
+});
+
+export const {
+  useLazyGetRoomQuery,
+  useArchiveRoomMutation,
+  useGetRoomQuery,
+  useGetArchivedRoomsQuery,
+  useLazyGetArchivedRoomsQuery,
+  useRestoreRoomMutation,
+  useLazyGetRoomsQuery,
+  useCreateRoomMutation,
+  useUpdateRoomMutation,
+  useDeleteRoomMutation,
+} = roomQuery;

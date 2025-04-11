@@ -12,14 +12,11 @@ interface ApplicationType {
 }
 
 export const Applications = [
-    { key: 'registration', name: 'Registration', icon: IconAdjustments },
-    { key: 'pms', name: 'Training Center', icon: IconBuildingBank },
+    { key: 'pms-admin', name: 'PMS Admin', icon: IconAdjustments },
+    { key: 'pms-tenant', name: 'PMS Tenant', icon: IconBuildingBank },
 ];
 
 export const CurrentApplication = (key: string): ApplicationType => {
   const application = Applications.find((app) => app.key === key) ?? Applications[0];
   return application;
 };
-
-
-console.log('CurrentApplication', CurrentApplication);

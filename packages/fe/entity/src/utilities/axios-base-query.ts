@@ -3,7 +3,7 @@ import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { getCurrentSession, useAuth} from "@pms/auth"
 
 const refreshToken = async () => {
-  const session = await getCurrentSession();
+  const session = await getCurrentSession() || {};
   console.log('sesseion', session)
   const refreshToken = session?.refreshToken;
   const config: AxiosRequestConfig = {
@@ -42,7 +42,7 @@ export const axiosBaseQuery =
   > =>
   async ({ url, method, data, params, headers, responseType }) => {
     try {
-      const session = await getCurrentSession();
+      const session = await getCurrentSession() || {};
       console.log("session", session);
       const accessToken = session?.accessToken;
       console.log("accessToken", accessToken);
@@ -64,7 +64,7 @@ export const axiosBaseQuery =
     } catch (axiosError) {
       const err = axiosError as AxiosError;
       if (err.response?.status === 401) {
-        const session = await getCurrentSession();
+        const session = await getCurrentSession() || {};
         const refreshToken = session?.refreshToken;
         const result = await axios({
           ...err.config,
