@@ -1,7 +1,7 @@
-import { LoadingOverlay } from '@mantine/core';
+import { LoadingOverlay } from "@mantine/core";
 
-const Page = () => {
+const Loading = () => {
   return <LoadingOverlay />;
 };
 
-export default Page;
+export default Loading;

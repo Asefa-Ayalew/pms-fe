@@ -12,7 +12,7 @@ import {
   Modal,
   Pagination,
   Select,
-  Stack,
+  Stack,  
   TextInput,
   Tooltip,
 } from "@mantine/core";
@@ -654,8 +654,8 @@ export default function EntityList<T>(props: Props<T>) {
             </div>
           )}
           {!itemsLoading && (
-            <table className="w-full text-sm mt-2 text-left border rounded">
-              <thead className="text-sm text-gray-900 capitalize bg-gray-100 rounded">
+            <table className="w-full text-md mt-2 text-left border rounded">
+              <thead className="text-md text-gray-900 capitalize bg-gray-100 rounded">
                 <tr>
                   {check &&
                     (viewMode !== "detail" ? (
@@ -679,7 +679,7 @@ export default function EntityList<T>(props: Props<T>) {
                           <th
                             key={item?.name}
                             scope="col"
-                            className="py-3 text-sm px-2 items-center"
+                            className="py-3 text-md px-2 items-center"
                           >
                             <div className="flex items-center space-x-2 h-full">
                               <div className="flex items-center text-xs">
@@ -1137,7 +1137,7 @@ export default function EntityList<T>(props: Props<T>) {
         } flex-col space-y-2 px-2 h-full`}
       >
         <div className="h-14 bg-white rounded p-2 border   flex justify-between items-center">
-          <div className="h-full  items-center flex text-sm font-semibold">
+          <div className="h-full  items-center flex text-md font-semibold">
             {detailTitle ?? title}
           </div>
           <div className="h-full items-center flex space-x-2">
@@ -1197,9 +1197,9 @@ export default function EntityList<T>(props: Props<T>) {
         <div className="px-2">
           <table
             ref={pdfRef}
-            className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+            className="w-full text-md text-left text-gray-500 dark:text-gray-400"
           >
-            <thead className="text-sm text-gray-700 capitalize bg-gray-50 dark:bg-gray-500 dark:text-gray-400">
+            <thead className="text-md text-gray-700 capitalize bg-gray-50 dark:bg-gray-500 dark:text-gray-400">
               <tr>
                 {setting?.visibleColumn?.map(
                   (item: any) =>
@@ -1301,9 +1301,9 @@ export default function EntityList<T>(props: Props<T>) {
           <div className="px-2">
             <table
               ref={pdfRef}
-              className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+              className="w-full text-md text-left text-gray-500 dark:text-gray-400"
             >
-              <thead className="text-sm text-gray-700 capitalize bg-gray-50 dark:bg-gray-500 dark:text-gray-400">
+              <thead className="text-md text-gray-700 capitalize bg-gray-50 dark:bg-gray-500 dark:text-gray-400">
                 <tr>
                   {setting?.visibleColumn?.map(
                     (item) =>
