@@ -32,5 +32,5 @@
 
 .active {
   border-right: 2px solid var(--mantine-color-primary-4);
-  /* @apply text-black bg-primary-100; */
+  background-color: var(--mantine-color-primary-0);
 }

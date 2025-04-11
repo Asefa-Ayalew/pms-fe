@@ -33,12 +33,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         speed={200}
         shadow="0 0 10px #6adca0,0 0 5px #6adca0"
         template='
-          <div class="bar" role="bar">
-            <div class="peg"></div>
-          </div> 
-         <div class="spinner" role="spinner">
-              <div class="spinner-icon"></div>
-         </div>'
+                  <div class="bar" role="bar">
+                    <div class="peg"></div>
+                  </div> 
+                  <div class="spinner" role="spinner">
+                    <div class="spinner-icon"></div>
+                  </div>'
         zIndex={1600}
         showAtBottom={false}
       />

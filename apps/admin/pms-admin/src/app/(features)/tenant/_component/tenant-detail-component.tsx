@@ -5,62 +5,29 @@ import { useParams } from 'next/navigation';
 import { getCurrentSession } from '@pms/auth';
 import { useEffect, useState } from 'react';
 import EmptyIcon from '@/app/icons/empty-icon';
+import { useLazyGetTenantQuery } from '../_store/tenant.query';
 
 export default function TenantDetailComponent() {
   const params = useParams();
 
   const [user, setUser] = useState<any>(null);
+  const [getTenant, { data: tenant}] = useLazyGetTenantQuery();
+
+  useEffect(()=>{
+    getTenant({id: `${params?.id}`})
+  }, [getTenant, params?.id])
 
   const data = [
-    {
-      key: 'name',
-      label: 'Name',
-      value: user?.profile?.data?.name ?? 'N/A',
-    },
-    {
-      key: 'tradeName',
-      label: 'Trade Name',
-      value: user?.profile?.data?.tradeName ?? 'N/A',
-    },
-    {
-      key: 'tin',
-      label: 'Taxpayer ID Number',
-      value: user?.profile?.data?.tin ?? 'N/A',
-    },
-    {
-      key: 'phoneNumber',
-      label: 'Phone Number',
-      value:
-        [
-          user?.profile?.data?.phoneNumber,
-          ...(user?.profile?.data?.secondaryPhoneNumbers || []),
-        ]
-          .filter(Boolean)
-          .join(', ') || 'N/A',
-    },
-    {
-      key: 'email',
-      label: 'Email Address',
-      value:
-        [
-          user?.profile?.data?.email,
-          ...(user?.profile?.data?.secondaryEmails || []),
-        ]
-          .filter(Boolean)
-          .join(', ') || 'N/A',
-    },
-    {
-      key: 'industry',
-      label: 'Industry',
-      value: user?.profile?.data?.industry ?? 'N/A',
-    },
-    {
-      key: 'createdAt',
-      label: 'Registered On',
-      value: user?.profile?.data?.createdAt
-        ? new Date(user?.profile.data.createdAt).toLocaleString()
-        : 'N/A',
-    },
+    { key: 'name', label: 'Name', value: tenant?.name ?? 'N/A' },
+    { key: 'tradeName', label: 'Trade Name', value: tenant?.tradeName ?? 'N/A' },
+    { key: 'shortCode', label: 'Short Code', value: tenant?.shortCode ?? 'N/A' },
+    { key: 'email', label: 'email', value: tenant?.email ?? 'N/A' },
+    { key: 'secondaryEmails', label: 'Secondary Emails', value: tenant?.secondaryEmails ?? 'N/A' },
+    { key: 'phoneNumber', label: 'Phone Number', value: tenant?.phoneNumber ?? 'N/A' },
+    { key: 'secondaryPhoneNumber', label: 'Secondary Phone Numbers', value: tenant?.secondaryPhoneNumbers ?? 'N/A' },
+    { key: 'tin', label: 'TIN', value: tenant?.tin ?? 'N/A' },
+    { key: 'createdAt', label: 'Registration Date', value: tenant?.createdAt ?? 'N/A' },
+   
   ];
 
   const profileData = {

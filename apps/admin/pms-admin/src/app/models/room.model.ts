@@ -1,7 +1,12 @@
+import { Property } from "./property.model";
+import { Tenant } from "./tenant.model";
+
 export interface Room {
   id?: string;
   tenantId?: string;
   propertyId?: string;
+  tenant: Tenant;
+  property: Property
   roomNumber: string;
   description?: string;
   floorNumber: string;

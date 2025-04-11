@@ -5,62 +5,27 @@ import { useParams } from 'next/navigation';
 import { getCurrentSession } from '@pms/auth';
 import { useEffect, useState } from 'react';
 import EmptyIcon from '@/app/icons/empty-icon';
+import { useGetRoomQuery, useLazyGetRoomQuery } from '../../_store/room.query';
 
 export default function RoomDetailComponent() {
   const params = useParams();
-
   const [user, setUser] = useState<any>(null);
 
+  const [getRoom, { data: room }] = useLazyGetRoomQuery();
+  useEffect(() => {
+    getRoom({ id: `${params?.id}`, includes: ['property', 'tenant'] });
+  }, [params.id, getRoom]);
+
   const data = [
-    {
-      key: 'name',
-      label: 'Name',
-      value: user?.profile?.data?.name ?? 'N/A',
-    },
-    {
-      key: 'tradeName',
-      label: 'Trade Name',
-      value: user?.profile?.data?.tradeName ?? 'N/A',
-    },
-    {
-      key: 'tin',
-      label: 'Taxpayer ID Number',
-      value: user?.profile?.data?.tin ?? 'N/A',
-    },
-    {
-      key: 'phoneNumber',
-      label: 'Phone Number',
-      value:
-        [
-          user?.profile?.data?.phoneNumber,
-          ...(user?.profile?.data?.secondaryPhoneNumbers || []),
-        ]
-          .filter(Boolean)
-          .join(', ') || 'N/A',
-    },
-    {
-      key: 'email',
-      label: 'Email Address',
-      value:
-        [
-          user?.profile?.data?.email,
-          ...(user?.profile?.data?.secondaryEmails || []),
-        ]
-          .filter(Boolean)
-          .join(', ') || 'N/A',
-    },
-    {
-      key: 'industry',
-      label: 'Industry',
-      value: user?.profile?.data?.industry ?? 'N/A',
-    },
-    {
-      key: 'createdAt',
-      label: 'Registered On',
-      value: user?.profile?.data?.createdAt
-        ? new Date(user?.profile.data.createdAt).toLocaleString()
-        : 'N/A',
-    },
+    { key: 'tenant', label: 'Tenant', value: room?.tenant?.name ?? 'N/A' },
+    { key: 'property', label: 'Property', value: room?.property?.description ?? 'N/A' },
+    { key: 'description', label: 'Description', value: room?.description ?? 'N/A' },
+    { key: 'floorNumber', label: 'Floor Number', value: room?.floorNumber ?? 'N/A' },
+    { key: 'roomNumber', label: 'Room Number', value: room?.roomNumber ?? 'N/A' },
+    { key: 'size', label: 'Size', value: room?.size ?? 'N/A' },
+    { key: 'type', label: 'Type', value: room?.type ?? 'N/A' },
+    { key: 'amenities', label: 'Amenities', value: room?.amenities ?? 'N/A' },
+   
   ];
 
   const profileData = {
@@ -76,13 +41,13 @@ export default function RoomDetailComponent() {
   const config = {
     editUrl: `/rooms/${params?.id}`,
     isProfile: false,
-    title: `${user?.profile?.data?.name ?? ''}`,
+    title: `${room?.description}`,
     widthClass: 'w-full',
   };
 
   useEffect(() => {
     const fetchSession = async () => {
-      const session = await getCurrentSession() || {};
+      const session = (await getCurrentSession()) || {};
       setUser(session);
     };
 

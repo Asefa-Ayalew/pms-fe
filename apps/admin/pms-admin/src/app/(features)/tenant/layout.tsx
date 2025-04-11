@@ -53,7 +53,7 @@ export default function TenantListPage({
       name: 'Tenant',
       render: (data: Tenant) => `${data?.name ?? ''}`,
     },
-    rootUrl: '/tenants',
+    rootUrl: '/tenant',
     identity: 'id',
     visibleColumn: [
       {
