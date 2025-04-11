@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: '/pms-tenant',
+  basePath: '/pms-admin',
   reactStrictMode: true,
   output: 'standalone',
   experimental: {

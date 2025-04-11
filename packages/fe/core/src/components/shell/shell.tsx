@@ -70,39 +70,7 @@ export const Shell = React.memo(function Shell({ children }: ShellProps) {
     [currentApplication],
   );
 
-  useEffect(() => {
-    const permissionArray = user?.organizations[0]?.permissions;
-
-    function filterMenuAndSubmenu(permissions: string[], menus: any[]) {
-      return menus
-        .map((men: any) => {
-          if (!men.permission || men.permission.length === 0) {
-            if (men.links && men.links.length > 0) {
-              return {
-                ...men,
-                links: filterMenuAndSubmenu(permissions, men.links as any[]),
-              };
-            }
-            return men;
-          }
-          return men.permission.some((perm: string) =>
-            permissions.includes(perm),
-          )
-            ? men
-            : undefined;
-        })
-        .filter(Boolean);
-    }
-
-    const filtered: any =
-      user &&
-      permissionArray !== undefined &&
-      filterMenuAndSubmenu(permissionArray as string[], shellContext.menuItems);
-
-    filtered ? setFilterdMenu(filtered as any[]) : setFilterdMenu([]);
-  }, [shellContext.menuItems, currentApplication, user]);
-
-  const links = filterdMenu.map((item) => (
+  const links = shellContext.menuItems.map((item) => (
     <LinksGroup {...item} key={item.label} />
   ));
   const networkStatus = useNetwork();
