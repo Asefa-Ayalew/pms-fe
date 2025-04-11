@@ -16,7 +16,12 @@ import {
 } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
-import { IconLogout, IconMenu2, IconNotification, IconUserCircle } from '@tabler/icons-react';
+import {
+  IconLogout,
+  IconMenu2,
+  IconNotification,
+  IconUserCircle,
+} from '@tabler/icons-react';
 import { LinksGroup } from './navbar-link-group';
 import { useDisclosure, useNetwork } from '@mantine/hooks';
 import styles from './shell.module.css';
@@ -24,7 +29,6 @@ import { Applications, CurrentApplication } from '../../config/application';
 import { UserInfo } from './user-info';
 import { getCurrentSession, useAuth } from '@pms/auth';
 import { useContext } from 'react';
-import { appConfig } from '../../config/menu';
 import DarkModeToggle from '../dark-mode-toggle';
 import { ShellContext } from '../../context/shell.context';
 
@@ -37,40 +41,70 @@ export const Shell = React.memo(function Shell({ children }: ShellProps) {
   const shellContext = useContext(ShellContext);
   const { logOut, user } = useAuth();
   const [userInfo, setUserInfo] = useState<any>(null);
-
-  // Memoize the links to prevent re-renders
-  const links = useMemo(() => 
-    appConfig.map((item) => (
-      <LinksGroup {...item} key={item.label} />
-    )), 
-    [appConfig]
-  );
+  const [filterdMenu, setFilterdMenu] = useState<any[]>([]);
 
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
 
   // Memoize current application
-  const currentApplication = useMemo(() => 
-    CurrentApplication(shellContext.currentApplication).name,
-    [shellContext.currentApplication]
+  const currentApplication = useMemo(
+    () => CurrentApplication(shellContext.currentApplication).name,
+    [shellContext.currentApplication],
   );
 
   // Memoize applications menu items
-  const applications = useMemo(() => 
-    Applications.filter(({ name }) => name !== currentApplication)
-      .map((item) => (
-        <Menu.Item
-          component="a"
-          href={`/${item?.key}`}
-          key={item?.key}
-          leftSection={<item.icon size={14} />}
-        >
-          {item.name}
-        </Menu.Item>
-      )),
-    [currentApplication]
+  const applications = useMemo(
+    () =>
+      Applications.filter(({ name }) => name !== currentApplication).map(
+        (item) => (
+          <Menu.Item
+            component="a"
+            href={`/${item?.key}`}
+            key={item?.key}
+            leftSection={<item.icon size={14} />}
+          >
+            {item.name}
+          </Menu.Item>
+        ),
+      ),
+    [currentApplication],
   );
 
+  useEffect(() => {
+    const permissionArray = user?.organizations[0]?.permissions;
+
+    function filterMenuAndSubmenu(permissions: string[], menus: any[]) {
+      return menus
+        .map((men: any) => {
+          if (!men.permission || men.permission.length === 0) {
+            if (men.links && men.links.length > 0) {
+              return {
+                ...men,
+                links: filterMenuAndSubmenu(permissions, men.links as any[]),
+              };
+            }
+            return men;
+          }
+          return men.permission.some((perm: string) =>
+            permissions.includes(perm),
+          )
+            ? men
+            : undefined;
+        })
+        .filter(Boolean);
+    }
+
+    const filtered: any =
+      user &&
+      permissionArray !== undefined &&
+      filterMenuAndSubmenu(permissionArray as string[], shellContext.menuItems);
+
+    filtered ? setFilterdMenu(filtered as any[]) : setFilterdMenu([]);
+  }, [shellContext.menuItems, currentApplication, user]);
+
+  const links = filterdMenu.map((item) => (
+    <LinksGroup {...item} key={item.label} />
+  ));
   const networkStatus = useNetwork();
 
   // Memoize the session fetch
@@ -84,42 +118,45 @@ export const Shell = React.memo(function Shell({ children }: ShellProps) {
   }, [fetchSession]);
 
   // Memoize the header content
-  const headerContent = useMemo(() => (
-    <Group align="center" h="100%" justify="space-between" px="sm">
-      <Title fz={16}>{userInfo?.profile?.tenant?.name}</Title>
-      <Group gap={8} align="center">
-        <IconNotification size={16}/>
-        <Box className="mt-1">
-          <DarkModeToggle />
-        </Box>
-        <Menu arrowPosition="center" shadow="md" width={200} withArrow>
-          <Menu.Target>
-            <Button variant="subtle">
-              <Box className="flex gap-2 items-center">
-                <Avatar color="primary" radius="xl" size="sm" />
-                <Flex className="flex-col justify-start text-left">
-                  <Text lh={1}>{userInfo?.profile?.firstName}</Text>
-                </Flex>
-              </Box>
-            </Button>
-          </Menu.Target>
-          <Menu.Dropdown>
-            <Menu.Item leftSection={<IconUserCircle size={14} />}>
-              Profile
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item
-              leftSection={<IconLogout size={14} />}
-              onClick={logOut}
-              color="red"
-            >
-              Logout
-            </Menu.Item>
-          </Menu.Dropdown>
-        </Menu>
+  const headerContent = useMemo(
+    () => (
+      <Group align="center" h="100%" justify="space-between" px="sm">
+        <Title fz={16}>{userInfo?.profile?.tenant?.name}</Title>
+        <Group gap={8} align="center">
+          <IconNotification size={16} />
+          <Box className="mt-1">
+            <DarkModeToggle />
+          </Box>
+          <Menu arrowPosition="center" shadow="md" width={200} withArrow>
+            <Menu.Target>
+              <Button variant="subtle">
+                <Box className="flex gap-2 items-center">
+                  <Avatar color="primary" radius="xl" size="sm" />
+                  <Flex className="flex-col justify-start text-left">
+                    <Text lh={1}>{userInfo?.profile?.firstName}</Text>
+                  </Flex>
+                </Box>
+              </Button>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item leftSection={<IconUserCircle size={14} />}>
+                Profile
+              </Menu.Item>
+              <Menu.Divider />
+              <Menu.Item
+                leftSection={<IconLogout size={14} />}
+                onClick={logOut}
+                color="red"
+              >
+                Logout
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+        </Group>
       </Group>
-    </Group>
-  ), [userInfo, logOut]);
+    ),
+    [userInfo, logOut],
+  );
 
   return (
     <ModalsProvider>

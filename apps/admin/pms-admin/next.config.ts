@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: '/pms',
+  basePath: '/pms-tenant',
   reactStrictMode: true,
-  transpilePackages: ['@pms/theme', '@pms/auth', '@pms/core', '@pms/entity'],
   output: 'standalone',
   experimental: {
     turbo: {},

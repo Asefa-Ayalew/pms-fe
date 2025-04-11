@@ -6,8 +6,8 @@ import { AuthProvider } from '@pms/auth';
 import { Providers } from '@pms/entity';
 
 export const metadata: Metadata = {
-  title: 'Training Center',
-  description: 'Training Center',
+  title: 'PMS Admin',
+  description: 'PMS Admin',
 };
 
 export default function RootLayout({
