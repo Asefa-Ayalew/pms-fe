@@ -211,6 +211,13 @@ export const roomQuery = appApi.injectEndpoints({
                 }
               )
             );
+            // dispatch(
+            //   roomQuery.util.updateQueryData("getRoom", param, (draft) => {
+            //     if (data) {
+            //       console.log(data);
+            //     }
+            //   })
+            // );
             notifications.show({
               title: "Success",
               message: "Successfully restored",

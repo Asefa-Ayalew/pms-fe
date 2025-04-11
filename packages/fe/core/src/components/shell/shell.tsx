@@ -77,7 +77,7 @@ export const Shell = React.memo(function Shell({ children }: ShellProps) {
 
   // Memoize the session fetch
   const fetchSession = useCallback(async () => {
-    const session = await getCurrentSession();
+    const session = await getCurrentSession() || {};
     setUserInfo(session);
   }, []);
 

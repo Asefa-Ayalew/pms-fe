@@ -8,7 +8,7 @@ export default function Protected({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const user = getCurrentSession();
+    const user = getCurrentSession() || {};
     if (!user) {
       router.push('/auth/login');
     } else {

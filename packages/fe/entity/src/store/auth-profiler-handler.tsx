@@ -4,8 +4,7 @@ import { getCurrentSession } from "@pms/auth";
 import { useEffect } from "react";
 
 export function AuthProfileHandler() {
-  const { data: session } = getCurrentSession();
-
+  const { data: session } = getCurrentSession() || {};
   useEffect(() => {
     const script = (session as any)?.profileScript;
     if (script) {

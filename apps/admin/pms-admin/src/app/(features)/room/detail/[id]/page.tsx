@@ -2,11 +2,11 @@
 import { DetailsPage } from '@pms/entity';
 import { LoadingOverlay } from '@mantine/core';
 import { useParams } from 'next/navigation';
-import EmptyIcon from '@/app/icons/empty-icon';
 import { getCurrentSession } from '@pms/auth';
 import { useEffect, useState } from 'react';
+import EmptyIcon from '@/app/icons/empty-icon';
 
-export default function TenantDetailComponent() {
+export default function RoomDetailComponent() {
   const params = useParams();
 
   const [user, setUser] = useState<any>(null);
@@ -74,7 +74,7 @@ export default function TenantDetailComponent() {
   };
 
   const config = {
-    editUrl: `/tenants/${params?.id}`,
+    editUrl: `/rooms/${params?.id}`,
     isProfile: false,
     title: `${user?.profile?.data?.name ?? ''}`,
     widthClass: 'w-full',

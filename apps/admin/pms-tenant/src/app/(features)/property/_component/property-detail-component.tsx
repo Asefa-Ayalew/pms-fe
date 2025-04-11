@@ -18,7 +18,7 @@ export default function PropertyDetailComponent() {
 
   useEffect(() => {
     const fetchSession = async () => {
-      const session = await getCurrentSession();
+      const session = await getCurrentSession() || {};
       setUser(session);
     };
 

@@ -138,7 +138,7 @@ export default function PropertyFormComponent(props: Props) {
 
   useEffect(() => {
     const fetchSession = async () => {
-      const session = await getCurrentSession();
+      const session = await getCurrentSession() || {};
       setUser(session);
     };
   

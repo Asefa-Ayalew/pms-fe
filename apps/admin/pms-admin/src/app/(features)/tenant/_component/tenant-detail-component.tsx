@@ -82,7 +82,7 @@ export default function TenantDetailComponent() {
 
   useEffect(() => {
     const fetchSession = async () => {
-      const session = await getCurrentSession();
+      const session = await getCurrentSession() || {};
       setUser(session);
     };
 

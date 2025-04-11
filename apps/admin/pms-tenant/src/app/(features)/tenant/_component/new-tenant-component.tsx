@@ -163,7 +163,7 @@ export default function NewTenantComponent(props: Props) {
   };
 
   useEffect(() => {
-    getCurrentSession().then((session: any) => {
+    getCurrentSession()?.then((session: any) => {
       setCurrentSession(session);
     });
   }, []);

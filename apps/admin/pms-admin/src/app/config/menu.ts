@@ -10,7 +10,7 @@ import {
 export const Menu: MenuItem[] = [
   { label: 'Dashboard', icon: IconGauge, link: '/dashboard' },
   { label: 'Tenants', icon: IconHome, link: '/tenant' },
-  { label: 'Available Rooms', icon: IconDoor, link: '/available-room' },
+  { label: 'Available Rooms', icon: IconDoor, link: '/room' },
   {
     label: 'Reports and Analytics',
     icon: IconChartBar,

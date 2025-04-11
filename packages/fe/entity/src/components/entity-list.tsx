@@ -1,5 +1,5 @@
-"use client";
-import '../styles.css'
+'use client';
+import '../styles.css';
 import {
   Button,
   Checkbox,
@@ -12,13 +12,14 @@ import {
   Modal,
   Pagination,
   Select,
-  Stack,  
+  Stack,
+  Table,
   TextInput,
   Tooltip,
-} from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { notifications } from "@mantine/notifications";
-import * as TablerIcons from "@tabler/icons-react";
+} from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { notifications } from '@mantine/notifications';
+import * as TablerIcons from '@tabler/icons-react';
 import {
   IconCaretDownFilled,
   IconCaretUpFilled,
@@ -31,39 +32,39 @@ import {
   IconMinus,
   IconPlus,
   IconPrinter,
-} from "@tabler/icons-react";
-import dateFormat from "dateformat";
-import * as FileSaver from "file-saver";
-import { debounce } from "lodash-es";
+} from '@tabler/icons-react';
+import dateFormat from 'dateformat';
+import * as FileSaver from 'file-saver';
+import { debounce } from 'lodash-es';
 import React, {
   ReactElement,
   ReactNode,
   useEffect,
   useRef,
   useState,
-} from "react";
+} from 'react';
 
-import { RootState } from "../store/store";
-import { Icon } from "@tabler/icons-react";
-import Link from "next/link";
+import { RootState } from '../store/store';
+import { Icon } from '@tabler/icons-react';
+import Link from 'next/link';
 import {
   useParams,
   usePathname,
   useRouter,
   useSearchParams,
-} from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
-import ReactToPrint from "react-to-print";
-import * as XLSX from "xlsx";
-import EmptyIcon from "../icons/empty-icon";
-import { CollectionQuery } from "../models/collection.model";
-import { EntityConfig, entityViewMode } from "../models/entity-config.model";
-import { PaginationOptions } from "../models/pagination.model";
+} from 'next/navigation';
+import { useDispatch, useSelector } from 'react-redux';
+import ReactToPrint from 'react-to-print';
+import * as XLSX from 'xlsx';
+import EmptyIcon from '../icons/empty-icon';
+import { CollectionQuery } from '../models/collection.model';
+import { EntityConfig, entityViewMode } from '../models/entity-config.model';
+import { PaginationOptions } from '../models/pagination.model';
 import {
   removeEntityListCollection,
   setEntityListCollection,
   setUiState,
-} from "../utilities/entity-list-slice";
+} from '../utilities/entity-list-slice';
 
 type FunctionType = (args: any) => void;
 interface Props<T> {
@@ -113,7 +114,7 @@ interface Props<T> {
 
 export default function EntityList<T>(props: Props<T>) {
   const {
-    detailWidth = { list: "md:w-3/12", content: "md:w-9/12" },
+    detailWidth = { list: 'md:w-3/12', content: 'md:w-9/12' },
     viewMode,
     detail,
     selectedItem = [],
@@ -137,7 +138,7 @@ export default function EntityList<T>(props: Props<T>) {
     detailTitle,
     showNewButton = true,
     showNewModal = false,
-    newButtonText = "New",
+    newButtonText = 'New',
     showArchived = true,
     header,
     parentStyle,
@@ -168,12 +169,12 @@ export default function EntityList<T>(props: Props<T>) {
   const [pageSize, setPageSize] = useState<number>(props.defaultPageSize ?? 20);
 
   const [defaultValue] = useState<EntityConfig<T>>({
-    rootUrl: "",
-    detailUrl: "detail",
-    identity: "id",
-    name: "",
+    rootUrl: '',
+    detailUrl: 'detail',
+    identity: 'id',
+    name: '',
     visibleColumn: [],
-    primaryColumn: { name: "Name", key: "name" },
+    primaryColumn: { name: 'Name', key: 'name' },
     showFullScreen: true,
     showClose: true,
     hasActions: false,
@@ -182,21 +183,21 @@ export default function EntityList<T>(props: Props<T>) {
   });
 
   const collections = useSelector(
-    (state: RootState) => state?.entityListReducer?.collections
+    (state: RootState) => state?.entityListReducer?.collections,
   );
-  
+
   const collection = collections?.filter((item: any) => item?.key === tableKey);
-    
+
   const viewAll = useSelector(
-    (state: RootState) => state.entityListReducer.viewAll
+    (state: RootState) => state.entityListReducer.viewAll,
   );
 
   const [setting, setSetting] = useState<EntityConfig<T>>();
   const [filterValue, setFilterValue] = useState<string[]>([]);
   const [filterMenus, setFilterProps] = useState<any>();
   const [order, setOrder] = useState<{ field: string; direction: string }>({
-    field: "",
-    direction: "",
+    field: '',
+    direction: '',
   });
 
   //Persisting table state from redux
@@ -217,7 +218,7 @@ export default function EntityList<T>(props: Props<T>) {
         setOrder({
           field: collection?.[0]?.collection?.orderBy?.[0]?.field,
           direction:
-            collection?.[0]?.collection?.orderBy?.[0]?.direction ?? "desc",
+            collection?.[0]?.collection?.orderBy?.[0]?.direction ?? 'desc',
         });
       }
       if (collection?.[0]?.collection?.search) {
@@ -236,7 +237,7 @@ export default function EntityList<T>(props: Props<T>) {
       (collectionQuery?.orderBy && collectionQuery?.orderBy?.length > 0)
     ) {
       dispatch(
-        setEntityListCollection({ key: tableKey, collection: collectionQuery })
+        setEntityListCollection({ key: tableKey, collection: collectionQuery }),
       );
     }
   }, [collectionQuery, tableKey]);
@@ -264,7 +265,7 @@ export default function EntityList<T>(props: Props<T>) {
         setting !== undefined &&
           setting?.filter?.length !== idx + 1 &&
           filterTemp?.push({
-            type: "divider",
+            type: 'divider',
           });
       });
       setFilterProps({ items: filterTemp });
@@ -300,8 +301,8 @@ export default function EntityList<T>(props: Props<T>) {
   useEffect(() => {
     if (check && opened && checkedItems.length === 0) {
       notifications.show({
-        title: "Warning",
-        message: "Please select items to export",
+        title: 'Warning',
+        message: 'Please select items to export',
       });
     } else if (check) {
       setPrintItems(checkedItems);
@@ -319,7 +320,7 @@ export default function EntityList<T>(props: Props<T>) {
     const filterMap: { [key: string]: any[] } = {};
     data.forEach((item) => {
       filterMap[JSON.parse(item)?.field] = data.filter(
-        (query) => JSON.parse(query)?.field === JSON.parse(item).field
+        (query) => JSON.parse(query)?.field === JSON.parse(item).field,
       );
     });
     // constructs the filter query into array form the grouped object
@@ -334,12 +335,12 @@ export default function EntityList<T>(props: Props<T>) {
 
   const exportToExcel = async () => {
     const fileType =
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset-UTF-8;";
-    const fileExtension = ".xlsx";
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset-UTF-8;';
+    const fileExtension = '.xlsx';
     if (check && checkedItems.length === 0) {
       notifications.show({
-        title: "Warning",
-        message: "Please select items to export",
+        title: 'Warning',
+        message: 'Please select items to export',
       });
       return null;
     }
@@ -352,16 +353,16 @@ export default function EntityList<T>(props: Props<T>) {
           if (!Array.isArray(col.key)) {
             if (col?.isDate) {
               return (data[`${col.key}`] = item[`${col.key}`]
-                ? dateFormat(item[`${col.key}`], "mmm dS, yyyy ")
-                : "");
+                ? dateFormat(item[`${col.key}`], 'mmm dS, yyyy ')
+                : '');
             } else {
               return (data[`${col.key}`] = item[`${col.key}`]);
             }
           } else {
             if (col?.isDate) {
               return (data[`${col.key}`] = childeView(item, col.key)
-                ? dateFormat(childeView(item, col.key), "mmm dS, yyyy ")
-                : "");
+                ? dateFormat(childeView(item, col.key), 'mmm dS, yyyy ')
+                : '');
             } else {
               return (data[`${col.key}`] = childeView(item, col.key));
             }
@@ -372,8 +373,8 @@ export default function EntityList<T>(props: Props<T>) {
     });
 
     const ws = XLSX.utils.json_to_sheet(exportData);
-    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const wb = { Sheets: { data: ws }, SheetNames: ['data'] };
+    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
     const data = new Blob([excelBuffer], { type: fileType });
     FileSaver.saveAs(data, title + fileExtension);
   };
@@ -384,7 +385,7 @@ export default function EntityList<T>(props: Props<T>) {
         if (item[key] !== null && item[key] !== undefined) {
           item = item[key];
         } else {
-          item = "";
+          item = '';
         }
       });
     }
@@ -394,12 +395,12 @@ export default function EntityList<T>(props: Props<T>) {
 
   const exportDropdown = [
     {
-      key: "pdf",
+      key: 'pdf',
       onClick: () => {
         if (check && checkedItems.length === 0) {
           notifications.show({
-            title: "Warning",
-            message: "Please select items to export",
+            title: 'Warning',
+            message: 'Please select items to export',
           });
         } else {
           close();
@@ -418,7 +419,7 @@ export default function EntityList<T>(props: Props<T>) {
       ),
     },
     {
-      key: "excel",
+      key: 'excel',
       onClick: () => {
         exportToExcel();
       },
@@ -439,12 +440,12 @@ export default function EntityList<T>(props: Props<T>) {
   return (
     <div className={`h-full flex space-x-2  relative p-2 ` + parentStyle}>
       <div
-        className={`flex-col  space-y-2   ${
-          viewMode !== "detail"
-            ? "w-full"
+        className={`flex-col  space-y-2 ${
+          viewMode !== 'detail'
+            ? 'w-full'
             : !fullScreen
               ? detailWidth.list
-              : "hidden"
+              : 'hidden'
         }`}
       >
         <div className="h-14 rounded bg-white  flex items-center justify-between p-2 border space-x-2">
@@ -453,14 +454,14 @@ export default function EntityList<T>(props: Props<T>) {
           </div>
 
           <div className="h-full justify-end flex space-x-4 items-center">
-            {filterValue.length > 0 && viewMode !== "detail" && (
+            {filterValue.length > 0 && viewMode !== 'detail' && (
               <div
                 className="flex shrink-0 px-2"
                 onClick={() => {
                   setFilterValue([]);
-                  onSearch?.("");
-                  onOrder?.("");
-                  dispatch(removeEntityListCollection(tableKey ?? ""));
+                  onSearch?.('');
+                  onOrder?.('');
+                  dispatch(removeEntityListCollection(tableKey ?? ''));
                   dispatch(setUiState(false));
                 }}
               >
@@ -470,7 +471,7 @@ export default function EntityList<T>(props: Props<T>) {
               </div>
             )}
 
-            {tableKey === "dispatches" && (
+            {tableKey === 'dispatches' && (
               <Checkbox
                 label="View all"
                 checked={viewAll}
@@ -481,20 +482,20 @@ export default function EntityList<T>(props: Props<T>) {
               />
             )}
 
-            {showArchived && viewMode !== "detail" && (
+            {showArchived && viewMode !== 'detail' && (
               <Checkbox
                 label="Show Archived"
                 onChange={(e) => onShowArchived?.(e)}
               />
             )}
-            {header ?? ""}
-            {showExport !== false && viewMode !== "detail" && (
+            {header ?? ''}
+            {showExport !== false && viewMode !== 'detail' && (
               <Menu>
                 <Menu.Target>
                   <Stack>
                     <Button
                       className="shadow-none flex items-center space-x-2 rounded dark:bg-dark_primary"
-                      bg={"primary.4"}
+                      bg={'primary.4'}
                       leftSection={<IconFileExport />}
                     >
                       <span>Export</span>
@@ -516,47 +517,44 @@ export default function EntityList<T>(props: Props<T>) {
         </div>
         <div
           className={`border bg-white  rounded p-2 py-6 w-full ${
-            viewMode !== "detail"
+            viewMode !== 'detail'
               ? showExport !== false
-                ? "h-10 flex items-center justify-between"
-                : "h-10 flex w-full items-center justify-end"
-              : "flex-col space-y-2"
+                ? 'h-10 flex items-center justify-between'
+                : 'h-10 flex w-full items-center justify-end'
+              : 'flex-col space-y-2'
           }`}
         >
           {showNewButton && !showNewModal ? (
             <div
               className={`h-full flex items-center ${
-                showNewButton === false ? "invisible" : "visible"
+                showNewButton === false ? 'invisible' : 'visible'
               }`}
             >
               <Link href={`${setting?.rootUrl}/new`}>
                 <Button
-                  // className="bg-blue-500 shadow-none rounded flex  items-center justify-center"
-                  bg={"primary.4"}
-                  //
-                  //
+                  className="bg-[#022A53] hover:bg-[#033C73] active:bg-[#011E36] shadow-none rounded flex items-center justify-center"
                   leftSection={<IconPlus />}
                 >
-                  <span>{newButtonText ?? "New"}</span>
+                  <span>{newButtonText ?? 'New'}</span>
                 </Button>
               </Link>
             </div>
           ) : (
             <div
               className={`h-full flex items-center ${
-                showNewModal === false ? "invisible" : "visible"
+                showNewModal === false ? 'invisible' : 'visible'
               }`}
             >
               <div>
                 <Button
                   // className="bg-blue-500 shadow-none rounded flex  items-center justify-center"
-                  bg={"primary.4"}
+                  bg={'primary.4'}
                   //
                   //
                   leftSection={<IconPlus />}
                   onClick={handleNewModal}
                 >
-                  <span>{newButtonText ?? "New"}</span>
+                  <span>{newButtonText ?? 'New'}</span>
                 </Button>
               </div>
             </div>
@@ -577,7 +575,7 @@ export default function EntityList<T>(props: Props<T>) {
           <div className="flex space-x-2 justify-end">
             <TextInput
               placeholder="Search here"
-              className={`${viewMode !== "detail" ? "w-80" : "w-full"}`}
+              className={`${viewMode !== 'detail' ? 'w-80' : 'w-full'}`}
               onKeyUp={debounce((event: any) => {
                 onSearch?.(event.target.value);
               }, 1000)}
@@ -596,14 +594,14 @@ export default function EntityList<T>(props: Props<T>) {
                         variant="filled"
                         // className={`shadow-none bg-primary-500 flex items-center  dark:border-none dark:text-white`}
                         className={`shadow-none flex items-center  dark:border-none dark:text-white`}
-                        bg={"primary.4"}
+                        bg={'primary.4'}
                       >
                         <span>
                           <IconFilter />
                         </span>
                         <span
                           className={`${
-                            viewMode === "detail" && "hidden"
+                            viewMode === 'detail' && 'hidden'
                           } dark:text-white`}
                         >
                           Filter
@@ -612,15 +610,15 @@ export default function EntityList<T>(props: Props<T>) {
                     </Menu.Target>
                     <Menu.Dropdown>
                       {filterMenus?.items?.map((menu: any, index: any) =>
-                        menu?.type === "divider" ? (
+                        menu?.type === 'divider' ? (
                           <Menu.Item key={index} value={menu?.value}>
-                            <Divider size={"xs"} />
+                            <Divider size={'xs'} />
                           </Menu.Item>
                         ) : (
                           <Menu.Item key={index} value={menu?.value}>
                             {menu?.label}
                           </Menu.Item>
-                        )
+                        ),
                       )}
                     </Menu.Dropdown>
                   </Menu>
@@ -631,7 +629,7 @@ export default function EntityList<T>(props: Props<T>) {
               <Tooltip label="Selector">
                 <Checkbox
                   className={`w-8 h-8 border flex pt-1 justify-center rounded ${
-                    check && "bg-blue-900"
+                    check && 'bg-blue-900'
                   }`}
                   checked={check}
                   onChange={() => {
@@ -654,62 +652,58 @@ export default function EntityList<T>(props: Props<T>) {
             </div>
           )}
           {!itemsLoading && (
-            <table className="w-full text-md mt-2 text-left border rounded">
-              <thead className="text-md text-gray-900 capitalize bg-gray-100 rounded">
-                <tr>
+            <Table highlightOnHover>
+              <Table.Thead className="capitalize">
+                <Table.Tr>
                   {check &&
-                    (viewMode !== "detail" ? (
-                      <th scope="col" className="py-3 px-2">
+                    (viewMode !== 'detail' ? (
+                      <Table.Th scope="col" className="py-3 px-2">
                         <Checkbox onChange={() => setAllChecked(!allChecked)} />
-                      </th>
+                      </Table.Th>
                     ) : (
-                      <th
-                        scope="col"
-                        // className="py-2 px-2 bg-primary-500 text-white"
-                        className="py-2 px-2 bg-primary-500 text-white"
-                        // bg={"primary.4"}
+                      <Table.Th
                       >
                         <Checkbox onChange={() => setAllChecked(!allChecked)} />
-                      </th>
+                      </Table.Th>
                     ))}
-                  {viewMode !== "detail" ? (
+                  {viewMode !== 'detail' ? (
                     setting?.visibleColumn?.map(
                       (item: any) =>
                         item?.hide !== true && (
-                          <th
+                          <Table.Th
                             key={item?.name}
                             scope="col"
-                            className="py-3 text-md px-2 items-center"
+                            className="py-3 text-sm px-2 items-center"
                           >
                             <div className="flex items-center space-x-2 h-full">
-                              <div className="flex items-center text-xs">
+                              <div className="flex items-center text-sm">
                                 {item?.name}
                               </div>
                               {!item.hideSort && (
                                 <div
                                   className="flex-col"
                                   onClick={() => {
-                                    if (order.direction === "asc") {
+                                    if (order.direction === 'asc') {
                                       setOrder({
                                         field: `${item.key}`,
-                                        direction: "desc",
+                                        direction: 'desc',
                                       });
                                       onOrder?.({
                                         field: !Array.isArray(item.key)
                                           ? `${item.key}`
-                                          : item.key && item.key?.join("."),
-                                        direction: "desc",
+                                          : item.key && item.key?.join('.'),
+                                        direction: 'desc',
                                       });
                                     } else {
                                       setOrder({
                                         field: `${item.key}`,
-                                        direction: "asc",
+                                        direction: 'asc',
                                       });
                                       onOrder?.({
                                         field: !Array.isArray(item.key)
                                           ? `${item.key}`
-                                          : item.key && item.key?.join("."),
-                                        direction: "asc",
+                                          : item.key && item.key?.join('.'),
+                                        direction: 'asc',
                                       });
                                     }
                                   }}
@@ -718,8 +712,8 @@ export default function EntityList<T>(props: Props<T>) {
                                     size={10}
                                     className={` fill-current cursor-pointer ${
                                       order.field === item.key &&
-                                      order.direction === "asc" &&
-                                      "text-blue-500"
+                                      order.direction === 'asc' &&
+                                      'text-gray-900'
                                     }`}
                                   />
 
@@ -727,45 +721,42 @@ export default function EntityList<T>(props: Props<T>) {
                                     size={10}
                                     className={`fill-current cursor-pointer ${
                                       order.field === item.key &&
-                                      order.direction === "desc" &&
-                                      "text-blue-500"
+                                      order.direction === 'desc' &&
+                                      'text-gray-900'
                                     }`}
                                   />
                                 </div>
                               )}
                             </div>
-                          </th>
-                        )
+                          </Table.Th>
+                        ),
                     )
                   ) : (
-                    <th
-                      scope="col"
-                      className="py-3 bg-primary-500 text-white px-2"
-                    >
+                    <Table.Th>
                       <div className="flex space-x-2 items-center">
-                        <div className="flex items-center text-xs">
-                          {setting?.primaryColumn["name"]}
+                        <div className="flex items-center text-sm">
+                          {setting?.primaryColumn['name']}
                         </div>
                         <div
                           className="flex-col "
                           onClick={() => {
-                            if (order.direction === "asc") {
+                            if (order.direction === 'asc') {
                               setOrder({
-                                field: `${setting?.primaryColumn?.["key"]}`,
-                                direction: "desc",
+                                field: `${setting?.primaryColumn?.['key']}`,
+                                direction: 'desc',
                               });
                               onOrder?.({
-                                field: `${setting?.primaryColumn?.["key"]}`,
-                                direction: "desc",
+                                field: `${setting?.primaryColumn?.['key']}`,
+                                direction: 'desc',
                               });
                             } else {
                               setOrder({
-                                field: `${setting?.primaryColumn?.["key"]}`,
-                                direction: "asc",
+                                field: `${setting?.primaryColumn?.['key']}`,
+                                direction: 'asc',
                               });
                               onOrder?.({
-                                field: `${setting?.primaryColumn?.["key"]}`,
-                                direction: "asc",
+                                field: `${setting?.primaryColumn?.['key']}`,
+                                direction: 'asc',
                               });
                             }
                           }}
@@ -775,9 +766,9 @@ export default function EntityList<T>(props: Props<T>) {
                               size={5}
                               className={`fill-current cursor-pointer ${
                                 order.field ===
-                                  setting?.primaryColumn?.["key"] &&
-                                order.direction === "asc" &&
-                                "text-orange-500"
+                                  setting?.primaryColumn?.['key'] &&
+                                order.direction === 'asc' &&
+                                'text-orange-500'
                               }`}
                             />
                           </div>
@@ -786,25 +777,23 @@ export default function EntityList<T>(props: Props<T>) {
                               size={5}
                               className={`h-2 fill-current cursor-pointer ${
                                 order.field ===
-                                  setting?.primaryColumn?.["key"] &&
-                                order.direction === "desc" &&
-                                "text-orange-500"
+                                  setting?.primaryColumn?.['key'] &&
+                                order.direction === 'desc' &&
+                                'text-orange-500'
                               }`}
                             />
                           </div>
                         </div>
                       </div>
-                    </th>
+                    </Table.Th>
                   )}
-                  {viewMode !== "detail" &&
-                    (setting?.showDetail || setting?.actions) && <th></th>}
-                </tr>
-              </thead>
-              <tbody
-                className={"relative text-xs text-gray-900 border border-white"}
-              >
+                  {viewMode !== 'detail' &&
+                    (setting?.showDetail || setting?.actions) && <Table.Th></Table.Th>}
+                </Table.Tr>
+              </Table.Thead>
+              <Table.Tbody>
                 {items?.map((item, idx) => (
-                  <tr
+                  <Table.Tr
                     onDoubleClick={() => {
                       if (setting?.showDetail) {
                         onDetail?.(item);
@@ -814,7 +803,7 @@ export default function EntityList<T>(props: Props<T>) {
                               ? item[`${setting?.identity}`]
                               : setting?.identity &&
                                 childeView(item, setting?.identity)
-                          }`
+                          }`,
                         );
                       }
                     }}
@@ -826,16 +815,16 @@ export default function EntityList<T>(props: Props<T>) {
                           (!Array.isArray(setting?.identity)
                             ? item?.[`${setting?.identity}`]
                             : setting?.identity &&
-                              childeView(item, setting?.identity))
-                      ) && "bg-secondary"
+                              childeView(item, setting?.identity)),
+                      ) && 'bg-secondary'
                     } ${
-                      viewMode === "detail"
+                      viewMode === 'detail'
                         ? params?.id ==
                           (!Array.isArray(setting?.identity)
                             ? item?.[`${setting?.identity}`]
                             : setting?.identity &&
                               childeView(item, setting?.identity))
-                          ? "bg-primary-500  text-white hover:bg-primary-500"
+                          ? 'bg-primary-500  text-white hover:bg-primary-500'
                           : `${
                               checkedItems.some(
                                 (checkedItem) =>
@@ -843,19 +832,19 @@ export default function EntityList<T>(props: Props<T>) {
                                   (!Array.isArray(setting?.identity)
                                     ? item?.[`${setting?.identity}`]
                                     : setting?.identity &&
-                                      childeView(item, setting?.identity))
+                                      childeView(item, setting?.identity)),
                               )
-                                ? "bg-secondary  text-white"
-                                : "bg-white"
+                                ? 'bg-secondary  text-white'
+                                : 'bg-white'
                             }  `
-                        : ""
+                        : ''
                     }  border-b  hover:bg-primary-50 `}
                   >
                     {check && (
                       <td
                         className={`${
-                          viewMode === "detail" &&
-                          "group-hover:bg-primary-500 group-hover:text-white font-medium  whitespace-nowrap"
+                          viewMode === 'detail' &&
+                          'group-hover:bg-primary-500 group-hover:text-white font-medium  whitespace-nowrap'
                         } py-2 px-2`}
                       >
                         <Checkbox
@@ -868,11 +857,11 @@ export default function EntityList<T>(props: Props<T>) {
                                   : setting?.identity &&
                                       childeView(
                                         checkedItem,
-                                        setting?.identity
+                                        setting?.identity,
                                       ) === !Array.isArray(setting?.identity)
                                     ? item?.[`${setting?.identity}`]
                                     : setting?.identity &&
-                                      childeView(item, setting?.identity)
+                                      childeView(item, setting?.identity),
                               )) &&
                             checkedItems.some(
                               (checkedItem: any) =>
@@ -881,12 +870,12 @@ export default function EntityList<T>(props: Props<T>) {
                                   : setting?.identity &&
                                     childeView(
                                       checkedItem,
-                                      setting?.identity
+                                      setting?.identity,
                                     )) ===
                                 (!Array.isArray(setting?.identity)
                                   ? item?.[`${setting?.identity}`]
                                   : setting?.identity &&
-                                    childeView(item, setting?.identity))
+                                    childeView(item, setting?.identity)),
                             ) &&
                             true
                           }
@@ -898,7 +887,7 @@ export default function EntityList<T>(props: Props<T>) {
                                   : setting?.identity &&
                                     childeView(
                                       checkedItem,
-                                      setting?.identity
+                                      setting?.identity,
                                     )) ===
                                 (!Array.isArray(setting?.identity)
                                   ? JSON.parse(event.target.value)?.[
@@ -907,8 +896,8 @@ export default function EntityList<T>(props: Props<T>) {
                                   : setting?.identity &&
                                     childeView(
                                       JSON.parse(event.target.value),
-                                      setting?.identity
-                                    ))
+                                      setting?.identity,
+                                    )),
                             )
                               ? setCheckedItems([
                                   ...checkedItems.filter(
@@ -918,7 +907,7 @@ export default function EntityList<T>(props: Props<T>) {
                                         : setting?.identity &&
                                           childeView(
                                             checkedItem,
-                                            setting?.identity
+                                            setting?.identity,
                                           )) !==
                                       (!Array.isArray(setting?.identity)
                                         ? JSON.parse(event.target.value)?.[
@@ -927,8 +916,8 @@ export default function EntityList<T>(props: Props<T>) {
                                         : setting?.identity &&
                                           childeView(
                                             JSON.parse(event.target.value),
-                                            setting?.identity
-                                          ))
+                                            setting?.identity,
+                                          )),
                                   ),
                                 ])
                               : setCheckedItems([
@@ -939,7 +928,7 @@ export default function EntityList<T>(props: Props<T>) {
                         />
                       </td>
                     )}
-                    {viewMode !== "detail" ? (
+                    {viewMode !== 'detail' ? (
                       setting?.visibleColumn?.map(
                         (col: any, index: any) =>
                           col.hide !== true && (
@@ -947,7 +936,7 @@ export default function EntityList<T>(props: Props<T>) {
                               {col.render ? (
                                 <>{col.render(item)}</>
                               ) : !Array.isArray(col.key) ? (
-                                typeof item?.[`${col.key}`] === "boolean" ? (
+                                typeof item?.[`${col.key}`] === 'boolean' ? (
                                   item?.[`${col.key}`] ? (
                                     <IconCheck size={20} />
                                   ) : (
@@ -957,16 +946,16 @@ export default function EntityList<T>(props: Props<T>) {
                                   item?.[`${col.key}`] ? (
                                     dateFormat(
                                       item?.[`${col.key}`],
-                                      "mmm dS, yyyy"
+                                      'mmm dS, yyyy',
                                     )
                                   ) : (
-                                    ""
+                                    ''
                                   )
                                 ) : (
                                   item?.[`${col.key}`]
                                 )
                               ) : typeof childeView(item, col.key) ===
-                                "boolean" ? (
+                                'boolean' ? (
                                 childeView(item, col.key) ? (
                                   <IconCheck size={20} />
                                 ) : (
@@ -976,19 +965,19 @@ export default function EntityList<T>(props: Props<T>) {
                                 childeView(item, col.key) ? (
                                   dateFormat(
                                     childeView(item, col.key),
-                                    "mmm dS, yyyy "
+                                    'mmm dS, yyyy ',
                                   )
                                 ) : (
-                                  ""
+                                  ''
                                 )
                               ) : (
                                 childeView(item, col.key)
                               )}
                             </td>
-                          )
+                          ),
                       )
                     ) : (
-                      <th
+                      <Table.Th
                         className={`py-2 ${
                           pathname ===
                           `${setting?.detailUrl}/${
@@ -997,8 +986,8 @@ export default function EntityList<T>(props: Props<T>) {
                               : setting?.identity &&
                                 childeView(item, setting?.identity)
                           }`
-                            ? "bg-primary-500 text-white"
-                            : ""
+                            ? 'bg-primary-500 text-white'
+                            : ''
                         } cursor-pointer group-hover:bg-primary-500 group-hover:text-white w-full px-2 font-medium  whitespace-nowrap `}
                         onClick={() => {
                           onDetail?.(item);
@@ -1008,7 +997,7 @@ export default function EntityList<T>(props: Props<T>) {
                                 ? item?.[`${setting?.identity}`]
                                 : setting?.identity &&
                                   childeView(item, setting?.identity)
-                            }`
+                            }`,
                           );
                         }}
                       >
@@ -1020,9 +1009,9 @@ export default function EntityList<T>(props: Props<T>) {
                           setting?.primaryColumn &&
                           childeView(item, setting?.primaryColumn?.key)
                         )}
-                      </th>
+                      </Table.Th>
                     )}
-                    {viewMode !== "detail" && setting?.showDetail && (
+                    {viewMode !== 'detail' && setting?.showDetail && (
                       <td
                         onClick={() => {
                           onDetail?.(item);
@@ -1032,7 +1021,7 @@ export default function EntityList<T>(props: Props<T>) {
                                 ? item?.[`${setting?.identity}`]
                                 : setting?.identity &&
                                   childeView(item, setting?.identity)
-                            }`
+                            }`,
                           );
                         }}
                         className="py-2 px-2 cursor-pointer "
@@ -1040,7 +1029,7 @@ export default function EntityList<T>(props: Props<T>) {
                         <IconChevronRight className="group-hover:visible invisible" />
                       </td>
                     )}
-                    {viewMode !== "detail" && !setting?.showDetail && (
+                    {viewMode !== 'detail' && !setting?.showDetail && (
                       <Menu shadow="md" width={200}>
                         <Menu.Target>
                           <Button variant="subtle" size="xs" px={6}>
@@ -1064,8 +1053,8 @@ export default function EntityList<T>(props: Props<T>) {
                                       ) : null
                                     }
                                     color={
-                                      action.type === "danger"
-                                        ? "red"
+                                      action.type === 'danger'
+                                        ? 'red'
                                         : undefined
                                     }
                                     onClick={() =>
@@ -1082,36 +1071,36 @@ export default function EntityList<T>(props: Props<T>) {
                         </Menu.Dropdown>
                       </Menu>
                     )}
-                  </tr>
+                  </Table.Tr>
                 ))}
-              </tbody>
-            </table>
+              </Table.Tbody>
+            </Table>
           )}
           {total > 0 && (
-            <Flex m={"lg"} justify={"space-between"}>
+            <Flex m={'lg'} justify={'space-between'}>
               {
                 <Group>
                   <Select
                     size="xs"
-                    defaultValue={props.defaultPageSize?.toString() ?? "20"}
+                    defaultValue={props.defaultPageSize?.toString() ?? '20'}
                     value={pageSize.toString()}
                     data={PaginationOptions}
                     onChange={(value: string | null, option: ComboboxItem) => {
-                      const newSize = parseInt(value ?? "20");
+                      const newSize = parseInt(value ?? '20');
                       setPageSize(newSize);
                       setPageIndex(1); // Reset to first page when changing page size
                       onPaginationChange(1, newSize);
                     }}
                   />
                   {showTotal && (
-                    <span className="text-md text-gray-500">
+                    <span className="text-sm text-gray-500">
                       {` Total : ${Math.ceil(total)} ${title}`}
                     </span>
                   )}
                 </Group>
               }
               <Pagination
-                size={"xs"}
+                size={'xs'}
                 total={Math.ceil(total / pageSize)}
                 value={pageIndex}
                 onChange={(value: number) => {
@@ -1132,12 +1121,12 @@ export default function EntityList<T>(props: Props<T>) {
       </div>
       {/* detail  view */}
       <div
-        className={` ${viewMode === "detail" ? "block" : "hidden"} ${
-          fullScreen ? "w-full -px-4" : detailWidth.content
+        className={` ${viewMode === 'detail' ? 'block' : 'hidden'} ${
+          fullScreen ? 'w-full -px-4' : detailWidth.content
         } flex-col space-y-2 px-2 h-full`}
       >
         <div className="h-14 bg-white rounded p-2 border   flex justify-between items-center">
-          <div className="h-full  items-center flex text-md font-semibold">
+          <div className="h-full  items-center flex text-sm font-semibold">
             {detailTitle ?? title}
           </div>
           <div className="h-full items-center flex space-x-2">
@@ -1169,7 +1158,7 @@ export default function EntityList<T>(props: Props<T>) {
             <Tooltip label="Close">
               <span
                 onClick={() => {
-                  navigate.push(setting?.rootUrl ?? "");
+                  navigate.push(setting?.rootUrl ?? '');
                 }}
               >
                 <svg
@@ -1195,31 +1184,27 @@ export default function EntityList<T>(props: Props<T>) {
         onClose={close}
       >
         <div className="px-2">
-          <table
-            ref={pdfRef}
-            className="w-full text-md text-left text-gray-500 dark:text-gray-400"
+          <Table
+           highlightOnHover
           >
-            <thead className="text-md text-gray-700 capitalize bg-gray-50 dark:bg-gray-500 dark:text-gray-400">
-              <tr>
+            <Table.Thead>
+              <Table.Tr>
                 {setting?.visibleColumn?.map(
                   (item: any) =>
                     item?.print !== false && (
-                      <th key={item.name} scope="col" className="py-3 px-2">
-                        <div className="flex space-x-2 h-full">
-                          <div className="flex items-center ">{item.name}</div>
-                        </div>
-                      </th>
-                    )
+                      <Table.Th key={item.name}>
+                      </Table.Th>
+                    ),
                 )}
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
+                <Table.Th></Table.Th>
+              </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>
               {printItems?.map((item, idx) => (
-                <tr
+                <Table.Tr
                   key={idx}
                   className={`group ${
-                    viewMode === "detail"
+                    viewMode === 'detail'
                       ? params?.id ===
                         item[
                           `${
@@ -1229,9 +1214,9 @@ export default function EntityList<T>(props: Props<T>) {
                                 childeView(item, setting?.identity)
                           }`
                         ]
-                        ? "bg-primary-500 dark:bg-primary-500 text-white"
-                        : "bg-white dark:bg-gray-700 "
-                      : ""
+                        ? 'bg-primary-500 dark:bg-primary-500 text-white'
+                        : 'bg-white dark:bg-gray-700 '
+                      : ''
                   } border-b dark:border-gray-700 `}
                 >
                   {setting?.visibleColumn.map((col: any, index: any) => (
@@ -1239,7 +1224,7 @@ export default function EntityList<T>(props: Props<T>) {
                       {col.render && col?.print !== false ? (
                         <>{col.render(item)}</>
                       ) : !Array.isArray(col.key) ? (
-                        typeof item[`${col.key}`] === "boolean" ? (
+                        typeof item[`${col.key}`] === 'boolean' ? (
                           item[`${col.key}`] ? (
                             <IconCheck />
                           ) : (
@@ -1247,14 +1232,14 @@ export default function EntityList<T>(props: Props<T>) {
                           )
                         ) : col.isDate ? (
                           item[`${col.key}`] ? (
-                            dateFormat(item[`${col.key}`], "mmm dS, yyyy ")
+                            dateFormat(item[`${col.key}`], 'mmm dS, yyyy ')
                           ) : (
-                            ""
+                            ''
                           )
                         ) : (
                           item[`${col.key}`]
                         )
-                      ) : typeof childeView(item, col.key) === "boolean" ? (
+                      ) : typeof childeView(item, col.key) === 'boolean' ? (
                         childeView(item, col.key) ? (
                           <IconCheck />
                         ) : (
@@ -1262,19 +1247,19 @@ export default function EntityList<T>(props: Props<T>) {
                         )
                       ) : col.isDate ? (
                         childeView(item, col.key) ? (
-                          dateFormat(childeView(item, col.key), "mmm dS, yyyy ")
+                          dateFormat(childeView(item, col.key), 'mmm dS, yyyy ')
                         ) : (
-                          ""
+                          ''
                         )
                       ) : (
                         childeView(item, col.key)
                       )}
                     </td>
                   ))}
-                </tr>
+                </Table.Tr>
               ))}
-            </tbody>
-          </table>
+            </Table.Tbody>
+          </Table>
           <div className="w-full flex justify-end items-center mt-4">
             <ReactToPrint
               trigger={() => (
@@ -1283,7 +1268,7 @@ export default function EntityList<T>(props: Props<T>) {
                   className="flex  items-center space-x-2 bg-primary-500 text-white"
                   leftSection={<IconPrinter />}
                 >
-                  <span className="text-xs">Print</span>
+                  <span className="text-sm">Print</span>
                 </Button>
               )}
               content={() => pdfRef.current}
@@ -1301,9 +1286,9 @@ export default function EntityList<T>(props: Props<T>) {
           <div className="px-2">
             <table
               ref={pdfRef}
-              className="w-full text-md text-left text-gray-500 dark:text-gray-400"
+              className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
             >
-              <thead className="text-md text-gray-700 capitalize bg-gray-50 dark:bg-gray-500 dark:text-gray-400">
+              <Table.Thead className="text-sm text-gray-700 capitalize bg-gray-50 dark:bg-gray-500 dark:text-gray-400">
                 <tr>
                   {setting?.visibleColumn?.map(
                     (item) =>
@@ -1317,7 +1302,7 @@ export default function EntityList<T>(props: Props<T>) {
                   )}
                   <th></th>
                 </tr>
-              </thead>
+              </Table.Thead>
               <tbody>
                 {printItems?.map((item, idx) => (
                   <tr
