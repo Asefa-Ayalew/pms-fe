@@ -1,0 +1,8 @@
+{
+  "extends": "@pms/tsconfig/nextjs.json",
+  "compilerOptions": {
+    "plugins": [{ "name": "next" }]
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": [".turbo", ".next", "dist", "build", "node_modules"]
+}
