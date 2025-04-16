@@ -54,7 +54,7 @@ interface Props {
   isLoading: boolean;
 }
 
-export default function DetailsPage(props: Props): JSX.Element {
+export function DetailsPage(props: Props): JSX.Element {
   const {
     dataSource,
     profileData,

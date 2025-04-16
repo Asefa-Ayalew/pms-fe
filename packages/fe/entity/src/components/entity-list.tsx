@@ -112,7 +112,7 @@ interface Props<T> {
   handleNewModal?: () => void;
 }
 
-export default function EntityList<T>(props: Props<T>) {
+export function EntityList<T>(props: Props<T>) {
   const {
     detailWidth = { list: 'md:w-3/12', content: 'md:w-9/12' },
     viewMode,
@@ -841,7 +841,7 @@ export default function EntityList<T>(props: Props<T>) {
                     }  border-b  hover:bg-primary-50 `}
                   >
                     {check && (
-                      <td
+                      <Table.Td
                         className={`${
                           viewMode === 'detail' &&
                           'group-hover:bg-primary-500 group-hover:text-white font-medium  whitespace-nowrap'
@@ -926,13 +926,13 @@ export default function EntityList<T>(props: Props<T>) {
                                 ]);
                           }}
                         />
-                      </td>
+                      </Table.Td>
                     )}
                     {viewMode !== 'detail' ? (
                       setting?.visibleColumn?.map(
                         (col: any, index: any) =>
                           col.hide !== true && (
-                            <td key={index} className="py-2 px-2">
+                            <Table.Td key={index} className="py-2 px-2">
                               {col.render ? (
                                 <>{col.render(item)}</>
                               ) : !Array.isArray(col.key) ? (
@@ -973,7 +973,7 @@ export default function EntityList<T>(props: Props<T>) {
                               ) : (
                                 childeView(item, col.key)
                               )}
-                            </td>
+                            </Table.Td>
                           ),
                       )
                     ) : (
@@ -1012,7 +1012,7 @@ export default function EntityList<T>(props: Props<T>) {
                       </Table.Th>
                     )}
                     {viewMode !== 'detail' && setting?.showDetail && (
-                      <td
+                      <Table.Td
                         onClick={() => {
                           onDetail?.(item);
                           navigate.push(
@@ -1027,7 +1027,7 @@ export default function EntityList<T>(props: Props<T>) {
                         className="py-2 px-2 cursor-pointer "
                       >
                         <IconChevronRight className="group-hover:visible invisible" />
-                      </td>
+                      </Table.Td>
                     )}
                     {viewMode !== 'detail' && !setting?.showDetail && (
                       <Menu shadow="md" width={200}>
@@ -1220,7 +1220,7 @@ export default function EntityList<T>(props: Props<T>) {
                   } border-b dark:border-gray-700 `}
                 >
                   {setting?.visibleColumn.map((col: any, index: any) => (
-                    <td key={index} className="py-2 px-2">
+                    <Table.Td key={index} className="py-2 px-2">
                       {col.render && col?.print !== false ? (
                         <>{col.render(item)}</>
                       ) : !Array.isArray(col.key) ? (
@@ -1254,130 +1254,14 @@ export default function EntityList<T>(props: Props<T>) {
                       ) : (
                         childeView(item, col.key)
                       )}
-                    </td>
+                    </Table.Td>
                   ))}
                 </Table.Tr>
               ))}
             </Table.Tbody>
           </Table>
-          <div className="w-full flex justify-end items-center mt-4">
-            <ReactToPrint
-              trigger={() => (
-                <Button
-                  size="sm"
-                  className="flex  items-center space-x-2 bg-primary-500 text-white"
-                  leftSection={<IconPrinter />}
-                >
-                  <span className="text-sm">Print</span>
-                </Button>
-              )}
-              content={() => pdfRef.current}
-            />
-          </div>
         </div>
       </Modal>
-      {/* <Modal
-          size={"100%"}
-          opened={opened && printItems.length > 0}
-          onClose={() => setOpened(false)}
-          title={title}
-          closeOnClickOutside
-        >
-          <div className="px-2">
-            <table
-              ref={pdfRef}
-              className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-            >
-              <Table.Thead className="text-sm text-gray-700 capitalize bg-gray-50 dark:bg-gray-500 dark:text-gray-400">
-                <tr>
-                  {setting?.visibleColumn?.map(
-                    (item) =>
-                      item?.print !== false && (
-                        <th key={item.name} scope="col" className="py-3 px-2">
-                          <div className="flex space-x-2 h-full">
-                            <div className="flex items-center ">{item.name}</div>
-                          </div>
-                        </th>
-                      )
-                  )}
-                  <th></th>
-                </tr>
-              </Table.Thead>
-              <tbody>
-                {printItems?.map((item, idx) => (
-                  <tr
-                    key={idx}
-                    className={`group ${
-                      viewMode==='detail'
-                        ? params?.id ===
-                          item[
-                            `${
-                              !Array.isArray(setting?.identity)
-                                ? setting?.identity
-                                : setting?.identity &&
-                                  childeView(item, setting?.identity)
-                            }`
-                          ]
-                          ? "bg-primary-500 dark:bg-primary-500 text-white"
-                          : "bg-white dark:bg-gray-700 "
-                        : ""
-                    }  border-b dark:border-gray-700 `}
-                  >
-                    {setting?.visibleColumn.map((col, index) => (
-                      <td key={index} className="py-2 px-2">
-                        {col.render && col?.print !== false ? (
-                          <>{col.render(item)}</>
-                        ) : !Array.isArray(col.key) ? (
-                          typeof item[`${col.key}`] === "boolean" ? (
-                            item[`${col.key}`] ? (
-                              <IconCheck size={20} />
-                            ) : (
-                              <IconLineDashed size={20} />
-                            )
-                          ) : col.isDate ? (
-                            dateFormat(
-                              item[`${col.key}`],
-                              "mmm dS, yyyy "
-                            )
-                          ) : (
-                            item[`${col.key}`]
-                          )
-                        ) : typeof childeView(item, col.key) === "boolean" ? (
-                          childeView(item, col.key) ? (
-                            <IconCheck size={20} />
-                          ) : (
-                            <IconLineDashed size={20} />
-                          )
-                        ) : col.isDate ? (
-                          dateFormat(
-                            childeView(item, col.key),
-                            "mmm dS, yyyy "
-                          )
-                        ) : (
-                          childeView(item, col.key)
-                        )}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="w-full flex justify-end items-center mt-4">
-            <ReactToPrint
-              trigger={() => (
-                <Button
-                  variant="default"
-                  size="xs"
-                  className="flex  items-center space-x-4 bg-primary-500 text-white"
-                >
-                  <IconPrinter size={14} /> <span className="text-xs">Print</span>
-                </Button>
-              )}
-              content={() => pdfRef.current}
-            />
-          </div>
-        </Modal> */}
     </div>
   );
 }

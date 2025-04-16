@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react';
 
 import {
   CollectionQuery,
+  EntityList,
   Order,
   EntityConfig,
-  EntityList,
   entityViewMode,
 } from '@pms/entity';
 import { useLazyGetTenantsQuery } from './_store/tenant.query';

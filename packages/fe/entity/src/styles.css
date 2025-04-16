@@ -1,3 +1,7 @@
+@import "@mantine/notifications/styles.css";
+@import "@pms/theme/theme.css";
+@import "@pms/theme/preflight.css";
+
 @import "tailwindcss";
 
 @theme {

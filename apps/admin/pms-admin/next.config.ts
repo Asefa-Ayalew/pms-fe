@@ -3,7 +3,6 @@ const nextConfig = {
   basePath: '/pms-admin',
   experimental: {
     esmExternals: true,
-    runtime: 'experimental-edge',
     optimizePackageImports: [
       '@mantine/core',
       '@mantine/hooks',
@@ -42,7 +41,6 @@ const nextConfig = {
     ignoreBuildErrors: false,
   },
   output: 'standalone',
-  swcMinify: true,
   turbopack: {
     rules: {
       '*.svg': {
@@ -50,9 +48,6 @@ const nextConfig = {
         as: '*.js',
       },
       '*.scss': ['sass-loader'],
-    },
-    images: {
-      remotePatterns: [],
     },
   },
   webpack(config: any) {
