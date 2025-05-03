@@ -4,8 +4,8 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { useLazyGetLeasesQuery } from "./_store/lease.query";
-import { Lease } from "@/app/models/lease.model";
 import { CollectionQuery, EntityConfig, EntityList, entityViewMode, Order } from "@pms/entity";
+import { Lease } from "../../models/lease.model";
 
 export default function LeaseListPage({
   children,

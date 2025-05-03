@@ -4,8 +4,8 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { useLazyGetMaintenanceRequestsQuery } from "./_store/maintenance-request.query";
-import { MaintenanceRequest } from "@/app/models/maintenance-request.model";
 import { CollectionQuery, EntityConfig, EntityList, entityViewMode, Order } from "@pms/entity";
+import { MaintenanceRequest } from "../../models/maintenance-request.model";
 
 export default function MaintenanceRequestListPage({
   children,

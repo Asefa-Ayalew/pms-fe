@@ -1,7 +1,7 @@
 import { notifications } from "@mantine/notifications";
 import { MAINTENANCE_REQUEST_ENDPOINT } from "./maintenance-request.endpoint";
 import { appApi, Collection, CollectionQuery, collectionQueryBuilder } from "@pms/entity";
-import { MaintenanceRequest } from "@/app/models/maintenance-request.model";
+import { MaintenanceRequest } from "../../../models/maintenance-request.model";
 
 let maintenanceRequestCollection: CollectionQuery;
 

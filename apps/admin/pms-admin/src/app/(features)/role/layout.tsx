@@ -1,16 +1,17 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { Role } from "@/src/models/role.model";
-import EntityList from "@/src/shared/entity/entity-list";
-import { CollectionQuery, Order } from "@/src/shared/models/collection.model";
+import { useParams } from 'next/navigation';
+import { useLazyGetRolesQuery } from './_store/role.query';
+import { Role } from '@/app/models/role.model';
 import {
+  CollectionQuery,
   EntityConfig,
+  EntityList,
   entityViewMode,
-} from "@/src/shared/models/entity-config.model";
-import { useParams } from "next/navigation";
-import { useLazyGetRolesQuery } from "./_store/role.query";
+  Order,
+} from '@pms/entity';
 
 export default function RoleListPage({
   children,
@@ -22,11 +23,11 @@ export default function RoleListPage({
   //Component states
   const [check, setCheck] = useState(false);
   const [selectedRole, setSelectedType] = useState<Role>();
-  const [viewMode, setViewMode] = useState<entityViewMode>("list");
+  const [viewMode, setViewMode] = useState<entityViewMode>('list');
   const [collection, setCollection] = useState<CollectionQuery>({
     skip: 0,
     top: 20,
-    orderBy: [{ field: "createdAt", direction: "desc" }],
+    orderBy: [{ field: 'createdAt', direction: 'desc' }],
   });
 
   //Rtk hooks
@@ -39,27 +40,27 @@ export default function RoleListPage({
 
   useEffect(() => {
     setSelectedType(
-      role?.data?.data?.find((role) => role?.id === `${params?.id}`)
+      role?.data?.data?.find((role) => role?.id === `${params?.id}`),
     );
   });
 
   useEffect(() => {
     if (params?.id !== undefined) {
-      setViewMode("detail");
+      setViewMode('detail');
     } else {
-      setViewMode("list");
+      setViewMode('list');
     }
   }, [setViewMode, params]);
 
   const config: EntityConfig<Role> = {
-    primaryColumn: { key: "name", name: "Role Name" },
-    rootUrl: "/role",
-    identity: "id",
+    primaryColumn: { key: 'name', name: 'Role Name' },
+    rootUrl: '/role',
+    identity: 'id',
     visibleColumn: [
-      { key: "roleName", name: "Role Name" },
-      { key: "key", name: "Key" },
-      { key: "description", name: "Description" },
-      { key: "createdAt", name: "Created At", isDate: true },
+      { key: 'name', name: 'Role Name' },
+      { key: 'key', name: 'Key' },
+      { key: 'description', name: 'Description' },
+      { key: 'createdAt', name: 'Created At', isDate: true },
     ],
   };
 
@@ -74,8 +75,8 @@ export default function RoleListPage({
         showArchived={false}
         showSelector={false}
         tableKey="roles"
-        title={"Role"}
-        detailTitle={selectedRole?.roleName ?? ""}
+        title={'Role'}
+        detailTitle={selectedRole?.name ?? ''}
         newButtonText="New Role"
         showNewButton={false}
         total={role?.data?.count}
@@ -92,17 +93,17 @@ export default function RoleListPage({
           setCollection({ ...collection, skip: after, top: top });
         }}
         onSearch={(data: any) => {
-          if (data === "") {
+          if (data === '') {
             setCollection({
               ...collection,
-              search: "",
+              search: '',
               searchFrom: [],
             });
           } else {
             setCollection({
               ...collection,
               search: data,
-              searchFrom: ["name", "code"],
+              searchFrom: ['name', 'code'],
             });
           }
         }}

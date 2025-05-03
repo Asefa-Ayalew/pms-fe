@@ -15,8 +15,9 @@ import {
   useRestoreRevenueTypeMutation,
   useUpdateRevenueTypeMutation,
 } from "../_store/revenue-type.query";
-import { NewRevenueTypeSchema } from "@/app/schemas/new-revenue-type-schema";
-import { RevenueType } from "@/app/models/revenue-type.model";
+import { NewRevenueTypeSchema } from "../../../schemas/new-revenue-type-schema";
+import { RevenueType } from "../../../models/revenue-type.model";
+
 
 interface Props {
   editMode: "new" | "detail";

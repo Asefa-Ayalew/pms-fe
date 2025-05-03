@@ -6,7 +6,7 @@ import {
   CollectionQuery,
   collectionQueryBuilder,
 } from '@pms/entity';
-import { Receivable } from '@/app/models/receivable.model';
+import { Receivable } from '../../../models/receivable.model';
 
 let receivableCollection: CollectionQuery;
 

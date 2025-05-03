@@ -17,10 +17,11 @@ import { useEffect, useMemo, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useLazyGetDocumentTypesQuery } from "../../../document-types/_store/document-type.query";
 import { useCreateDocumentMutation } from "../../_store/lease.query";
-import { LeaseDocument } from "@/app/models/lease.model";
-import { useLazyGetTenantsQuery } from "@/app/(features)/tenant/_store/tenant.query";
+
 import { CollectionQuery } from "@pms/entity";
-import { leaseDocumentDefaultValues, leaseDocumentFormSchema, leaseDocumentSchema } from "@/app/schemas/lease-schema";
+import { LeaseDocument } from "../../../../models/lease.model";
+import { useLazyGetTenantsQuery } from "../../../tenant/_store/tenant.query";
+import { leaseDocumentDefaultValues, leaseDocumentFormSchema, leaseDocumentSchema } from "../../../../schemas/lease-schema";
 
 interface Props {
   editMode: "new" | "detail" | "view";
@@ -77,10 +78,12 @@ export default function LeaseDocumentForm(props: Props) {
     try {
       const formData = new FormData();
       // Append form fields
-      formData.append(
-        "leaseId",
-        Array.isArray(params.id) ? params.id[0] : params.id
-      );
+      const leaseId = Array.isArray(params.id) ? params.id[0] : params.id;
+
+      if (leaseId !== undefined) {
+        formData.append("leaseId", leaseId);
+      }
+      
       formData.append("tenantId", data.tenantId);
       formData.append("documentTypeId", data.documentTypeId);
       formData.append("reference", data.reference);

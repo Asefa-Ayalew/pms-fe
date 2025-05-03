@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { User } from "@/src/models/user.model";
-import EntityList from "@/src/shared/entity/entity-list";
-import { CollectionQuery, Order } from "@/src/shared/models/collection.model";
+import { useParams } from 'next/navigation';
+import { useLazyGetUsersQuery } from './_store/user.query';
+import { User } from '@/app/models/user.model';
 import {
+  CollectionQuery,
   EntityConfig,
+  EntityList,
   entityViewMode,
-} from "@/src/shared/models/entity-config.model";
-import { useParams } from "next/navigation";
-import { useLazyGetUsersQuery } from "./_store/user.query";
-
+  Order,
+} from '@pms/entity';
 
 export default function UserListPage({
   children,
@@ -23,11 +23,11 @@ export default function UserListPage({
   //Component states
   const [check, setCheck] = useState(false);
   const [selectedUser, setSelectedType] = useState<User>();
-  const [viewMode, setViewMode] = useState<entityViewMode>("list");
+  const [viewMode, setViewMode] = useState<entityViewMode>('list');
   const [collection, setCollection] = useState<CollectionQuery>({
     skip: 0,
     top: 20,
-    orderBy: [{ field: "createdAt", direction: "desc" }],
+    orderBy: [{ field: 'createdAt', direction: 'desc' }],
   });
 
   //Rtk hooks
@@ -39,54 +39,56 @@ export default function UserListPage({
 
   useEffect(() => {
     setSelectedType(
-      users?.data?.data?.find((user) => user?.id === `${params?.id}`)
+      users?.data?.data?.find((user: any) => user?.id === `${params?.id}`),
     );
   });
 
   useEffect(() => {
     if (params?.id !== undefined) {
-      setViewMode("detail");
+      setViewMode('detail');
     } else {
-      setViewMode("list");
+      setViewMode('list');
     }
   }, [setViewMode, params]);
 
   const config: EntityConfig<User> = {
     primaryColumn: {
-      key: "User Name",
-      name: "User Name",
+      key: 'User Name',
+      name: 'User Name',
       render: (data: User) =>
-        `${data?.firstName ?? ""} ${data?.middleName ?? ""} ${data?.lastName ?? ""
+        `${data?.firstName ?? ''} ${data?.middleName ?? ''} ${
+          data?.lastName ?? ''
         }`,
     },
-    rootUrl: "/user",
-    identity: "id",
+    rootUrl: '/user',
+    identity: 'id',
     visibleColumn: [
       {
-        key: "",
-        name: "User Name",
+        key: '',
+        name: 'User Name',
         render: (data: User) =>
-          `${data?.firstName ?? ""} ${data?.middleName ?? ""} ${data?.lastName ?? ""
+          `${data?.firstName ?? ''} ${data?.middleName ?? ''} ${
+            data?.lastName ?? ''
           }`,
       },
       {
-        key: "isEmployee",
-        name: "Employee",
+        key: 'isEmployee',
+        name: 'Employee',
       },
       {
-        key: "gender",
-        name: "Gender",
+        key: 'gender',
+        name: 'Gender',
         render: (value) => {
           return <span className="capitalize">{value?.gender}</span>;
         },
       },
-      { key: "employeeNumber", name: "User Employee Number" },
-      { key: "phone", name: "Phone Number" },
-      { key: "startDate", name: "Employment Date", isDate: true },
-      { key: "tin", name: "TIN" },
+      { key: 'employeeNumber', name: 'User Employee Number' },
+      { key: 'phone', name: 'Phone Number' },
+      { key: 'startDate', name: 'Employment Date', isDate: true },
+      { key: 'tin', name: 'TIN' },
       {
-        key: "createdAt",
-        name: "Regisration Date",
+        key: 'createdAt',
+        name: 'Regisration Date',
         isDate: true,
       },
     ],
@@ -103,9 +105,10 @@ export default function UserListPage({
         showArchived={false}
         showSelector={true}
         tableKey="users"
-        title={"User Names"}
-        detailTitle={`${selectedUser?.firstName ?? ""} ${selectedUser?.middleName ?? ""} ${selectedUser?.lastName ?? ""
-          }`}
+        title={'User Names'}
+        detailTitle={`${selectedUser?.firstName ?? ''} ${selectedUser?.middleName ?? ''} ${
+          selectedUser?.lastName ?? ''
+        }`}
         newButtonText="New"
         total={users?.data?.count}
         collectionQuery={collection}
@@ -121,10 +124,10 @@ export default function UserListPage({
           setCollection({ ...collection, skip: after, top: top });
         }}
         onSearch={(data: any) => {
-          if (data === "") {
+          if (data === '') {
             setCollection({
               ...collection,
-              search: "",
+              search: '',
               searchFrom: [],
             });
           } else {
@@ -132,14 +135,14 @@ export default function UserListPage({
               ...collection,
               search: data,
               searchFrom: [
-                "firstName",
-                "middleName",
-                "lastName",
-                "phone",
-                "employeeNumber",
-                "userType",
-                "tin",
-                "gender",
+                'firstName',
+                'middleName',
+                'lastName',
+                'phone',
+                'employeeNumber',
+                'userType',
+                'tin',
+                'gender',
               ],
             });
           }

@@ -16,10 +16,10 @@ import {
   useRestoreMaintenanceRequestMutation,
   useUpdateMaintenanceRequestMutation,
 } from "../_store/maintenance-request.query";
-import { MaintenanceRequest } from "@/app/models/maintenance-request.model";
 import { CollectionQuery } from "@pms/entity";
-import { MaintenanceRequestDefaultValues, MaintenanceRequestFormSchema, MaintenanceRequestSchema } from "@/app/schemas/maintenance-request-schema";
 import { notifications } from "@mantine/notifications";
+import { MaintenanceRequestDefaultValues, MaintenanceRequestFormSchema, MaintenanceRequestSchema } from "../../../schemas/maintenance-request-schema";
+import { MaintenanceRequest } from "../../../models/maintenance-request.model";
 interface Props {
   editMode: "new" | "detail";
   onCreating?: (data: any) => void;

@@ -11,11 +11,10 @@ import { useLazyGetBankAccountsQuery } from "../../bank-accounts/_store/bank-acc
 import { useLazyGetRoomsQuery } from "../../property/_store/room.query";
 import { useLazyGetUsersQuery } from "../../user/_store/user.query";
 import { useSendToReceivableMutation } from "../_store/invoice-item.query";
-import { InvoiceItem } from "@/app/models/invoice-item.model";
 import { CollectionQuery } from "@pms/entity";
-import { ReceivableFormSchema, ReceivableSchema } from "@/app/schemas/receivable-schema";
-import { ReceivableDefaultValues } from "@/app/schemas/reveivable-schema";
-import { Receivable } from "@/app/models/receivable.model";
+import { receivableDefaultValues, ReceivableFormSchema, ReceivableSchema } from "../../../schemas/receivable-schema";
+import { InvoiceItem } from "../../../models/invoice-item.model";
+import { Receivable } from "../../../models/receivable.model";
 
 export default function ReceivableForm(props: {
   data: InvoiceItem[] | undefined;
@@ -52,7 +51,7 @@ export default function ReceivableForm(props: {
   } = useForm<ReceivableFormSchema>({
     resolver: zodResolver(ReceivableSchema),
     mode: "all",
-    defaultValues: ReceivableDefaultValues,
+    defaultValues: receivableDefaultValues,
   });
 
   useEffect(() => {
@@ -276,7 +275,7 @@ export default function ReceivableForm(props: {
           <Flex justify="flex-end" gap={8}>
             <Button
               variant="default"
-              onClick={() => reset(ReceivableDefaultValues)}
+              onClick={() => reset(receivableDefaultValues)}
             >
               Reset
             </Button>

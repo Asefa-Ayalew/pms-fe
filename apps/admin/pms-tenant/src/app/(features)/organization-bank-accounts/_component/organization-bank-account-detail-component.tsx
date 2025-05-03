@@ -6,9 +6,9 @@ import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useLazyGetUserQuery } from '../../user/_store/user.query';
 import { useLazyGetOrganizationBankAccountQuery } from '../_store/organization-bank-account.query';
-import { BankAccountType } from '@/app/enum/app.enum';
-import EmptyIcon from '@/app/icons/empty-icon';
 import { DetailsPage } from '@pms/entity';
+import { BankAccountType } from '../../../enum/app.enum';
+import EmptyIcon from '../../../icons/empty-icon';
 
 export default function OrganizationBankAccountDetailComponent() {
   const params = useParams();

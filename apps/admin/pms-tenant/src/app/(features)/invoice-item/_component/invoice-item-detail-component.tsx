@@ -5,8 +5,8 @@ import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useLazyGetUserQuery } from '../../user/_store/user.query';
 import { useLazyGetInvoiceItemQuery } from '../_store/invoice-item.query';
-import EmptyIcon from '@/app/icons/empty-icon';
 import { DetailsPage } from '@pms/entity';
+import EmptyIcon from '../../../icons/empty-icon';
 
 export default function InvoiceItemDetailComponent() {
   const params = useParams();

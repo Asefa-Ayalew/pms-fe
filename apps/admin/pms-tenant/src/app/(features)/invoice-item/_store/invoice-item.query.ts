@@ -1,8 +1,8 @@
 import { notifications } from "@mantine/notifications";
 import { INVOICE_ITEM_ENDPOINT } from "./invoice-item.endpoint";
 import { appApi, Collection, CollectionQuery, collectionQueryBuilder } from "@pms/entity";
-import { InvoiceItem } from "@/app/models/invoice-item.model";
-import { Receivable } from "@/app/models/receivable.model";
+import { InvoiceItem } from "../../../models/invoice-item.model";
+import { Receivable } from "../../../models/receivable.model";
 
 let invoiceItemCollection: CollectionQuery;
 

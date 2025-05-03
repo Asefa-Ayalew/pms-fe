@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useLazyGetUserQuery } from '../../user/_store/user.query';
 import { useLazyGetExpenseQuery } from '../_store/expense.query';
 import { DetailsPage } from '@pms/entity';
-import EmptyIcon from '@/app/icons/empty-icon';
+import EmptyIcon from '../../../icons/empty-icon';
 
 export default function ExpenseDetailComponent() {
   const params = useParams();
@@ -97,9 +97,10 @@ export default function ExpenseDetailComponent() {
       value: `${expense?.remark}`,
     },
     {
-      key: 'remark',
+      key: 'createdAt',
       label: 'Registration Date',
       value: `${expense?.createdAt}`,
+      isDate: true,
     },
   ];
 

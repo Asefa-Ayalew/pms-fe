@@ -17,12 +17,8 @@ import {
   useUpdateLeaseMutation,
 } from '../../_store/lease.query';
 import { CollectionQuery } from '@pms/entity';
-import {
-  LeaseDefaultValues,
-  LeaseFormSchema,
-  LeaseSchema,
-} from '@/app/schemas/lease-schema';
-import { Lease } from '@/app/models/lease.model';
+import { LeaseDefaultValues, LeaseFormSchema, LeaseSchema } from '../../../../schemas/lease-schema';
+import { Lease } from '../../../../models/lease.model';
 
 interface Props {
   editMode: 'new' | 'detail';

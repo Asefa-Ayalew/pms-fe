@@ -2,7 +2,7 @@
 import { notifications } from "@mantine/notifications";
 import { ROLE_ENDPOINT } from "./role.endpoint";
 import { appApi, Collection, CollectionQuery, collectionQueryBuilder } from "@pms/entity";
-import { Role } from "@/app/models/role.model";
+import { Role } from "../../../models/role.model";
 
 let roleCollection: CollectionQuery;
 let archivedRoleCollection: CollectionQuery;

@@ -16,11 +16,12 @@ import {
   useUpdateBankAccountMutation
 } from "../_store/bank-account.query";
 import { getCurrentSession } from "@pms/auth";
-import { NewBankAccountSchema } from "@/app/schemas/new-bank-account-schema";
-import { BankAccount, OwnerType } from "@/app/models/bank-account.model";
 import BankListJson from "../../../constants/bank-list.json";
 import countryJson from "../../../constants/country-json.json";
 import { CollectionQuery } from "@pms/entity";
+import { NewBankAccountSchema } from "../../../schemas/new-bank-account-schema";
+import { BankAccount, OwnerType } from "../../../models/bank-account.model";
+
 
 interface Props {
   editMode: "new" | "detail";
@@ -49,7 +50,7 @@ const countryCodes = countryJson
       index === self.findIndex((t) => t.value === value.value)
   );
 
-const bankCodes = <BankListJson></BankListJson>
+const bankCodes = BankListJson
   .map((bank) => ({
     value: bank.bankCode,
     label: `${bank.name}`,

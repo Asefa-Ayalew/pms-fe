@@ -6,8 +6,8 @@ import { useEffect } from 'react';
 import { useLazyGetUserQuery } from '../../user/_store/user.query';
 import { useLazyGetDepartmentQuery } from '../_store/department.query';
 import { DetailsPage } from '@pms/entity';
-import EmptyIcon from '@/app/icons/empty-icon';
 import dateFormat from "dateformat";
+import EmptyIcon from '../../../icons/empty-icon';
 
 export default function DepartmentDetailComponent() {
   const params = useParams();

@@ -20,7 +20,7 @@ import {
   useLazyGetRoomQuery,
   useUpdateRoomMutation,
 } from "../_store/room.query";
-import { Room } from "@/app/models/room.model";
+import { Room } from "../../../models/room.model";
 
 interface Props {
   editMode: "new" | "detail" | "view";

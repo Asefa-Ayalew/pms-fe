@@ -2,7 +2,7 @@
 import { notifications } from "@mantine/notifications";
 import { roomEndpoint } from "./room.endpoint";
 import { appApi, Collection, CollectionQuery, collectionQueryBuilder } from "@pms/entity";
-import { Room } from "@/app/models/room.model";
+import { Room } from "../../../models/room.model";
 
 let roomCollection: CollectionQuery;
 

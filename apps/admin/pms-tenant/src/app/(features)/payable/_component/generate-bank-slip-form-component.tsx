@@ -9,10 +9,10 @@ import { useEffect, useMemo, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useLazyGetOrganizationBankAccountsQuery } from "../../organization-bank-accounts/_store/organization-bank-account.query";
 import { useGenerateBankSlipMutation } from "../_store/payable.query";
-import { Payable } from "@/app/models/payable.model";
 import { CollectionQuery } from "@pms/entity";
-import { GenerateBankSlipDefaultValues, GenerateBankSlipFormSchema, GenerateBankSlipSchema } from "@/app/schemas/generate-bank-slip-schema";
-import { GenerateBankSlip } from "@/app/models/generate-bank-slip";
+import { Payable } from "../../../models/payable.model";
+import { GenerateBankSlipDefaultValues, GenerateBankSlipFormSchema, GenerateBankSlipSchema } from "../../../schemas/generate-bank-slip-schema";
+import { GenerateBankSlip } from "../../../models/generate-bank-slip";
 
 export default function GenerateBankSlipForm(props: {
   data: Payable[] | undefined;

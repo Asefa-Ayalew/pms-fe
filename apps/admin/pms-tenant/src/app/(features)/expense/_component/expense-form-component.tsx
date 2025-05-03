@@ -34,10 +34,10 @@ import {
   useRestoreExpenseMutation,
   useUpdateExpenseMutation,
 } from "../_store/expense.query";
-import { Expense } from "@/app/models/expense.model";
 import { CollectionQuery } from "@pms/entity";
-import { expenseDefaultValue, ExpenseFormSchema, ExpenseSchema } from "@/app/schemas/expense-schema";
 import { getCurrentSession } from "@pms/auth";
+import { Expense } from "../../../models/expense.model";
+import { expenseDefaultValue, ExpenseFormSchema, ExpenseSchema } from "../../../schemas/expense-schema";
 
 interface Props {
   editMode: "new" | "detail";

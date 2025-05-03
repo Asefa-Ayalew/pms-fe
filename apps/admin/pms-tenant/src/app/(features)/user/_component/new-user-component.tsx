@@ -37,11 +37,13 @@ import {
   useRestoreUserMutation,
   useUpdateUserMutation,
 } from "../_store/user.query";
-import { NewUserSchema } from "@/app/schemas/new-user-schema";
-import { User } from "@/app/models/user.model";
+
 import { CollectionQuery } from "@pms/entity";
-import { Department } from "@/app/models/department.model";
-import { Role } from "@/app/models/role.model";
+import { NewUserSchema } from "../../../schemas/new-user-schema";
+import { User } from "../../../models/user.model";
+import { Department } from "../../../models/department.model";
+import { Role } from "../../../models/role.model";
+
 
 interface Props {
   editMode: "new" | "detail";

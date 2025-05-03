@@ -1,13 +1,13 @@
-import { UserRoles } from "@/src/models/role.model";
-import { User } from "@/src/models/user.model";
+import { notifications } from '@mantine/notifications';
+import { USER_ENDPOINT } from './user.endpoint';
 import {
+  appApi,
   Collection,
   CollectionQuery,
-} from "@/src/shared/models/collection.model";
-import { collectionQueryBuilder } from "@/src/shared/utitlity/collection-query-builder";
-import { appApi } from "@/src/store/app.api";
-import { notifications } from "@mantine/notifications";
-import { USER_ENDPOINT } from "./user.endpoint";
+  collectionQueryBuilder,
+} from '@pms/entity';
+import { User } from '@/app/models/user.model';
+import { UserRoles } from '@/app/models/role.model';
 
 let userCollection: CollectionQuery;
 export const userQuery = appApi.injectEndpoints({
@@ -15,17 +15,17 @@ export const userQuery = appApi.injectEndpoints({
     getUser: builder.query<User, CollectionQuery>({
       query: (data: CollectionQuery) => ({
         url: `${USER_ENDPOINT.detail}/${data?.id}`,
-        method: "get",
+        method: 'get',
         params: collectionQueryBuilder(data),
       }),
     }),
     getUsers: builder.query<Collection<User>, CollectionQuery>({
       query: (data: CollectionQuery) => ({
         url: USER_ENDPOINT.list,
-        method: "GET",
+        method: 'GET',
         params: collectionQueryBuilder(data),
       }),
-      providesTags: ["Users"],
+      providesTags: ['Users'],
       async onQueryStarted(param, { queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
@@ -34,11 +34,11 @@ export const userQuery = appApi.injectEndpoints({
           }
         } catch (error: any) {
           notifications.show({
-            title: "Error",
+            title: 'Error',
             message: error?.error?.data?.message
               ? error?.error?.data?.message
-              : "Error try again",
-            color: "red",
+              : 'Error try again',
+            color: 'red',
           });
         }
       },
@@ -46,39 +46,39 @@ export const userQuery = appApi.injectEndpoints({
     createUser: builder.mutation<User, User>({
       query: (newData: any) => ({
         url: `${USER_ENDPOINT.create}`,
-        method: "post",
+        method: 'post',
         data: newData,
       }),
-      invalidatesTags: ["Users"],
+      invalidatesTags: ['Users'],
       async onQueryStarted(param, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
           if (data) {
             notifications.show({
-              title: "Success",
-              message: "Successfully created",
-              color: "green",
+              title: 'Success',
+              message: 'Successfully created',
+              color: 'green',
             });
             dispatch(
               userQuery.util.updateQueryData(
-                "getUsers",
+                'getUsers',
                 userCollection,
                 (draft) => {
                   if (data) {
                     draft.data.push(data);
                     draft.count += 1;
                   }
-                }
-              )
+                },
+              ),
             );
           }
         } catch (error: any) {
           notifications.show({
-            title: "error",
+            title: 'error',
             message: error?.error?.data?.message
               ? error?.error?.data?.message
-              : "Error try again",
-            color: "red",
+              : 'Error try again',
+            color: 'red',
           });
         }
       },
@@ -86,17 +86,17 @@ export const userQuery = appApi.injectEndpoints({
     updateUser: builder.mutation<User, User>({
       query: (newData: User) => ({
         url: `${USER_ENDPOINT.update}`,
-        method: "PUT",
+        method: 'PUT',
         data: newData,
       }),
-      invalidatesTags: ["UserInfo"],
+      invalidatesTags: ['UserInfo'],
       async onQueryStarted(param, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
           if (data) {
             dispatch(
               userQuery.util.updateQueryData(
-                "getUsers",
+                'getUsers',
                 userCollection,
                 (draft) => {
                   if (data) {
@@ -108,22 +108,22 @@ export const userQuery = appApi.injectEndpoints({
                       }
                     });
                   }
-                }
-              )
+                },
+              ),
             );
             notifications.show({
-              title: "Success",
-              message: "Successfully updated",
-              color: "green",
+              title: 'Success',
+              message: 'Successfully updated',
+              color: 'green',
             });
           }
         } catch (error: any) {
           notifications.show({
-            title: "Error",
+            title: 'Error',
             message: error?.error?.data?.message
               ? error?.error?.data?.message
-              : "Error try again",
-            color: "red",
+              : 'Error try again',
+            color: 'red',
           });
         }
       },
@@ -131,7 +131,7 @@ export const userQuery = appApi.injectEndpoints({
     archiveUser: builder.mutation<User, CollectionQuery>({
       query: (data: CollectionQuery) => ({
         url: `${USER_ENDPOINT.archive}/${data?.id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
 
       async onQueryStarted(param, { dispatch, queryFulfilled }) {
@@ -140,7 +140,7 @@ export const userQuery = appApi.injectEndpoints({
           if (data) {
             dispatch(
               userQuery.util.updateQueryData(
-                "getUsers",
+                'getUsers',
                 userCollection,
                 (draft) => {
                   if (data) {
@@ -151,29 +151,29 @@ export const userQuery = appApi.injectEndpoints({
                       }
                     });
                   }
-                }
-              )
+                },
+              ),
             );
             dispatch(
-              userQuery.util.updateQueryData("getUser", param, (draft) => {
+              userQuery.util.updateQueryData('getUser', param, (draft) => {
                 if (data) {
                   draft.archivedAt = data?.archivedAt;
                 }
-              })
+              }),
             );
             notifications.show({
-              title: "Success",
-              message: "Successfully archived",
-              color: "green",
+              title: 'Success',
+              message: 'Successfully archived',
+              color: 'green',
             });
           }
         } catch (error: any) {
           notifications.show({
-            title: "Error",
+            title: 'Error',
             message: error?.error?.data?.message
               ? error?.error?.data?.message
-              : "Error try again",
-            color: "red",
+              : 'Error try again',
+            color: 'red',
           });
         }
       },
@@ -181,7 +181,7 @@ export const userQuery = appApi.injectEndpoints({
     restoreUser: builder.mutation<User, CollectionQuery>({
       query: (data: CollectionQuery) => ({
         url: `${USER_ENDPOINT.restore}/${data?.id}`,
-        method: "POST",
+        method: 'POST',
       }),
 
       async onQueryStarted(param, { dispatch, queryFulfilled }) {
@@ -190,7 +190,7 @@ export const userQuery = appApi.injectEndpoints({
           if (data) {
             dispatch(
               userQuery.util.updateQueryData(
-                "getUsers",
+                'getUsers',
                 userCollection,
                 (draft) => {
                   if (data) {
@@ -202,29 +202,29 @@ export const userQuery = appApi.injectEndpoints({
                       }
                     });
                   }
-                }
-              )
+                },
+              ),
             );
             dispatch(
-              userQuery.util.updateQueryData("getUser", param, (draft) => {
+              userQuery.util.updateQueryData('getUser', param, (draft) => {
                 if (data) {
-                  draft.archivedAt = "";
+                  draft.archivedAt = '';
                 }
-              })
+              }),
             );
             notifications.show({
-              title: "Success",
-              message: "Successfully restored",
-              color: "green",
+              title: 'Success',
+              message: 'Successfully restored',
+              color: 'green',
             });
           }
         } catch (error: any) {
           notifications.show({
-            title: "Error",
+            title: 'Error',
             message: error?.error?.data?.message
               ? error?.error?.data?.message
-              : "Error try again",
-            color: "red",
+              : 'Error try again',
+            color: 'red',
           });
         }
       },
@@ -232,40 +232,40 @@ export const userQuery = appApi.injectEndpoints({
     deleteUser: builder.mutation<boolean, string>({
       query: (id: string) => ({
         url: `${USER_ENDPOINT.delete}/${id}`,
-        method: "delete",
+        method: 'delete',
       }),
-      invalidatesTags: ["Users"],
+      invalidatesTags: ['Users'],
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
           if (data) {
             dispatch(
               userQuery.util.updateQueryData(
-                "getUsers",
+                'getUsers',
                 userCollection,
                 (draft) => {
                   if (data) {
                     draft.data = draft?.data?.filter(
-                      (user) => user.id?.toString() !== id
+                      (user) => user.id?.toString() !== id,
                     );
                     draft.count -= 1;
                   }
-                }
-              )
+                },
+              ),
             );
             notifications.show({
-              title: "Success",
-              message: "Successfully deleted",
-              color: "green",
+              title: 'Success',
+              message: 'Successfully deleted',
+              color: 'green',
             });
           }
         } catch (error: any) {
           notifications.show({
-            title: "Error",
+            title: 'Error',
             message: error?.error?.data?.message
               ? error?.error?.data?.message
-              : "Error try again",
-            color: "red",
+              : 'Error try again',
+            color: 'red',
           });
         }
       },
@@ -273,7 +273,7 @@ export const userQuery = appApi.injectEndpoints({
     getDepartments: builder.query<Collection<any>, CollectionQuery>({
       query: (data: CollectionQuery) => ({
         url: USER_ENDPOINT.department_list,
-        method: "GET",
+        method: 'GET',
         params: collectionQueryBuilder(data),
       }),
       async onQueryStarted(param, { queryFulfilled }) {
@@ -284,11 +284,11 @@ export const userQuery = appApi.injectEndpoints({
           }
         } catch (error: any) {
           notifications.show({
-            title: "Error",
+            title: 'Error',
             message: error?.error?.data?.message
               ? error?.error?.data?.message
-              : "Error try again",
-            color: "red",
+              : 'Error try again',
+            color: 'red',
           });
         }
       },
@@ -296,47 +296,47 @@ export const userQuery = appApi.injectEndpoints({
     getUserInfo: builder.query<User, void>({
       query: () => ({
         url: `${USER_ENDPOINT.user_info}`,
-        method: "get",
+        method: 'get',
       }),
-      providesTags: ["UserInfo"],
+      providesTags: ['UserInfo'],
     }),
 
     createUserRole: builder.mutation<UserRoles, UserRoles>({
       query: (newData: UserRoles) => ({
         url: `${USER_ENDPOINT.create_role}`,
-        method: "post",
+        method: 'post',
         data: newData,
       }),
-      invalidatesTags: ["Users"],
+      invalidatesTags: ['Users'],
       async onQueryStarted(param, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
           if (data) {
             notifications.show({
-              title: "Success",
-              message: "Role is Assigned for the user",
-              color: "green",
+              title: 'Success',
+              message: 'Role is Assigned for the user',
+              color: 'green',
             });
             dispatch(
               userQuery.util.updateQueryData(
-                "getUsers",
+                'getUsers',
                 userCollection,
                 (draft) => {
                   // if (data) {
                   //   draft.data.push(data);
                   //   draft.count += 1;
                   // }
-                }
-              )
+                },
+              ),
             );
           }
         } catch (error: any) {
           notifications.show({
-            title: "error",
+            title: 'error',
             message: error?.error?.data?.message
               ? error?.error?.data?.message
-              : "Error try again",
-            color: "red",
+              : 'Error try again',
+            color: 'red',
           });
         }
       },

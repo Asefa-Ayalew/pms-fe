@@ -2,9 +2,9 @@
 import { DetailsPage } from '@pms/entity';
 import { LoadingOverlay } from '@mantine/core';
 import { useParams } from 'next/navigation';
-import EmptyIcon from '@/app/icons/empty-icon';
 import { getCurrentSession } from '@pms/auth';
 import { useEffect, useState } from 'react';
+import EmptyIcon from '../../../icons/empty-icon';
 
 export default function TenantDetailComponent() {
   const params = useParams();

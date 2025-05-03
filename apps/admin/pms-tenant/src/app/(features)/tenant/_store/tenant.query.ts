@@ -6,7 +6,7 @@ import {
 } from "@pms/entity";
 import { notifications } from "@mantine/notifications";
 import { TENANT_ENDPOINT } from "./tenant.endpoint";
-import { Tenant } from "@/app/models/tenant.model";
+import { Tenant } from "../../../models/tenant.model";
 
 let tenantCollection: CollectionQuery;
 

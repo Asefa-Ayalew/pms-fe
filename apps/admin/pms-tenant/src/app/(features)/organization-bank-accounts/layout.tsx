@@ -4,9 +4,9 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { useLazyGetOrganizationBankAccountsQuery } from "./_store/organization-bank-account.query";
-import { OrganizationBankAccount } from "@/app/models/organization-bank-account.model";
 import { CollectionQuery, EntityConfig, EntityList, entityViewMode, Order } from "@pms/entity";
-import { BankAccountType } from "@/app/enum/app.enum";
+import { OrganizationBankAccount } from "../../models/organization-bank-account.model";
+import { BankAccountType } from "../../enum/app.enum";
 
 export default function OrganizationBankAccountListPage({
   children,

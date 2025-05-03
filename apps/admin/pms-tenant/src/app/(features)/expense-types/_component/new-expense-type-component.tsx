@@ -16,8 +16,8 @@ import {
   useRestoreExpenseTypeMutation,
   useUpdateExpenseTypeMutation,
 } from "../_store/expense-type.query";
-import { NewExpenseTypeSchema } from "@/app/schemas/new-expense-type-schema";
-import { ExpenseType } from "@/app/models/expense-type.model";
+import { NewExpenseTypeSchema } from "../../../schemas/new-expense-type-schema";
+import { ExpenseType } from "../../../models/expense-type.model";
 
 interface Props {
   editMode: "new" | "detail";

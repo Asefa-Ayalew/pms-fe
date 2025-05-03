@@ -20,8 +20,8 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useLazyGetBankAccountsQuery } from "../../bank-accounts/_store/bank-account.query";
 import { useMarkAsPaidMutation } from "../_store/payable.query";
 import { CollectionQuery } from "@pms/entity";
-import { MarkAsPidDefaultValues, MarkAsPidFormSchema, MarkAsPidSchema } from "@/app/schemas/mark-as-paid-schema";
 import { getCurrentSession } from "@pms/auth";
+import { MarkAsPidDefaultValues, MarkAsPidFormSchema, MarkAsPidSchema } from "../../../schemas/mark-as-paid-schema";
 
 interface Props {
   onClose: () => void;

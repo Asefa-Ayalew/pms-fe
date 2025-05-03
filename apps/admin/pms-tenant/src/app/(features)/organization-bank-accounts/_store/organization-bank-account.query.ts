@@ -2,7 +2,7 @@
 import { notifications } from "@mantine/notifications";
 import { ORGANIZATION_BANK_ACCOUNT_ENDPOINT } from "./organization-bank-account.endpoint";
 import { appApi, Collection, CollectionQuery, collectionQueryBuilder } from "@pms/entity";
-import { OrganizationBankAccount } from "@/app/models/organization-bank-account.model";
+import { OrganizationBankAccount } from "../../../models/organization-bank-account.model";
 
 let organizationBankAccountCollection: CollectionQuery;
 

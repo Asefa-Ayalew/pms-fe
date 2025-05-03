@@ -9,11 +9,8 @@ import {
   useLazyGetUserQuery,
 } from '../_store/emergency-contact.query';
 import EmergencyContactForm from './emergency-contact-form';
-import {
-  EmergencyContact,
-  UserContactType,
-} from '@/app/models/emergency-contact.model';
 import { CollectionQuery, EntityConfig, EntityList, Order } from '@pms/entity';
+import { EmergencyContact, UserContactType } from '../../../models/emergency-contact.model';
 
 export default function EmergencyContactsComponent() {
   const [modals, setModals] = useState({

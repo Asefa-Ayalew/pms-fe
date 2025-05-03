@@ -2,9 +2,9 @@
 import { notifications } from "@mantine/notifications";
 import { BANK_ACCOUNT_ENDPOINT } from "./bank-account.endpoint";
 import { appApi, Collection, CollectionQuery, collectionQueryBuilder } from "@pms/entity";
-import { BankAccount } from "@/app/models/bank-account.model";
-import { User } from "@/app/models/user.model";
-import { Tenant } from "@/app/models/tenant.model";
+import { BankAccount } from "../../../models/bank-account.model";
+import { User } from "../../../models/user.model";
+import { Tenant } from "../../../models/tenant.model";
 
 let bankAccountCollection: CollectionQuery;
 let tenantCollection: CollectionQuery;

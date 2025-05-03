@@ -8,7 +8,7 @@ import {
   useLazyGetTenantQuery,
 } from "./_store/bank-account.query";
 import { CollectionQuery, EntityConfig, EntityList, entityViewMode, Order } from "@pms/entity";
-import { BankAccount, OwnerType } from "@/app/models/bank-account.model";
+import { BankAccount, OwnerType } from "../../models/bank-account.model";
 
 export default function BankAccountListPage({
   children,

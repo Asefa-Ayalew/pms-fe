@@ -7,8 +7,8 @@ import { useEffect } from 'react';
 import { useLazyGetUserQuery } from '../_store/user.query';
 import EmergencyContactsComponent from './emergency-contact-component';
 import UserRolesComponent from './user-roles-component';
-import EmptyIcon from '@/app/icons/empty-icon';
 import { DetailsPage } from '@pms/entity';
+import EmptyIcon from '../../../icons/empty-icon';
 
 export default function UserDetailComponent() {
   const params = useParams();

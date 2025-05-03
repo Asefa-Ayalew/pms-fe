@@ -5,8 +5,8 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useLazyGetPropertyQuery } from '../_store/property.query';
 import { DetailsPage } from '@pms/entity';
-import EmptyIcon from '@/app/icons/empty-icon';
 import { getCurrentSession } from '@pms/auth';
+import EmptyIcon from '../../../icons/empty-icon';
 
 export default function PropertyDetailComponent() {
   const params = useParams();

@@ -2,8 +2,8 @@
 import { notifications } from "@mantine/notifications";
 import { USER_ENDPOINT } from "./user.endpoint";
 import { appApi, Collection, CollectionQuery, collectionQueryBuilder } from "@pms/entity";
-import { User } from "@/app/models/user.model";
-import { UserRoles } from "@/app/models/role.model";
+import { User } from "../../../models/user.model";
+import { UserRoles } from "../../../models/role.model";
 
 let userCollection: CollectionQuery;
 export const userQuery = appApi.injectEndpoints({

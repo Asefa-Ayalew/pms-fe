@@ -2,9 +2,9 @@
 import { notifications } from "@mantine/notifications";
 import { PAYABLE_ENDPOINT } from "./payable.endpoint";
 import { appApi, Collection, CollectionQuery, collectionQueryBuilder } from "@pms/entity";
-import { Payable } from "@/app/models/payable.model";
-import { MarkAsPaid } from "@/app/models/mark-as-paid.model";
-import { GenerateBankSlip } from "@/app/models/generate-bank-slip";
+import { Payable } from "../../../models/payable.model";
+import { GenerateBankSlip } from "../../../models/generate-bank-slip";
+import { MarkAsPaid } from "../../../models/mark-as-paid.model";
 
 let payableCollection: CollectionQuery;
 

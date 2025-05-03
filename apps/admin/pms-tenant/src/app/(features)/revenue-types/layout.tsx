@@ -3,8 +3,8 @@
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useLazyGetRevenueTypesQuery } from './_store/revenue-type.query';
-import { RevenueType } from '@/app/models/revenue-type.model';
 import { CollectionQuery, EntityConfig, EntityList, entityViewMode, Order } from '@pms/entity';
+import { RevenueType } from '../../models/revenue-type.model';
 
 export default function RevenueTypeListPage({
   children,

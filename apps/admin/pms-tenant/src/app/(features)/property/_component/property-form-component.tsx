@@ -1,7 +1,7 @@
 "use client";
 import { getCurrentSession } from "@pms/auth";
 
-import countryJson from "@/app/constants/country-json.json";
+import countryJson from "../../../constants/country-json.json";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
@@ -27,8 +27,8 @@ import {
   useUpdatePropertyMutation,
 } from "../_store/property.query";
 import ReasonForm from "./reason-form-component";
-import { Property } from "@/app/models/property.model";
-import { defaultValue, FormSchema, propertySchema } from "@/app/schemas/property-schema";
+import { Property } from "../../../models/property.model";
+import { defaultValue, FormSchema, propertySchema } from "../../../schemas/property-schema";
 
 interface Props {
   editMode: "new" | "detail";

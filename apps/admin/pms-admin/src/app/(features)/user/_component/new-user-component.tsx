@@ -1,11 +1,5 @@
 "use client";
-import { useUserInfo } from "@/src/hooks/useUserInfo";
-import { Department } from "@/src/models/department.model";
-import { Role } from "@/src/models/role.model";
-import { User } from "@/src/models/user.model";
-import { NewUserSchema } from "@/src/schemas/new-user-schema";
-import countryJson from "@/src/shared/constants/country-json.json";
-import { CollectionQuery } from "@/src/shared/models/collection.model";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -27,7 +21,6 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 import dayjs from "dayjs";
-import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -44,6 +37,12 @@ import {
   useRestoreUserMutation,
   useUpdateUserMutation,
 } from "../_store/user.query";
+import countryJson from '../../../constants/country-json.json';
+import { NewUserSchema } from "@/app/schemas/new-user-schema";
+import { User } from "@/app/models/user.model";
+import { Department } from "@/app/models/department.model";
+import { Role } from "@/app/models/role.model";
+import { CollectionQuery } from "@pms/entity";
 
 interface Props {
   editMode: "new" | "detail";
@@ -87,7 +86,6 @@ export default function NewUserComponent(props: Props) {
   const { editMode, onCreating } = props;
   const params = useParams();
   const navigate = useRouter();
-  const { update } = useSession();
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User>();
@@ -102,9 +100,9 @@ export default function NewUserComponent(props: Props) {
   const [archiveUser, archiveResponse] = useArchiveUserMutation();
   const [restoreUser, restoreResponse] = useRestoreUserMutation();
   const [deleteUser, deleteResponse] = useDeleteUserMutation();
-  const { user: currentUser } = useUserInfo();
-  const [collection, setCollection] = useState<CollectionQuery>({});
   const [getDepartments, departments] = useLazyGetDepartmentsQuery();
+  const [collection, setCollection] = useState<CollectionQuery>({});
+
   const {
     register,
     control,
@@ -157,11 +155,6 @@ export default function NewUserComponent(props: Props) {
               userId: response.data.id
             }
             createUserRole(userRoles ?? data?.userRoles);
-          }
-          if (currentUser?.id === response.data.id) {
-            await update({
-              profile: response.data,
-            });
           }
 
           navigate.push(`/user/detail/${response?.data?.id}`);

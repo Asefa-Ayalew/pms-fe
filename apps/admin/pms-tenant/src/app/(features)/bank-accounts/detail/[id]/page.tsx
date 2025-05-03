@@ -3,6 +3,5 @@ import BankAccountTypeDetailComponent from "../../_component/bank-account-detail
 export default function BankAccountDetailPage() {
 return (
     <BankAccountTypeDetailComponent />
-
     );
 }

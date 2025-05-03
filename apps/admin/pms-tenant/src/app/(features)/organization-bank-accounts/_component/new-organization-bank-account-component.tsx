@@ -15,9 +15,9 @@ import {
   useRestoreOrganizationBankAccountMutation,
   useUpdateOrganizationBankAccountMutation,
 } from "../_store/organization-bank-account.query";
-import { NewOrganizationBankAccountSchema } from "@/app/schemas/new-organization-bank-account-schema";
-import { OrganizationBankAccount } from "@/app/models/organization-bank-account.model";
-import { BankAccountType } from "@/app/enum/app.enum";
+import { NewOrganizationBankAccountSchema } from "../../../schemas/new-organization-bank-account-schema";
+import { OrganizationBankAccount } from "../../../models/organization-bank-account.model";
+import { BankAccountType } from "../../../enum/app.enum";
 
 interface Props {
   editMode: "new" | "detail";

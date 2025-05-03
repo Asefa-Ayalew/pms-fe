@@ -1,7 +1,7 @@
 import { notifications } from "@mantine/notifications";
 import { REVENUE_TYPE_ENDPOINT } from "./revenue-type.endpoint";
 import { appApi, Collection, CollectionQuery, collectionQueryBuilder } from "@pms/entity";
-import { RevenueType } from "@/app/models/revenue-type.model";
+import { RevenueType } from "../../../models/revenue-type.model";
 
 let revenueTypeCollection: CollectionQuery;
 

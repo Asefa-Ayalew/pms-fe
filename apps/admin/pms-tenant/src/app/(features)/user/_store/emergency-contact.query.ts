@@ -6,8 +6,8 @@ import {
   CollectionQuery,
   collectionQueryBuilder,
 } from '@pms/entity';
-import { EmergencyContact } from '@/app/models/emergency-contact.model';
-import { User } from '@/app/models/user.model';
+import { EmergencyContact } from '../../../models/emergency-contact.model';
+import { User } from '../../../models/user.model';
 
 let emergencyContactCollection: CollectionQuery;
 

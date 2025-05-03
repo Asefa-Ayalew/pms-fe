@@ -8,8 +8,8 @@ import {
   useLazyGetUserQuery,
 } from '../_store/emergency-contact.query';
 import { CollectionQuery, EntityConfig, EntityList, Order } from '@pms/entity';
-import { Role } from '@/app/models/role.model';
-import { EmergencyContact } from '@/app/models/emergency-contact.model';
+import { Role } from '../../../models/role.model';
+import { EmergencyContact } from '../../../models/emergency-contact.model';
 
 export default function UserRolesComponent() {
   const [modals, setModals] = useState({

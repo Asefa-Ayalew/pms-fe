@@ -6,7 +6,7 @@ import { JSX, useEffect, useState } from "react";
 import { useLazyGetRoomsQuery } from "../_store/room.query";
 import ReasonForm from "./reason-form-component";
 import RoomForm from "./room-form-component";
-import { Room } from "@/app/models/room.model";
+import { Room } from "../../../models/room.model";
 
 export default function RoomsComponent(props: { editMode: "view" | "edit" }) {
   const [modals, setModals] = useState({

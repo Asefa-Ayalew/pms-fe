@@ -1,5 +1,5 @@
 'use client';
-import countryJson from '../../../constants/constant/countryJson';
+import countryJson from '../../../constants/country-json.json';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Box,

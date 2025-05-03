@@ -39,8 +39,8 @@ import {
 import MarkAsPaidFrom from "./mark-as-paid-form-component";
 import ReasonForm from "./reason-form-component";
 import { CollectionQuery } from "@pms/entity";
-import { payableDefaultValues, PayableFormSchema, PayableSchema } from "@/app/schemas/payable-schema";
-import { Payable } from "@/app/models/payable.model";
+import { payableDefaultValues, PayableFormSchema, PayableSchema } from "../../../schemas/payable-schema";
+import { Payable } from "../../../models/payable.model";
 interface Props {
   editMode: "new" | "detail";
 }

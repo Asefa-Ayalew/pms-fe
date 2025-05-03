@@ -1,7 +1,5 @@
 "use client";
 
-import DetailsPage from "@/src/shared/component/details-page/details-page.component";
-import EmptyIcon from "@/src/shared/icons/empty-icon";
 import { LoadingOverlay, Tabs } from "@mantine/core";
 import dayjs from "dayjs";
 import { useParams } from "next/navigation";
@@ -9,6 +7,8 @@ import { useEffect } from "react";
 import { useLazyGetUserQuery } from "../_store/user.query";
 import EmergencyContactsComponent from "./emergency-contact-component";
 import UserRolesComponent from "./user-roles-component";
+import EmptyIcon from "@/app/icons/empty-icon";
+import { DetailsPage } from "@pms/entity";
 
 export default function UserDetailComponent() {
   const params = useParams();

@@ -7,9 +7,9 @@ import {
   useRemoveDocumentMutation,
 } from "../../_store/lease.query";
 import LeaseDocumentForm from "./lease-document-form.component";
-import { LeaseDocument } from "@/app/models/lease.model";
-import { leaseDocumentDefaultValues } from "@/app/schemas/lease-schema";
 import { CollectionQuery, EntityConfig, EntityList, Order } from "@pms/entity";
+import { LeaseDocument } from "../../../../models/lease.model";
+import { leaseDocumentDefaultValues } from "../../../../schemas/lease-schema";
 
 export default function LeaseDocumentsComponent(props: {
   mode: "view" | "edit";

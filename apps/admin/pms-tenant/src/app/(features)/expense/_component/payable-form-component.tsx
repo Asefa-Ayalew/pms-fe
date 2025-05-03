@@ -11,10 +11,10 @@ import { useLazyGetBankAccountsQuery } from "../../bank-accounts/_store/bank-acc
 import { useLazyGetRoomsQuery } from "../../property/_store/room.query";
 import { useLazyGetUsersQuery } from "../../user/_store/user.query";
 import { useSendToPaybleMutation } from "../_store/expense.query";
-import { Expense } from "@/app/models/expense.model";
 import { CollectionQuery } from "@pms/entity";
-import { payableModalDefaultValues, PayableModalFormSchema, PayableModalSchema } from "@/app/schemas/payable-modal-shema";
-import { Payable } from "@/app/models/payable.model";
+import { Expense } from "../../../models/expense.model";
+import { Payable } from "../../../models/payable.model";
+import { payableModalDefaultValues, PayableModalFormSchema, PayableModalSchema } from "../../../schemas/payable-modal-shema";
 
 export default function PayableForm(props: { data: Expense[] | undefined }) {
   const params = useParams();

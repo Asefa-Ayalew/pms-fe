@@ -2,15 +2,9 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-
-import { Department } from "@/src/models/department.model";
-import EntityList from "@/src/shared/entity/entity-list";
-import { CollectionQuery, Order } from "@/src/shared/models/collection.model";
-import {
-  EntityConfig,
-  entityViewMode,
-} from "@/src/shared/models/entity-config.model";
 import { useLazyGetDepartmentsQuery } from "./_store/department.query";
+import { Department } from "@/app/models/department.model";
+import { CollectionQuery, EntityConfig, EntityList, entityViewMode, Order } from "@pms/entity";
 
 export default function DepartmentListPage({
   children,

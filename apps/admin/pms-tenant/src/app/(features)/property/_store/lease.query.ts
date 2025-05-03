@@ -6,7 +6,7 @@ import {
 } from "@pms/entity";
 import { notifications } from "@mantine/notifications";
 import { LeaseEndpoint } from "./lease.endpoint";
-import { Lease } from "@/app/models/lease.model";
+import { Lease } from "../../../models/lease.model";
 
 let leaseCollection: CollectionQuery;
 

@@ -1,7 +1,7 @@
 import { notifications } from "@mantine/notifications";
 import { EXPENSE_TYPE_ENDPOINT } from "./expense-type.endpoint";
 import { appApi, Collection, CollectionQuery, collectionQueryBuilder } from "@pms/entity";
-import { ExpenseType } from "@/app/models/expense-type.model";
+import { ExpenseType } from "../../../models/expense-type.model";
 
 let expenseTypeCollection: CollectionQuery;
 

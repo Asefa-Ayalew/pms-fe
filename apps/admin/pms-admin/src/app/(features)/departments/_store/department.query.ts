@@ -1,12 +1,7 @@
-import { Department } from "@/src/models/department.model";
-import {
-  Collection,
-  CollectionQuery,
-} from "@/src/shared/models/collection.model";
-import { collectionQueryBuilder } from "@/src/shared/utitlity/collection-query-builder";
-import { appApi } from "@/src/store/app.api";
 import { notifications } from "@mantine/notifications";
 import { DEPARTMENT_ENDPOINT } from "./department.endpoint";
+import { appApi, Collection, CollectionQuery, collectionQueryBuilder } from "@pms/entity";
+import { Department } from "@/app/models/department.model";
 
 let departmentCollection: CollectionQuery;
 

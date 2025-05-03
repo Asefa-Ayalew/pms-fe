@@ -6,8 +6,8 @@ import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useLazyGetUserQuery } from '../../../user/_store/user.query';
 import { useLazyGetLeaseQuery } from '../../_store/lease.query';
-import EmptyIcon from '@/app/icons/empty-icon';
 import { DetailsPage } from '@pms/entity';
+import EmptyIcon from '../../../../icons/empty-icon';
 
 export default function LeaseDetailComponent() {
   const params = useParams();

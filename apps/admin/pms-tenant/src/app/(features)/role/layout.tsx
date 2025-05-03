@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useLazyGetRolesQuery } from './_store/role.query';
-import { Role } from '@/app/models/role.model';
 import {
   CollectionQuery,
   EntityConfig,
@@ -11,6 +10,7 @@ import {
   entityViewMode,
   Order,
 } from '@pms/entity';
+import { Role } from '../../models/role.model';
 
 export default function RoleListPage({
   children,

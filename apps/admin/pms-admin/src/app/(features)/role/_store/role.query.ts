@@ -1,12 +1,7 @@
-import { Role } from "@/src/models/role.model";
-import {
-  Collection,
-  CollectionQuery,
-} from "@/src/shared/models/collection.model";
-import { collectionQueryBuilder } from "@/src/shared/utitlity/collection-query-builder";
-import { appApi } from "@/src/store/app.api";
 import { notifications } from "@mantine/notifications";
 import { ROLE_ENDPOINT } from "./role.endpoint";
+import { appApi, Collection, CollectionQuery, collectionQueryBuilder } from "@pms/entity";
+import { Role } from "@/app/models/role.model";
 
 let roleCollection: CollectionQuery;
 let archivedRoleCollection: CollectionQuery;

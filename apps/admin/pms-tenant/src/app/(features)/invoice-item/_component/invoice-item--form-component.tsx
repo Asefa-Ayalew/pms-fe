@@ -40,7 +40,7 @@ import {
   useUpdateInvoiceItemMutation,
 } from "../_store/invoice-item.query";
 import { CollectionQuery } from "@pms/entity";
-import { InvoiceItem } from "@/app/models/invoice-item.model";
+import { InvoiceItem } from "../../../models/invoice-item.model";
 
 interface Props {
   editMode: "new" | "detail";

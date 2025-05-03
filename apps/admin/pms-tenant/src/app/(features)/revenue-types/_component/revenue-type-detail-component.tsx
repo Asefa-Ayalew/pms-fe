@@ -5,8 +5,8 @@ import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useLazyGetUserQuery } from '../../user/_store/user.query';
 import { useLazyGetRevenueTypeQuery } from '../_store/revenue-type.query';
-import EmptyIcon from '@/app/icons/empty-icon';
 import { DetailsPage } from '@pms/entity';
+import EmptyIcon from '../../../icons/empty-icon';
 
 export default function RevenueTypeDetailComponent() {
   const params = useParams();

@@ -35,10 +35,10 @@ import {
   useUpdateReceivableMutation,
 } from "../_store/receivable.query";
 import ReasonForm from "./reason-form-component";
-import { BankAccount } from "@/app/models/bank-account.model";
 import { CollectionQuery } from "@pms/entity";
-import { receivableDefaultValues, ReceivableFormSchema, ReceivableSchema } from "@/app/schemas/receivable-schema";
-import { Receivable } from "@/app/models/receivable.model";
+import { BankAccount } from "../../../models/bank-account.model";
+import { receivableDefaultValues, ReceivableFormSchema, ReceivableSchema } from "../../../schemas/receivable-schema";
+import { Receivable } from "../../../models/receivable.model";
 
 interface Props {
   editMode: "new" | "detail";
