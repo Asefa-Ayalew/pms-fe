@@ -5,8 +5,8 @@ import { useEffect } from 'react';
 import { useLazyGetRoleQuery } from '../_store/role.query';
 
 import { LoadingOverlay, Tabs } from '@mantine/core';
-import EmptyIcon from '@/app/icons/empty-icon';
 import { DetailsPage } from '@pms/entity';
+import EmptyIcon from '../../../icons/empty-icon';
 
 export default function RoleDetailComponent() {
   const params = useParams();

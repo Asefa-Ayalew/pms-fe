@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useLazyGetUsersQuery } from './_store/user.query';
-import { User } from '@/app/models/user.model';
 import {
   CollectionQuery,
   EntityConfig,
@@ -11,6 +10,7 @@ import {
   entityViewMode,
   Order,
 } from '@pms/entity';
+import { User } from '../../models/user.model';
 
 export default function UserListPage({
   children,

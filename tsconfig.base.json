@@ -1,22 +1,21 @@
 {
-  "compileOnSave": false,
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Default",
   "compilerOptions": {
-    "rootDir": "src",
-    "sourceMap": true,
-    "declaration": false,
+    "composite": false,
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "inlineSources": false,
+    "isolatedModules": true,
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "es2015",
-    "module": "esnext",
-    "lib": ["es2020", "dom"],
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true,
     "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": "src",
-    "paths": {}
+    "strict": true,
+    "strictNullChecks": true,
   },
-  "include": ["src/**/*"], // Only compile source files
-
-  "exclude": ["node_modules", "tmp", ".next", "dist"] // Add build dirs
+  "exclude": ["node_modules"]
 }

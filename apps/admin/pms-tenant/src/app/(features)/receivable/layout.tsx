@@ -4,7 +4,6 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { useLazyGetReceivablesQuery } from './_store/receivable.query';
-import { Receivable } from '@/app/models/receivable.model';
 import {
   CollectionQuery,
   EntityConfig,
@@ -12,6 +11,7 @@ import {
   entityViewMode,
   Order,
 } from '@pms/entity';
+import { Receivable } from '../../models/receivable.model';
 
 export default function ReceivableListPage({
   children,
