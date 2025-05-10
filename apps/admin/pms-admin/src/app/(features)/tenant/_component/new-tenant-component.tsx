@@ -1,6 +1,5 @@
 "use client";
 import { Tenant } from "../../../models/tenant.model";
-import { NewTenantSchema } from "../../../schemas/new-tenant-schema";
 import countryJson from "../../../constants/country-json.json";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -29,7 +28,7 @@ import {
   useUpdateTenantMutation,
 } from "../_store/tenant.query";
 import { getCurrentSession } from "@pms/auth";
-
+import { NewTenantSchema } from "@/app/schemas/new-tenant-schema";
 interface Props {
   editMode: "new" | "detail";
   onCreating?: (data: any) => void;

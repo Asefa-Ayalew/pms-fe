@@ -1,3 +1,4 @@
+import '../../styles.css';
 import { JSX } from 'react'
 import DetailsPageSkeleton from "./details-page-skeleton.component";
 import dateFormat from "dateformat";

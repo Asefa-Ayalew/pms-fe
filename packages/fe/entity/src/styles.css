@@ -3,6 +3,8 @@
 @import "@pms/theme/preflight.css";
 
 @import "tailwindcss";
+@import "mantine-react-table/styles.css";
+
 
 @theme {
   --breakpoint-*: initial;

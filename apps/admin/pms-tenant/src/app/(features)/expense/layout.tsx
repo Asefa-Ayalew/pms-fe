@@ -15,7 +15,7 @@ import {
   entityViewMode,
   Order,
 } from '@pms/entity';
-import { Expense } from '@/app/models/expense.model';
+import { Expense } from '../../models/expense.model';
 
 export default function ExpenseListPage({
   children,

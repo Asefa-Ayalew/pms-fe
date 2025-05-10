@@ -1,3 +1,4 @@
+import '../../styles.css';
 import { JSX } from 'react'
 import { Skeleton, Table } from "@mantine/core";
 

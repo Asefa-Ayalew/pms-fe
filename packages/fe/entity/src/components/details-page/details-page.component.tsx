@@ -1,20 +1,21 @@
-"use client";
-import { JSX } from 'react'
-import type { ReactNode } from "react";
+'use client';
+import '../../styles.css';
+import { JSX } from 'react';
+import type { ReactNode } from 'react';
 
 // import { Button, Divider, Empty, Image, Table, Typography } from "antd";
 
-import { Badge, Button, Card, Table, Text } from "@mantine/core";
-import { IconListDetails, IconStarFilled } from "@tabler/icons-react";
-import { useRouter } from "next/navigation";
-import React from "react";
-import EmptyIcon from "../../icons/empty-icon";
-import DetailsPageSkeleton from "./details-page-skeleton.component";
+import { Badge, Button, Card, Table, Text } from '@mantine/core';
+import { IconListDetails, IconStarFilled } from '@tabler/icons-react';
+import { useRouter } from 'next/navigation';
+import React from 'react';
+import EmptyIcon from '../../icons/empty-icon';
+import DetailsPageSkeleton from './details-page-skeleton.component';
 export interface DataType {
   key: string;
   label: string;
   value: any;
-  type?: "string" | "date" | "number" | "boolean";
+  type?: 'string' | 'date' | 'number' | 'boolean';
 }
 
 interface ProfileHeaderDataType {
@@ -78,8 +79,8 @@ export function DetailsPage(props: Props): JSX.Element {
   const {
     isProfile,
     title,
-    editUrl = "",
-    widthClass = "max-w-2xl",
+    editUrl = '',
+    widthClass = 'max-w-2xl',
     hideEditButton = false,
   } = config;
 
@@ -132,7 +133,7 @@ export function DetailsPage(props: Props): JSX.Element {
                               mx={1}
                               key={index}
                             >
-                              {value}{" "}
+                              {value}{' '}
                             </Badge>
                             // <div key={index}></div>
                           ))
@@ -148,10 +149,10 @@ export function DetailsPage(props: Props): JSX.Element {
                   Department Description:
                 </Text>
 
-                <div dangerouslySetInnerHTML={{ __html: description ?? "" }} />
+                <div dangerouslySetInnerHTML={{ __html: description ?? '' }} />
               </Card>
             ) : (
-              ""
+              ''
             )}
           </section>
         );
@@ -204,7 +205,7 @@ function EditButton({ editUrl }: { editUrl: string }): JSX.Element {
     <Button
       leftSection={<IconListDetails size={12} />}
       variant="filled"
-      radius={"xl"}
+      radius={'xl'}
       className="w-max ml-auto  flex items-center gap-0.5 bg-primary-500 text-white"
       onClick={() => {
         router.push(editUrl);
